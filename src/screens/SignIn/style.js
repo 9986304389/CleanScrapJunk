@@ -3,6 +3,15 @@ const React = require("react-native");
 const { StyleSheet } = React;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  image: {
+    width: 200, // Adjust width as needed
+    height: 200, // Adjust height as needed
+  },
   containerView: {
     flex: 1,
     alignItems: "center",
