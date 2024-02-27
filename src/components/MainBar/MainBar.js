@@ -8,7 +8,7 @@ const MainBar = () => {
       <TouchableOpacity style={styles.avatarContainer}>
         <Avatar
           rounded
-          source={require('./path_to_your_avatar_image.jpg')}
+          source={require('../../../assets/man.png')}
           size="medium"
         />
       </TouchableOpacity>
