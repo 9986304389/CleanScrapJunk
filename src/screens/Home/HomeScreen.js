@@ -4,7 +4,8 @@ import styles from "./styles";
 import { recipes } from "../../data/dataArrays";
 import MenuImage from "../../components/MenuImage/MenuImage";
 import { getCategoryName } from "../../data/MockDataAPI";
-// import MainBar from "../../components/MainBar/MainBar";
+import BottomBar from "../../components/BottomBar/BottomBar";
+import MainBar from "../../components/MainBar/MainBar";
 export default function HomeScreen(props) {
   const { navigation } = props;
 
@@ -37,9 +38,10 @@ export default function HomeScreen(props) {
 
   return (
     <View>
-      {/* <MainBar/> */}
+      <MainBar/>
       <Text style={styles.title}>Hello</Text>
-      <FlatList vertical showsVerticalScrollIndicator={false} numColumns={2} data={recipes} renderItem={renderRecipes} keyExtractor={(item) => `${item.recipeId}`} />
+      {/* <FlatList vertical showsVerticalScrollIndicator={false} numColumns={2} data={recipes} renderItem={renderRecipes} keyExtractor={(item) => `${item.recipeId}`} /> */}
+      <BottomBar />
     </View>
   );
 }
