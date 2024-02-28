@@ -6,21 +6,46 @@ import MenuImage from "../../components/MenuImage/MenuImage";
 import { getCategoryName } from "../../data/MockDataAPI";
 import BottomBar from "../../components/BottomBar/BottomBar";
 import MainBar from "../../components/MainBar/MainBar";
+import { Appbar } from 'react-native-paper';
+import { Avatar, Icon } from 'react-native-elements';
 export default function HomeScreen(props) {
   const { navigation } = props;
 
   useLayoutEffect(() => {
     navigation.setOptions({
+      headerTitle: '',
       headerLeft: () => (
-        <MenuImage
-          onPress={() => {
-            navigation.openDrawer();
-          }}
-        />
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 20 }}>
+          <Avatar
+            rounded
+            source={{
+              uri: 'https://placeimg.com/100/100/people',
+            }}
+            size="small"
+          />
+          <View style={{ marginLeft: 10 }}>
+            <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Velpula Kavitha</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Icon name="location-on" size={16} />
+              <Text style={{ marginLeft: 5 }}>SRP tools</Text>
+            </View>
+          </View>
+        </View>
       ),
-      headerRight: () => <View />,
+      // Omit headerLeft to have no left component
+      headerRight: () => (
+        <View style={{ flexDirection: 'row', marginRight: 20 }}>
+          {/* Notification Icon */}
+          <Icon name="notifications" type="material" size={24} color="black" style={{ marginRight: 10 }} />
+          {/* Cart Icon */}
+          {/* <Icon name="shopping-cart" type="material" size={24} color="black" style={{ marginRight: 10 }} /> */}
+          {/* Favorite Icon */}
+          <Icon name="favorite" type="material" size={24} color="black" />
+        </View>
+      ),
     });
-  }, []);
+  }, [navigation]);
+
 
   const onPressRecipe = (item) => {
     navigation.navigate("Recipe", { item });
@@ -38,8 +63,8 @@ export default function HomeScreen(props) {
 
   return (
     <View>
-      <MainBar/>
-      <Text style={styles.title}>Hello</Text>
+      {/* <MainBar/> */}
+      {/* <Text style={styles.title}>Hello</Text> */}
       {/* <FlatList vertical showsVerticalScrollIndicator={false} numColumns={2} data={recipes} renderItem={renderRecipes} keyExtractor={(item) => `${item.recipeId}`} /> */}
       <BottomBar />
     </View>

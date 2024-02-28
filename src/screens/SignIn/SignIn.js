@@ -106,14 +106,14 @@ export default function LoginScreen({ navigation }) {
               titleStyle={styles.buttonText}
             />
           </View>
-          <View style={styles.container}>
+          {/* <View style={styles.container}>
             {imageData && (
               <Image
                 source={{ uri: imageData }}
                 style={styles.image}
               />
             )}
-          </View>
+          </View> */}
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
