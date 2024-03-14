@@ -1,5 +1,5 @@
 import React, { useLayoutEffect } from "react";
-import { FlatList, Text, View, TouchableHighlight, Image } from "react-native";
+import { FlatList, Text, View, TouchableHighlight, Image, TouchableWithoutFeedback, Keyboard } from "react-native";
 import styles from "./styles";
 import { recipes } from "../../data/dataArrays";
 import MenuImage from "../../components/MenuImage/MenuImage";
@@ -8,7 +8,11 @@ import BottomBar from "../../components/BottomBar/BottomBar";
 import MainBar from "../../components/MainBar/MainBar";
 import { Appbar, FAB, useTheme } from 'react-native-paper';
 import { Avatar, Icon } from 'react-native-elements';
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
+
+import SearchBar from "../../components/SearchBar/SearchBar";
+import CarouselComponent from "../../components/Carousel/Carousel";
+import ProductTab from "../../components/ProductTab/ProductTab";
+
 export default function HomeScreen(props) {
   const { navigation } = props;
   const { bottom } = useSafeAreaInsets();
@@ -23,10 +27,8 @@ export default function HomeScreen(props) {
           <Avatar
 
             rounded
-            source={{
-              uri: 'https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg?w=900&t=st=1709143548~exp=1709144148~hmac=bc6472183558b0e0a41124e04f73d6ae0bd57b88c9518d7b690938374cb86029',
-            }}
-            size={40}
+            source={require('../../../assets/man.png')}
+            size="small"
           />
           <View style={{ marginLeft: 10 }}>
             <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Velpula Kavitha</Text>
@@ -66,40 +68,21 @@ export default function HomeScreen(props) {
     </TouchableHighlight>
   );
 
-  return (
-    <View>
+  const dismissKeyboard = () => {
+    Keyboard.dismiss();
+  }
 
-      {/* <MainBar/> */}
-      {/* <Text style={styles.title}>Hello</Text> */}
-      {/* <FlatList vertical showsVerticalScrollIndicator={false} numColumns={2} data={recipes} renderItem={renderRecipes} keyExtractor={(item) => `${item.recipeId}`} /> */}
-      <BottomBar />
-      {/* Bottom app bar */}
-    
-      {/* <Appbar
-        style={[
-          styles.bottom,
-          {
-            height: BOTTOM_APPBAR_HEIGHT + bottom,
-            backgroundColor: theme.colors.elevation.level2,
-          },
-        ]}
-        safeAreaInsets={{ bottom }}
-      >
-        <Appbar.Action icon="archive" onPress={() => { }} />
-        <Appbar.Action icon="email" onPress={() => { }} />
-        <Appbar.Action icon="label" onPress={() => { }} />
-        <Appbar.Action icon="delete" onPress={() => { }} />
-        <FAB
-          mode="flat"
-          size="medium"
-          icon="plus"
-          onPress={() => { }}
-          style={[
-            styles.fab,
-            { top: (BOTTOM_APPBAR_HEIGHT - MEDIUM_FAB_HEIGHT) / 2 },
-          ]}
-        />
-      </Appbar> */}
-    </View>
+  return (
+    <TouchableWithoutFeedback onPress={dismissKeyboard}>
+      <View style={{ flex: 1 }}>
+        <SearchBar />
+        <CarouselComponent />
+        <ProductTab />
+        {/* <MainBar/> */}
+        {/* <Text style={styles.title}>Hello</Text> */}
+        {/* <FlatList vertical showsVerticalScrollIndicator={false} numColumns={2} data={recipes} renderItem={renderRecipes} keyExtractor={(item) => `${item.recipeId}`} /> */}
+        {/* <BottomBar /> */}
+      </View>
+    </TouchableWithoutFeedback>
   );
 }

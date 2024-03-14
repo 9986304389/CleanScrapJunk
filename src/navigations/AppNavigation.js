@@ -92,6 +92,9 @@ import IngredientsDetailsScreen from '../screens/IngredientsDetails/IngredientsD
 import SignIn from '../screens/SignIn/SignIn';
 import SignUP from '../screens/SignUp/SignUp';
 import RestPassword from '../screens/ResetPassword/ResetPassword';
+import ProductDescription from '../components/ProductDescription/ProductDescription';
+import MyCart from '../components/MyCart/MyCart';
+import OrderSummary from '../components/OrderSummary/OrderSummary';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -118,6 +121,9 @@ function MainNavigator() {
       <Stack.Screen name='Ingredient' component={IngredientScreen} />
       <Stack.Screen name='Search' component={SearchScreen} />
       <Stack.Screen name='IngredientsDetails' component={IngredientsDetailsScreen} />
+      <Stack.Screen name='ProductDescription' component={ProductDescription} />
+      <Stack.Screen name='MyCart' component={MyCart} />
+      <Stack.Screen name='OrderSummary' component={OrderSummary} />
     </Stack.Navigator>
   )
 }
