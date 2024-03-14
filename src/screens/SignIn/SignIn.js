@@ -32,22 +32,22 @@ export default function LoginScreen({ navigation }) {
   };
 
 
-  useEffect(() => {
-    const domain_name = `${domainname}/api/getAllProducts?product_code=CS7`;
-    fetch(domain_name)
-      .then(response => response.json())
-      .then(data => {
-        const imageUrl = data.result[0].image_url; // Assuming you want the first product's image
-        const domainName = 'https://clean-scrap-jnck-backend.vercel.app';
-        const trimmedImageUrl = imageUrl.replace('/var/task/', '');
-        // Concatenate your domain name with the modified image URL
-        const finalImageUrl = domainName + '/' + trimmedImageUrl;
-        setImageData(finalImageUrl);
-      })
-      .catch(error => console.error('Error fetching image:', error));
-  }, []);
+  // useEffect(() => {
+  //   const domain_name = `${domainname}/api/getAllProducts?product_code=CS7`;
+  //   fetch(domain_name)
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       const imageUrl = data.result[0].image_url; // Assuming you want the first product's image
+  //       const domainName = 'https://clean-scrap-jnck-backend.vercel.app';
+  //       const trimmedImageUrl = imageUrl.replace('/var/task/', '');
+  //       // Concatenate your domain name with the modified image URL
+  //       const finalImageUrl = domainName + '/' + trimmedImageUrl;
+  //       setImageData(finalImageUrl);
+  //     })
+  //     .catch(error => console.error('Error fetching image:', error));
+  // }, []);
 
-  console.log(imageData)
+  // console.log(imageData)
   return (
     <KeyboardAvoidingView style={styles.containerView} behavior="padding">
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
