@@ -83,7 +83,7 @@ export default function MyComponent() {
 function HomeScreen() {
   return (
     <View style={styles.container}>
-      <Text variant="headlineMedium">Home!!!</Text>
+      <Text variant="headlineMedium">Home!</Text>
     </View>
   );
 }
