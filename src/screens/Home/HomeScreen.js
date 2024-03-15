@@ -8,6 +8,7 @@ import BottomBar from "../../components/BottomBar/BottomBar";
 import MainBar from "../../components/MainBar/MainBar";
 import { Appbar, FAB, useTheme } from 'react-native-paper';
 import { Avatar, Icon } from 'react-native-elements';
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import SearchBar from "../../components/SearchBar/SearchBar";
 import CarouselComponent from "../../components/Carousel/Carousel";
