@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Text, View, Button, Image, TouchableOpacity, Pressable } from 'react-native';
 import styles from './styles';
+import { Alert } from 'react-native';
 
 const ProductDescription = ({ route, navigation }) => {
     const [quantity, setQuantity] = useState(0); // Initial quantity of the product
@@ -31,6 +32,17 @@ const ProductDescription = ({ route, navigation }) => {
             quantity,
         });
     };
+    const givePopUp = () => {
+        console.log("call api if it success give alert ")
+        Alert.alert(
+            'Product',
+            'Add Cart successfully',
+            [
+                { text: 'OK', onPress: () => console.log('OK Pressed') }
+            ],
+            { cancelable: false }
+        );
+    }
 
     return (
         <View style={styles.container}>
@@ -56,7 +68,9 @@ const ProductDescription = ({ route, navigation }) => {
                 {/* <Button title="Place Order" onPress={handlePlaceOrder} /> */}
 
                 <View style={styles.buttonRow} >
-                    <TouchableOpacity style={styles.cartBtn} onPress={() => navigation.navigate('MyCart', { productName: productName, productPrice: productPrice, quantity: quantity })}>
+                    {/* <TouchableOpacity style={styles.cartBtn} onPress={() => navigation.navigate('MyCart', { productName: productName, productPrice: productPrice, quantity: quantity })}> */}
+
+                    <TouchableOpacity style={styles.cartBtn} onPress={givePopUp}>
                         <Text style={styles.cardBtnText}>Add to Cart</Text>
                     </TouchableOpacity>
                     <Pressable style={styles.buyBtn} onPress={() => navigation.navigate('OrderSummary', { productName: productName, productPrice: productPrice, quantity: quantity })}>

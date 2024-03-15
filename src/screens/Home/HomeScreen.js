@@ -15,7 +15,7 @@ import ProductTab from "../../components/ProductTab/ProductTab";
 
 export default function HomeScreen(props) {
   const { navigation } = props;
-  const { bottom } = useSafeAreaInsets();
+  // const { bottom } = useSafeAreaInsets();
   const BOTTOM_APPBAR_HEIGHT = 0;
   const MEDIUM_FAB_HEIGHT = 56;
   const theme = useTheme();

@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     titleView: {
         flexDirection: 'row',
         paddingLeft: '5%',
-        paddingTop: '5%'
+        paddingTop: '15%'
     },
     titleIcon: {
         marginTop: '1%'
