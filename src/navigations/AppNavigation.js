@@ -19,6 +19,7 @@ import RestPassword from '../screens/ResetPassword/ResetPassword';
 import ProductDescription from '../components/ProductDescription/ProductDescription';
 import MyCart from '../components/MyCart/MyCart';
 import OrderSummary from '../components/OrderSummary/OrderSummary';
+import OrderSteps from '../components/OrderSummary/OrderSummary';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -47,7 +48,7 @@ function MainNavigator() {
       <Stack.Screen name='IngredientsDetails' component={IngredientsDetailsScreen} />
       <Stack.Screen name='ProductDescription' component={ProductDescription} />
       <Stack.Screen name='MyCart' component={MyCart} />
-      <Stack.Screen name='OrderSummary' component={OrderSummary} />
+      <Stack.Screen name='OrderSummary' component={OrderSteps} />
     </Stack.Navigator>
   )
 }
