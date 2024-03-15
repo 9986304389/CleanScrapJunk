@@ -2,14 +2,19 @@ import { StyleSheet } from "react-native";
 import { Platform } from "react-native";
 
 const styles = StyleSheet.create({
-    container: {
+    container2: {
         flex: 1,
-        padding: 15,
-        marginTop: '5%'
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%'
+        // marginHorizontal: '5%',
     },
     addressContainer: {
+        width: '90%',
         marginBottom: 20,
-        paddingVertical: '4%',
+        paddingBottom: '5%',
+        paddingTop: '2%',
+        // paddingVertical: '7%',
         paddingHorizontal: '2%',
         borderRadius: 10,
         ...Platform.select({
@@ -32,8 +37,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     productDetailsContainer: {
+        padding: 10,
+        width: '92%',
+        flexDirection: 'row',
+        alignItems: 'center',
         marginBottom: 20,
-        paddingVertical: '2%',
+        marginLeft: '5%',
+        marginRight: '5%',
+        // marginHorizontal: '50%',
         borderRadius: 10,
         ...Platform.select({
             android: {
@@ -54,12 +65,20 @@ const styles = StyleSheet.create({
     quantityContainer: {
         marginBottom: 20,
     },
+    lastcontainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginVertical: 10,
+    },
     totalAmountContainer: {
+        width: '50%',
+        height: 50,
         marginTop: 20,
+        marginRight: 10,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingVertical: '5%',
         borderRadius: 10,
         ...Platform.select({
             android: {
@@ -88,22 +107,6 @@ const styles = StyleSheet.create({
         maxWidth: '60%',
         flexWrap: 'wrap',
     },
-    // description: {
-    //     marginTop: 5,
-    //     fontSize: 14,
-    // },
-    // price: {
-    //     marginTop: 5,
-    //     fontSize: 14,
-    // },
-    // quantityInput: {
-    //     marginTop: 5,
-    //     borderWidth: 1,
-    //     borderColor: '#ccc',
-    //     padding: 8,
-    //     fontSize: 14,
-    // },
-
     card: {
         padding: 10,
         width: '100%',
@@ -118,12 +121,13 @@ const styles = StyleSheet.create({
     textCard: {
         flexDirection: 'column',
         marginHorizontal: 10,
-        marginLeft: '7%'
+        marginLeft: '3%'
     },
     name: {
         fontSize: 20,
         fontWeight: '700',
-        marginBottom: 7
+        marginBottom: 7,
+        flexWrap: 'wrap',
     },
     price: {
         fontSize: 18,
@@ -137,7 +141,6 @@ const styles = StyleSheet.create({
     changeAddressBtnContainer: {
         flexDirection: 'row',
         justifyContent: 'flex-end',
-        paddingRight: '5%',
         marginTop: '5%', // Adjust the margin as needed
     },
     changeAddressBtn: {
@@ -156,23 +159,106 @@ const styles = StyleSheet.create({
     },
     continueBtnContainer: {
         alignItems: 'center',
-        paddingRight: '5%',
-        marginTop: '15%', // Adjust the margin as needed
+        justifyContent: 'center',
+        paddingTop: '5%'
+        // paddingHorizontal: '5%',
+        // paddingVertical: '5%',
+        // marginTop: '5%', // Adjust the margin as needed
     },
     continueBtn: {
-        width: '50%',
+        width: '100%',
         height: 50,
+        // paddingHorizontal: '10%',
+        // paddingVertical: '5%',
         backgroundColor: '#347855',
         alignItems: 'center',
         justifyContent: 'center',
         fontSize: 18,
         color: 'white',
-        borderRadius: 7
+        borderRadius: 7,
+        marginTop: '5%'
     },
     continueTxt: {
         fontSize: 16,
         color: 'white',
-    }
+        marginHorizontal: '10%'
+    },
+
+
+    container: {
+        display: 'flex',
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    progressBar: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: 20,
+        marginHorizontal: '5%'
+    },
+    stepContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    stepLine: {
+        flex: 1,
+        height: 2,
+        backgroundColor: '#ccc',
+    },
+    activeLine: {
+        backgroundColor: '#347855',
+    },
+    progressBarContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingTop: '4%',
+    },
+    stepIndicator: {
+        width: 30,
+        height: 30,
+        borderWidth: 1,
+        borderRadius: 15,
+        borderColor: '#ccc',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginHorizontal: 5,
+        color: 'black'
+    },
+    activeStep: {
+        backgroundColor: '#347855',
+        color: 'white',
+    },
+    stepText: {
+        color: 'black',
+    },
+    progressTxt: {
+        flexDirection: 'row'
+    },
+    pageName: {
+        width: '100%',
+        position: 'absolute',
+        top: '100%', // Center align text
+    },
+    pageName2: {
+        width: '100%',
+        position: 'absolute',
+        top: '100%',
+        left: '-15%'
+    },
+    pageName3: {
+        width: '100%',
+        position: 'absolute',
+        top: '100%',
+        left: '85%'
+    },
+    pageContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 })
 
 export default styles;
