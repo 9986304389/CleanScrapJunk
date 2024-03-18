@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   loginFormTextInput: {
     height: 43,
     fontSize: 14,
-    borderRadius: 20,
+    borderRadius: 10,
     borderWidth: 1,
     borderColor: "#eaeaea",
     backgroundColor: "#fafafa",
@@ -38,10 +38,10 @@ const styles = StyleSheet.create({
 
   },
   loginButton: {
-    backgroundColor: "#000080",
-    borderRadius: 20,
+    backgroundColor: "#347855",
+    borderRadius: 10,
     height: 45,
-    marginTop: 10,
+    marginTop: '10%',
 
     width: 320,
     alignItems: "center"

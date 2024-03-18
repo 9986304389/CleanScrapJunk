@@ -15,8 +15,8 @@ import { Button, SocialIcon, Icon } from "react-native-elements";
 import * as Facebook from "expo-facebook";
 
 
-export default function RestPassword() {
-    const onLoginPress = () => { };
+export default function RestPassword({ navigation }) {
+    const onLoginPress = () => { navigation.navigate('OTPPage') };
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [passwordreenter, setPasswordReenter] = useState('');
