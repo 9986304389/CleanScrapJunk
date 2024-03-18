@@ -5,12 +5,14 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#d6d6d6',
+        backgroundColor: '#e7e7e7',
         borderColor: "#ccc",
         borderRadius: 10,
         paddingHorizontal: 10,
         marginHorizontal: 15,
         marginTop: 20,
+        shadowColor:'#ffff',
+        minHeight:50
     },
     icon: {
         marginRight: 10,

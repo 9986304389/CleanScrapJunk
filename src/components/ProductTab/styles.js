@@ -30,32 +30,45 @@ const styles = StyleSheet.create({
     cardContainer: {
         width: '48%', // Adjust this value as needed
         marginBottom: 10,
+        padding: 3
     },
     card: {
         // backgroundColor: '#ffffff',
         borderRadius: 10,
-        padding: 10,
+        //padding: 10,
         alignItems: 'center',
         justifyContent: 'center',
+        // For Android
+        elevation: 1, // Adjust the elevation to change the intensity of the shadow
+        shadowOffset: { width: 0, height: 2 },
+        // For iOS
+        shadowColor: '#000',
+        shadowRadius: 50,
+        backgroundColor: "#e7e7e7"
     },
     image: {
         width: '100%',
         height: 175,
-        opacity: 0.7,
+        opacity: 1,
         borderRadius: 5
     },
     backgroundImage: {
         width: '100%',
         height: '100%',
         resizeMode: 'cover',
+        alignContent:'center',
+        alignItems:"center"
     },
     heartIcon: {
         position: 'absolute',
-        top: 15,
-        right: 15,
-        // backgroundColor: 'rgba(255, 255, 255, 0.5)',
-        padding: 5,
-        borderRadius: 15,
+        top: 5,
+        right: 5,
+        backgroundColor: '#ffff',
+        padding: 2,
+        opacity:0.8,
+        textAlign:'center',
+        alignSelf:'center',
+        borderRadius: 10,
     },
     title: {
         fontSize: 20,
@@ -64,10 +77,12 @@ const styles = StyleSheet.create({
         marginLeft: '5%'
     },
     price: {
-        fontSize: 16,
+        fontSize: 18,
+        fontWeight: '500',
         fontWeight: "400",
         marginBottom: '3%',
-        marginLeft: '5%'
+        marginLeft: '5%',
+        color: 'green'
     }
 })
 

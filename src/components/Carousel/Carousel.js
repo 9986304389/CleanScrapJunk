@@ -21,9 +21,10 @@ export default function CarouselComponent() {
     }
 
     return (
+
         <View style={styles.container}>
             <Text style={styles.specialOffers}>Special Offers</Text>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={true} style={{ width: '100%', maxHeight: 200 }}>
                 <View style={styles.cardContainer}>
                     {data.map((item, index) => (
                         <ImageBackground

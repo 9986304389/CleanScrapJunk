@@ -18,20 +18,31 @@ const useApi = () => {
     }
   };
 
-  const post = async (url, body) => {
+  const post = async (url, body,token) => {
     const options = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` // Add Authorization header with Bearer token
       },
-      body: JSON.stringify(body),
+      
     };
+    if (body) {
+      options.body = JSON.stringify(body);
+    }
     return await fetchData(url, options);
   };
 
-  const get = async (url) => {
-    return await fetchData(url);
+  const get = async (url, token) => {
+    const options = {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` // Add Authorization header with Bearer token
+      }
+    };
+    return await fetchData(url, options);
   };
+  
 
   const remove = async (url) => {
     const options = {
@@ -40,7 +51,7 @@ const useApi = () => {
     return await fetchData(url, options);
   };
 
-  return { loading, error, post, get, remove };
+  return { loading, error, post, get, remove,fetchData };
 };
 
 export default useApi;

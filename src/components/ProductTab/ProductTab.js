@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
-import { Dimensions, Text, View, Image, TouchableOpacity, FlatList, ImageBackground, ScrollView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Dimensions, Text, View, Image, TouchableOpacity, FlatList, ImageBackground, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import styles from './styles';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-
+import { useSelector, useDispatch } from 'react-redux'
+import useApi from '../../apiCalls/ApiCalls';
 const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
 
@@ -27,13 +28,50 @@ const data = [
 ];
 
 const FirstRoute = (props) => {
-
+    const { loading, error, get, fetchData, post } = useApi();
+    const [allProducts, setAllProducts] = useState([]);
+    const jwtToken = useSelector((state) => state.auth.token);
+    //console.log(jwtToken)
     const { navigation } = props;
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const queryParameters = {
+                    product_code: '', // Add your product code parameter value here
+                    Active_Status: '' // Add your Active_Status parameter value here
+                };
+
+                // Convert query parameters to string
+                const queryString = new URLSearchParams(queryParameters).toString();
+                // Construct the complete URL with query parameters
+                const url = `https://clean-scrap-jnck-backend.vercel.app/api/getAllProducts?${queryString}`;
+                console.log('URL:', url);
+                const response = await get(url, jwtToken);
+                //console.log('Response:', response); // Log the response
+
+                if (response?.status == true) {
+                    setAllProducts(response.result); // Update state with received data
+                }
+                else {
+                    // Call the alert 
+                }
+
+            } catch (error) {
+                console.error('Error fetching initial data:', error);
+                // Handle error if needed
+            }
+        };
+
+        fetchData(); // Call fetchData function when component mounts
+    }, []); // Empty dependency array to run the effect only once
+
+    console.log(allProducts); // Log the allProducts state
+
 
     return (
         <ScrollView>
             <View style={styles.container}>
-                {data.map((item, index) => (
+                {/* {data.map((item, index) => (
                     <TouchableOpacity style={styles.cardContainer} key={item.id} onPress={() => navigation.navigate("ProductDescription", { itemId: item.id, productName: item.title, productPrice: item.price, likedStatus: item.liked, productDescription: item.desc })}>
                         <View key={item.id}>
                             <View style={styles.card}>
@@ -48,6 +86,26 @@ const FirstRoute = (props) => {
                             </View>
                             <Text style={styles.title}>{item.title}</Text>
                             <Text style={styles.price}>{item.price}</Text>
+                        </View>
+                    </TouchableOpacity>
+                ))} */}
+                {allProducts.map((item, index) => (
+                    <TouchableOpacity style={styles.cardContainer} key={item.product_id} onPress={() => navigation.navigate("ProductDescription", { itemId: item.product_id, productName: item.name, productPrice: item.price, productDescription: item.description })}>
+                        <View key={item.id}>
+                            
+                                <View style={styles.card}>
+                                    <Image source={{ uri: item?.image_url }} style={styles.image} />
+                                    <TouchableOpacity style={styles.heartIcon} onPress={() => console.log('Heart icon pressed')}>
+                                        <Text>{false ? (
+                                            <Ionicons name="heart" size={30} color="red" /> // Use heart icon if liked
+                                        ) : (
+                                            <Ionicons name="heart-outline" size={30} color="black" /> // Use heart outline icon if not liked
+                                        )}</Text>
+                                    </TouchableOpacity>
+                                </View>
+                         
+                            <Text style={styles.title}>{item.name}</Text>
+                            <Text style={styles.price}>₹{item.price}</Text>
                         </View>
                     </TouchableOpacity>
                 ))}
