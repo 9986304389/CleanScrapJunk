@@ -21,6 +21,8 @@ import MyCart from '../components/MyCart/MyCart';
 import OrderSummary from '../components/OrderSummary/OrderSummary';
 import OrderSteps from '../components/OrderSummary/OrderSummary';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
+import OTPPage from '../screens/OTPPage/Otppage';
+import { Profilepage } from '../components/Profile/Profilepage';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator(); // Create a bottom tab navigator
@@ -49,6 +51,7 @@ function MainNavigator() {
       <Stack.Screen name='ProductDescription' component={ProductDescription} />
       <Stack.Screen name='MyCart' component={MyCart} />
       <Stack.Screen name='OrderSummary' component={OrderSteps} />
+      <Stack.Screen name='ProfileEdit' component={Profilepage} />
     </Stack.Navigator>
   )
 }
@@ -59,6 +62,7 @@ function SignInNavigator() {
       <Stack.Screen name="SignIn" component={SignIn} />
       <Stack.Screen name="SignUp" component={SignUP} />
       <Stack.Screen name="ResetPassword" component={RestPassword} />
+      <Stack.Screen name='OTPPage' component={OTPPage} />
     </Stack.Navigator>
   );
 }
@@ -107,7 +111,7 @@ function BottomTabNavigator({ navigation }) {
       />
       <Tab.Screen
         name="MyCart"
-         component={MyCart}
+        component={MyCart}
         options={{
           tabBarLabel: 'My Cart',
           tabBarIcon: ({ color, size }) => (
@@ -125,6 +129,17 @@ function BottomTabNavigator({ navigation }) {
             <FontAwesome name="list-alt" color={color} size={size} />
           ),
           onPress: () => navigation.navigate('OrderSummary'), // Navigate to OrderSummary screen when tab is pressed
+        }}
+      />
+      <Tab.Screen
+        name="ProfileEdit"
+        component={Profilepage}
+        options={{
+          tabBarLabel: 'Profile Edit',
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome name="user" color={color} size={size} />
+          ),
+          onPress: () => navigation.navigate('ProfileEdit'), // Navigate to OrderSummary screen when tab is pressed
         }}
       />
     </Tab.Navigator>
