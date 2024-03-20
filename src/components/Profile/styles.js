@@ -5,9 +5,9 @@ import { Platform } from "react-native";
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        // backgroundColor: '#fff',
         paddingHorizontal: 20,
-        paddingTop: '13%',
+        paddingTop: '5%',
     },
     profileHead: {
         flexDirection: 'row',
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     },
     profileicon: {
         fontSize: 22,
-        marginRight: '5%'
+        marginLeft: 20
     },
     threedots: {
         fontSize: 22,

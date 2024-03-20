@@ -1,20 +1,32 @@
 import React from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import styles from "./styles";
 
-const ProfilePage = ({ navigation }) => {
-    return (
-        <View style={styles.container}>
-            <View style={styles.profileHead}>
+const ProfilePage = (props) => {
+    const { navigation, route } = props;
+    React.useLayoutEffect(() => {
+        navigation.setOptions({
+            headerTitle: 'Profile',
+            headerTitleStyle: {
+                marginLeft: 0,
+                fontWeight: 'bold'
+            },
+            headerLeft: () => (
                 <FontAwesome name="user" style={styles.profileicon} />
-                <Text style={styles.profile}>Profile</Text>
-                <FontAwesome name="ellipsis-h" style={styles.threedots} />
+            ),
+
+        });
+    }, [navigation]);
+
+    return (
+        <ScrollView>
+            <View style={styles.container}>
+                <ProfileHeader navigation={navigation} />
+                <MenuItems />
             </View>
-            <ProfileHeader navigation={navigation} />
-            <MenuItems />
-        </View>
-    );
+        </ScrollView>
+    )
 };
 
 const ProfileHeader = ({ navigation }) => {
