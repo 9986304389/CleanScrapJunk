@@ -2,21 +2,7 @@ import React from "react";
 import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import { Feather, AntDesign, Fontisto } from '@expo/vector-icons';
 
-export function Profilepage(props) {
-    const { navigation, route } = props;
-    React.useLayoutEffect(() => {
-        navigation.setOptions({
-            headerTitle: 'Profile Edit',
-            headerTitleStyle: {
-                marginLeft: 20,
-                fontWeight: 'bold'
-            },
-            headerLeft: () => (
-                null
-            ),
-
-        });
-    }, [navigation]);
+function ProfileEdit() {
     return (
         <View style={{ flex: 1 }}>
             <View style={{ top: 100 }}>
@@ -144,3 +130,5 @@ const styles = StyleSheet.create({
     },
 
 });
+
+export default ProfileEdit;

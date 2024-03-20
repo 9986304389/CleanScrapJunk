@@ -189,7 +189,8 @@ import OrderSummary from '../components/OrderSummary/OrderSummary';
 import OrderSteps from '../components/OrderSummary/OrderSummary';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import OTPPage from '../screens/OTPPage/Otppage';
-import { Profilepage } from '../components/Profile/Profilepage';
+import ProfileEdit, { Profilepage } from '../components/Profile/Profilepage';
+import ProfilePage from '../components/Profile/Profile';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -292,7 +293,7 @@ function BottomTabNavigator() {
     <Tab.Navigator
       screenOptions={{ headerShown: false }}
       tabBarOptions={{
-        activeTintColor: 'green',
+        activeTintColor: '#347855',
         labelStyle: {
           fontSize: 14,
           paddingBottom: 3,
@@ -341,6 +342,7 @@ function BottomTabNavigator() {
           tabBarIcon: ({ color, size }) => (
             <FontAwesome name="user" color={color} size={size} />
           ),
+          onPress: () => navigation.navigate('ProfilePage'), // Navigate to OrderSummary screen when tab is pressed
         }}
       />
     </Tab.Navigator>
