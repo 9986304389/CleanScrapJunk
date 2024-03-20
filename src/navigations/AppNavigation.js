@@ -22,7 +22,8 @@ import OrderSummary from '../components/OrderSummary/OrderSummary';
 import OrderSteps from '../components/OrderSummary/OrderSummary';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import OTPPage from '../screens/OTPPage/Otppage';
-import { Profilepage } from '../components/Profile/Profilepage';
+import ProfileEdit, { Profilepage } from '../components/Profile/Profilepage';
+import ProfilePage from '../components/Profile/Profile';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator(); // Create a bottom tab navigator
@@ -51,7 +52,8 @@ function MainNavigator() {
       <Stack.Screen name='ProductDescription' component={ProductDescription} />
       <Stack.Screen name='MyCart' component={MyCart} />
       <Stack.Screen name='OrderSummary' component={OrderSteps} />
-      <Stack.Screen name='ProfileEdit' component={Profilepage} />
+      <Stack.Screen name='ProfileEdit' component={ProfileEdit} />
+      <Stack.Screen name='ProfilePage' component={ProfilePage} />
     </Stack.Navigator>
   )
 }
@@ -89,7 +91,7 @@ function BottomTabNavigator({ navigation }) {
     <Tab.Navigator
       screenOptions={{ headerShown: false }}
       tabBarOptions={{
-        activeTintColor: 'green', // Set the active color to green
+        activeTintColor: '#347855', // Set the active color to green
         labelStyle: {
           fontSize: 14, // Adjust font size as needed
           paddingBottom: 3, // Adjust padding bottom as needed
@@ -132,14 +134,14 @@ function BottomTabNavigator({ navigation }) {
         }}
       />
       <Tab.Screen
-        name="ProfileEdit"
-        component={Profilepage}
+        name="ProfilePage"
+        component={ProfilePage}
         options={{
           tabBarLabel: 'Profile Edit',
           tabBarIcon: ({ color, size }) => (
             <FontAwesome name="user" color={color} size={size} />
           ),
-          onPress: () => navigation.navigate('ProfileEdit'), // Navigate to OrderSummary screen when tab is pressed
+          onPress: () => navigation.navigate('ProfilePage'), // Navigate to OrderSummary screen when tab is pressed
         }}
       />
     </Tab.Navigator>
