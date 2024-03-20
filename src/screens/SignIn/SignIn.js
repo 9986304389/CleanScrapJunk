@@ -28,6 +28,7 @@ export default function LoginScreen({ navigation }) {
   const [phonenumber, setPhoneNumber] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [modelTitle, setModelTitle] = useState('');
   const [showButton, setShowButton] = useState(false);
   const [color_title, setColorTitle] = useState('');
   const [color_description, setColorDescription] = useState('');
@@ -49,27 +50,69 @@ export default function LoginScreen({ navigation }) {
 
 
   const onLoginPress = async () => {
+    navigation.navigate('Home')
 
-    
-    let data = {
-      "phonenumber": phonenumber,//9986304389
-      "password": password//kavitha
-    }
-    console.log(data)
-    const response = await post('https://clean-scrap-jnck-backend.vercel.app/api/login', data)
-    console.log("Token", response.result[0].token)
-    // Dispatch action to store token in Redux store
-    dispatch(setToken(response?.result[0].token));
-    if (response?.status === true) {
-      //call the otp screen
-      navigation.navigate('Home')
-    }
-    else {
-      setColorTitle('red');
-      setColorDescription('black');
-      setResponseMessage(response?.message)
-      showAlert();
-    }
+    // let data = {
+    //   "phonenumber": phonenumber,//9986304389
+    //   "password": password//kavitha
+    // }
+    // console.log(data)
+    // const response = await post('https://clean-scrap-jnck-backend.vercel.app/api/login', data)
+
+    // if (response?.status === true) {
+    //   // Dispatch action to store token in Redux store
+    //   dispatch(setToken(response?.result[0].token));
+
+    // Simulating fetching user data from an API
+    // const userData = {
+    //   name: response?.result[0].name,
+    //   phoneNumber: response?.result[0].phonenumber,
+    //   email: response?.result[0].email,
+    //   userType: response?.result[0].usertype,
+    //   loginTime: new Date().toISOString(),
+    // };
+    // dispatch(setUser(userData));
+    //   let jwtToken = response?.result[0].token;
+    //   try {
+    //     const queryParameters = {
+    //       phonenumber: phonenumber, // Add your product code parameter value here
+
+    //     };
+
+    //     // Convert query parameters to string
+    //     const queryString = new URLSearchParams(queryParameters).toString();
+    //     // Construct the complete URL with query parameters
+    //     const url = `https://clean-scrap-jnck-backend.vercel.app/api/getOTP?${queryString}`;
+    //     console.log('URL:', url);
+    //     const response = await get(url, jwtToken);
+    //     //console.log('Response:', response); // Log the response
+
+    //     if (response?.status == true) {
+    //       navigation.navigate('OTP', { phoneNumber: phonenumber })
+    //     }
+    //     else {
+    //       setModelTitle('Get OTP Fail')
+    //       // Call the alert 
+    //       setColorTitle('red');
+    //       setColorDescription('black');
+    //       setResponseMessage(response?.message)
+    //       showAlert();
+    //     }
+
+    //   } catch (error) {
+    //     console.error('Error fetching initial data:', error);
+    //     // Handle error if needed
+    //   }
+
+    // }
+    // else {
+
+    //   setModelTitle('Login Fail')
+    //   setColorTitle('red');
+    //   setColorDescription('black');
+    //   setResponseMessage(response?.message)
+    //   showAlert();
+    // }
   };
 
 
@@ -136,7 +179,7 @@ export default function LoginScreen({ navigation }) {
       </TouchableWithoutFeedback>
       <CustomAlert
         isVisible={isVisible}
-        title="Login Fail"
+        title={modelTitle}
         description={responseMessage}
         buttonText={showButton ? "OK" : ""}
         onPress={hideAlert}

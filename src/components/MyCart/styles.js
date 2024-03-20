@@ -16,7 +16,8 @@ const styles = StyleSheet.create({
         paddingTop: '15%'
     },
     titleIcon: {
-        marginTop: '1%'
+        marginTop: '1%',
+        marginLeft:20
     },
     title: {
         fontSize: 20,

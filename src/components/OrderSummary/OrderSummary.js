@@ -80,6 +80,7 @@ import styles from "./styles";
 // export default OrderSummary;
 
 const ProgressBar = ({ currentPage, pageNames }) => {
+
     return (
         <View style={styles.progressBar}>
             <View style={[styles.stepContainer, { flex: 1 }]}>
@@ -200,7 +201,21 @@ const PaymentPage = ({ onPrev }) => {
     );
 };
 
-const OrderSteps = () => {
+const OrderSteps = (props) => {
+    const { navigation, route } = props;
+    React.useLayoutEffect(() => {
+        navigation.setOptions({
+            headerTitle: 'OrderSummary',
+            headerTitleStyle: {
+                marginLeft: 20,
+                fontWeight: 'bold'
+            },
+            headerLeft: () => (
+                null
+            ),
+
+        });
+    }, [navigation]);
     const [currentPage, setCurrentPage] = useState(1);
 
     const onNext = () => {
