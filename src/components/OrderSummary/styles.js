@@ -183,6 +183,29 @@ const styles = StyleSheet.create({
         color: 'white',
         marginHorizontal: '10%'
     },
+    continueBtnContainer1: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        // paddingHorizontal: '5%',
+        // paddingVertical: '5%',
+        // marginTop: '5%', // Adjust the margin as needed
+    },
+    continueBtn1: {
+        width: '100%',
+        height: 50,
+        backgroundColor: '#347855',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: 18,
+        color: 'white',
+        borderRadius: 7,
+        // marginTop: '5%'
+    },
+    continueTxt1: {
+        fontSize: 16,
+        color: 'white',
+        marginHorizontal: '10%'
+    },
 
 
     container: {
@@ -256,7 +279,8 @@ const styles = StyleSheet.create({
     },
     pageContainer: {
         flex: 1,
-        justifyContent: 'center',
+        flexDirection: 'column',
+        // justifyContent: 'center',
         alignItems: 'center',
     },
 })
