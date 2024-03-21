@@ -45,7 +45,7 @@ export default function OTPPage({ route, navigation }) {
     const handleOTPInput = (text, index) => {
         const newOTP = [...otp];
         newOTP[index] = text;
-        //console.log(newOTP)
+       
         setOTP(newOTP);
 
         // Move to the next input field after entering a digit
@@ -63,7 +63,7 @@ export default function OTPPage({ route, navigation }) {
 
     const validate_OTP = async () => {
         const concatenatedOTP = otp.join('');
-        console.log(concatenatedOTP)
+        
         if (concatenatedOTP.length == 6) {
             try {
                 const queryParameters = {
@@ -75,9 +75,9 @@ export default function OTPPage({ route, navigation }) {
                 const queryString = new URLSearchParams(queryParameters).toString();
                 // Construct the complete URL with query parameters
                 const url = `https://clean-scrap-jnck-backend.vercel.app/api/verifyOTP?${queryString}`;
-                console.log('URL:', jwtToken);
+                
                 const response = await get(url, jwtToken);
-                console.log('Response:', response); // Log the response
+              
 
                 if (response?.status == true) {
 

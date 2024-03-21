@@ -5,12 +5,30 @@ import { AntDesign } from "@expo/vector-icons";
 import { useSelector, useDispatch } from 'react-redux'
 // import { useNavigation } from "@react-navigation/native";
 import useApi from '../../apiCalls/ApiCalls';
+import CustomAlert from '../alert/Alert'
+import { State } from "react-native-gesture-handler";
+
 
 const MyCart = (props) => {
     const { navigation, route } = props;
     const { loading, error, get, fetchData, post } = useApi();
     const jwtToken = useSelector((state) => state.auth.token);
+    const phoneNumber = useSelector((state) => state.profile.user.phoneNumber);
     const [allMyCartProducts, setAllMyCartProducts] = useState([]);
+    const [modelTitle, setModelTitle] = useState('');
+    const [showButton, setShowButton] = useState(false);
+    const [color_title, setColorTitle] = useState('');
+    const [color_description, setColorDescription] = useState('');
+    const [responseMessage, setResponseMessage] = useState('');
+    const [isVisible, setIsVisible] = useState(false);
+    const showAlert = () => {
+        setIsVisible(true);
+    };
+
+    const hideAlert = () => {
+        setIsVisible(false);
+    };
+
     React.useLayoutEffect(() => {
         navigation.setOptions({
             headerTitle: 'My Cart',
@@ -25,11 +43,11 @@ const MyCart = (props) => {
         });
     }, [navigation]);
     useEffect(() => {
-        console.log("hello")
+        
         const fetchData = async () => {
             try {
                 const queryParameters = {
-                    customer_id: '9986304389', // Add your product code parameter value here
+                    customer_id: phoneNumber, // Add your product code parameter value here
 
                 };
 
@@ -37,9 +55,9 @@ const MyCart = (props) => {
                 const queryString = new URLSearchParams(queryParameters).toString();
                 // Construct the complete URL with query parameters
                 const url = `https://clean-scrap-jnck-backend.vercel.app/api/getProductsByUser?${queryString}`;
-                console.log('URL:', url);
+               
                 const response = await get(url, jwtToken);
-                //console.log('Response:', response); // Log the response
+               
 
                 if (response?.status == true) {
                     setAllMyCartProducts(response.result)
@@ -61,7 +79,7 @@ const MyCart = (props) => {
         fetchData()
     }, [])
 
-    console.log(allMyCartProducts)
+   
 
     // const { productName, productPrice, quantity } = route.params;
 
@@ -186,6 +204,17 @@ const MyCart = (props) => {
                     </View>
                 </View> */}
                 {/* ))} */}
+                <CustomAlert
+                    isVisible={isVisible}
+                    title={modelTitle}
+                    description={responseMessage}
+                    buttonText={showButton ? "OK" : ""}
+                    onPress={hideAlert}
+                    onClose={hideAlert}
+                    btnisVisible={false}
+                    color_title={color_title}
+                    color_description={color_description}
+                />
             </View>
         </>
     );

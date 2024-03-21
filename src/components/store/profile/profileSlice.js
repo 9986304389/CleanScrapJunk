@@ -29,3 +29,4 @@ const profileSlice = createSlice({
 });
 
 export const { setUser, setLoading, setError } = profileSlice.actions;
+export default profileSlice.reducer;

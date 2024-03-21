@@ -20,6 +20,7 @@ import CustomAlert from '../../components/alert/Alert';
 import { setToken } from '../../components/store/auth/authSlice';
 import { useDispatch, Provider } from 'react-redux';
 import store from '../../store/mainreduxstore';
+import {setUser} from '../../components/store/profile/profileSlice';
 export default function LoginScreen({ navigation }) {
   const { loading, error, get, fetchData, post } = useApi();
   const { domainname } = domain();
@@ -50,69 +51,71 @@ export default function LoginScreen({ navigation }) {
 
 
   const onLoginPress = async () => {
-    navigation.navigate('Home')
 
-    // let data = {
-    //   "phonenumber": phonenumber,//9986304389
-    //   "password": password//kavitha
-    // }
-    // console.log(data)
-    // const response = await post('https://clean-scrap-jnck-backend.vercel.app/api/login', data)
 
-    // if (response?.status === true) {
-    //   // Dispatch action to store token in Redux store
-    //   dispatch(setToken(response?.result[0].token));
+    let data = {
+      "phonenumber": phonenumber,//9986304389
+      "password": password//kavitha
+    }
+    console.log(data)
+    const response = await post('https://clean-scrap-jnck-backend.vercel.app/api/login', data)
 
-    // Simulating fetching user data from an API
-    // const userData = {
-    //   name: response?.result[0].name,
-    //   phoneNumber: response?.result[0].phonenumber,
-    //   email: response?.result[0].email,
-    //   userType: response?.result[0].usertype,
-    //   loginTime: new Date().toISOString(),
-    // };
-    // dispatch(setUser(userData));
-    //   let jwtToken = response?.result[0].token;
-    //   try {
-    //     const queryParameters = {
-    //       phonenumber: phonenumber, // Add your product code parameter value here
+    if (response?.status === true) {
+      // Dispatch action to store token in Redux store
+      dispatch(setToken(response?.result[0].token));
 
-    //     };
+      // //Simulating fetching user data from an API
+      const userData = {
+        name: response?.result[0].name,
+        phoneNumber: response?.result[0].phonenumber,
+        email: response?.result[0].email,
+        userType: response?.result[0].usertype,
+        loginTime: new Date().toISOString(),
+      };
 
-    //     // Convert query parameters to string
-    //     const queryString = new URLSearchParams(queryParameters).toString();
-    //     // Construct the complete URL with query parameters
-    //     const url = `https://clean-scrap-jnck-backend.vercel.app/api/getOTP?${queryString}`;
-    //     console.log('URL:', url);
-    //     const response = await get(url, jwtToken);
-    //     //console.log('Response:', response); // Log the response
+      dispatch(setUser(userData));
+      // let jwtToken = response?.result[0].token;
+       navigation.navigate('Home')
+      // try {
+      //   const queryParameters = {
+      //     phonenumber: phonenumber, // Add your product code parameter value here
 
-    //     if (response?.status == true) {
-    //       navigation.navigate('OTP', { phoneNumber: phonenumber })
-    //     }
-    //     else {
-    //       setModelTitle('Get OTP Fail')
-    //       // Call the alert 
-    //       setColorTitle('red');
-    //       setColorDescription('black');
-    //       setResponseMessage(response?.message)
-    //       showAlert();
-    //     }
+      //   };
 
-    //   } catch (error) {
-    //     console.error('Error fetching initial data:', error);
-    //     // Handle error if needed
-    //   }
+      //   // Convert query parameters to string
+      //   const queryString = new URLSearchParams(queryParameters).toString();
+      //   // Construct the complete URL with query parameters
+      //   const url = `https://clean-scrap-jnck-backend.vercel.app/api/getOTP?${queryString}`;
+      //   console.log('URL:', url);
+      //   const response = await get(url, jwtToken);
+      //   //console.log('Response:', response); // Log the response
 
-    // }
-    // else {
+      //   if (response?.status == true) {
+      //     navigation.navigate('OTP', { phoneNumber: phonenumber })
+      //   }
+      //   else {
+      //     setModelTitle('Get OTP Fail')
+      //     // Call the alert 
+      //     setColorTitle('red');
+      //     setColorDescription('black');
+      //     setResponseMessage(response?.message)
+      //     showAlert();
+      //   }
 
-    //   setModelTitle('Login Fail')
-    //   setColorTitle('red');
-    //   setColorDescription('black');
-    //   setResponseMessage(response?.message)
-    //   showAlert();
-    // }
+      // } catch (error) {
+      //   console.error('Error fetching initial data:', error);
+      //   // Handle error if needed
+      // }
+
+    }
+    else {
+
+      setModelTitle('Login Fail')
+      setColorTitle('red');
+      setColorDescription('black');
+      setResponseMessage(response?.message)
+      showAlert();
+    }
   };
 
 
