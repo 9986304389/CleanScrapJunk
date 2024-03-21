@@ -23,7 +23,7 @@ const ProfilePage = (props) => {
         <ScrollView>
             <View style={styles.container}>
                 <ProfileHeader navigation={navigation} />
-                <MenuItems />
+                <MenuItems navigation={navigation} />
             </View>
         </ScrollView>
     )
@@ -47,11 +47,11 @@ const ProfileHeader = ({ navigation }) => {
     );
 };
 
-const MenuItems = () => {
+const MenuItems = ({ navigation }) => {
     return (
         <View style={styles.menuContainer}>
             <Text style={styles.menuHeads}>General</Text>
-            <TouchableOpacity style={styles.menuItem}>
+            <TouchableOpacity onPress={() => navigation.navigate('MyOrders')} style={styles.menuItem}>
                 <FontAwesome name="list-alt" style={styles.icons} />
                 <Text style={styles.menuItemTxt}>My Order</Text>
                 <FontAwesome name="chevron-right" style={[styles.rightArrow, { marginLeft: '63%' }]} />

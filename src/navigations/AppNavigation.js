@@ -1,6 +1,6 @@
 
 import React from 'react';
-import {View} from 'react-native'
+import { View } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -22,6 +22,7 @@ import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import OTPPage from '../screens/OTPPage/Otppage';
 import ProfileEdit from '../components/Profile/Profilepage';
 import ProfilePage from '../components/Profile/Profile';
+import MyOrders from '../components/MyOrders/MyOrders';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -51,6 +52,7 @@ function MainNavigator() {
       <Stack.Screen name='OrderSummary' component={OrderSteps} />
       <Stack.Screen name='ProfileEdit' component={ProfileEdit} />
       <Stack.Screen name='ProfilePage' component={ProfilePage} />
+      <Stack.Screen name='MyOrders' component={MyOrders} />
     </Stack.Navigator>
   )
 }

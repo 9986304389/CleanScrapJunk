@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
 import styles from "./styles";
 import { AntDesign } from "@expo/vector-icons";
 import { useSelector, useDispatch } from 'react-redux'
@@ -121,7 +121,7 @@ const MyCart = (props) => {
 
 
     return (
-        <>
+        <ScrollView>
             {/* <View style={styles.titleView}>
                 <AntDesign name="shoppingcart" size={25} color="black" style={styles.titleIcon} />
                 <Text style={styles.title}>My Cart</Text>
@@ -216,7 +216,7 @@ const MyCart = (props) => {
                     color_description={color_description}
                 />
             </View>
-        </>
+        </ScrollView>
     );
 }
 

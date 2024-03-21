@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, Button, TextInput, TouchableOpacity, Image } from "react-native";
 
 import styles from "./styles";
+import { AdressPage } from "../Address/AdressPage";
 
 // const OrderSummary = ({ route }) => {
 
@@ -115,10 +116,15 @@ const AddressPage = ({ onNext, route, productName, productPrice, quantity }) => 
 
     return (
         <View style={styles.pageContainer}>
-            <Text>Address Page</Text>
-            <TouchableOpacity onPress={onNext}>
+            <AdressPage />
+            <View style={styles.continueBtnContainer1}>
+                <TouchableOpacity onPress={onNext} style={styles.continueBtn1} >
+                    <Text style={styles.continueTxt1}>Continue</Text>
+                </TouchableOpacity>
+            </View>
+            {/* <TouchableOpacity onPress={onNext}>
                 <Text>Next</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
         </View>
     );
 };
