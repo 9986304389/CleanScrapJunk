@@ -1,17 +1,17 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
-import { Feather, AntDesign, Fontisto } from '@expo/vector-icons';
+import { Feather, AntDesign, Fontisto, FontAwesome, Ionicons } from '@expo/vector-icons';
 
 function ProfileEdit() {
     return (
-        <View style={{ flex: 1 }}>
-            <View style={{ top: 100 }}>
+        <View style={styles.container}>
+            <View>
                 <Image
                     source={require('../../../assets/man.png')}
                     style={styles.profile}
                 />
-                <TouchableOpacity>
-                    <Feather name="edit" size={29} color="white" style={{ top: -45, height: 30, width: 28, left: 240, backgroundColor: '#555e57', borderRadius: 5 }} />
+                <TouchableOpacity style={styles.profileEdit}>
+                    <Ionicons name="camera" size={25} color="white" style={styles.peIcon} />
                 </TouchableOpacity>
             </View>
             <View style={{ top: 280, height: 300, width: 300 }}>
@@ -45,11 +45,26 @@ function ProfileEdit() {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        paddingVertical: '10%'
+    },
     profile: {
         borderRadius: 75,
         height: 150,
         width: 150,
-        left: 120
+    },
+    profileEdit: {
+        width: '10%',
+        backgroundColor: '#347855',
+        borderRadius: 50,
+        position: 'absolute',
+        top: '75%',
+        left: '25%'
+    },
+    peIcon: {
+        padding: '15%'
     },
     name: {
         fontSize: 17,
