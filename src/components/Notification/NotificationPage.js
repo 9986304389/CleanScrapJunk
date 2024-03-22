@@ -1,75 +1,118 @@
 import react from "react";
-import { View , Text , StyleSheet, TouchableOpacity } from "react-native";
-import { AntDesign } from '@expo/vector-icons';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
+import { AntDesign, FontAwesome } from '@expo/vector-icons';
+import { Platform } from "react-native";
 
-export const NotificationPage = () =>{
-    return(
-        <View>
+export const NotificationPage = () => {
+    return (
+        <ScrollView>
             <View style={styles.todaycontainer}>
-                <Text style={{fontSize:18,fontWeight:"700",left:18}}>Today</Text>
-                <View style={styles.paymentcontainer}>
-                    <View style={styles.iconcontainer}>
-                       <AntDesign name="shoppingcart" size={44} color="black" style={styles.icon}/>
-                    </View>
+                <View style={styles.dayContainer}>
+                    <Text style={styles.day}>Today</Text>
+                </View>
+                <View style={{ width: '100%', alignItems: 'center' }}>
                     <View style={styles.datacontainer}>
-                        <View style={{flexDirection:"row"}}>
+                        <View style={{ flexDirection: "row" }}>
                             <Text style={styles.dataheader}>Payment Succesfull</Text>
                             <TouchableOpacity
-                            style={styles.deleteicon}
+                                style={styles.deleteicon}
                             >
-                                <Text><AntDesign name="delete" size={24} color="black" /></Text>
+                                <FontAwesome name="trash" size={24} color="black" />
                             </TouchableOpacity>
                         </View>
-                        
-                        <Text style={styles.data}>Dummy Dat Dummy Data Dummy Data Dummy Data Dummy Data Dummy Data</Text>
+
+                        <Text style={styles.data}>
+                            Your payment for that product was successfull. Keep track and enjoy shopping.
+                        </Text>
                     </View>
-                    
                 </View>
+
+
+                <View style={styles.dayContainer}>
+                    <Text style={styles.day}>Today</Text>
+                </View>
+                <View style={styles.datacontainer}>
+                    <View style={{ flexDirection: "row" }}>
+                        <Text style={styles.dataheader}>Payment Succesfull</Text>
+                        <TouchableOpacity
+                            style={styles.deleteicon}
+                        >
+                            <FontAwesome name="trash" size={24} color="black" />
+                        </TouchableOpacity>
+                    </View>
+
+                    <Text style={styles.data}>
+                        Your payment for that product was successfull. Keep track and enjoy shopping.
+                    </Text>
+                </View>
+
+                <View style={styles.datacontainer}>
+                    <View style={{ flexDirection: "row" }}>
+                        <Text style={styles.dataheader}>Payment Succesfull</Text>
+                        <TouchableOpacity
+                            style={styles.deleteicon}
+                        >
+                            <FontAwesome name="trash" size={24} color="black" />
+                        </TouchableOpacity>
+                    </View>
+
+                    <Text style={styles.data}>
+                        Your payment for that product was successfull. Keep track and enjoy shopping.
+                    </Text>
+                </View>
+
+
             </View>
-        </View>
+        </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
-    todaycontainer:{
-        top:100,   
+    todaycontainer: {
+        flex: 1,
+        alignItems: 'center',
     },
-    paymentcontainer:{
-        borderWidth:1,
-        width:350,
-        top:13,
-        left:25,
-        borderRadius:10,
-        flexDirection:"row",
-        height:100,
-        borderColor:'#f0f5f1'
+    dayContainer: {
+        width: '100%',
+        // borderTopWidth: 1,
+        // borderBottomWidth: 1,
+        alignItems: 'center',
+        marginVertical: '3%',
+        paddingVertical: '1%',
+        backgroundColor: '#ccc',
+        ...Platform.select({
+            android: {
+                elevation: 3,
+                backgroundColor: 'white', // Add elevation for shadow on Android
+            },
+            ios: {
+                shadowColor: '#ccc', // Shadow properties for iOS
+                shadowOffset: {
+                    width: 0,
+                    height: 1,
+                },
+                shadowOpacity: 0.05,
+                shadowRadius: 3.84,
+            },
+        }),
     },
-    iconcontainer:{
-        backgroundColor:'#f0f5f1',
-        height:70,
-        top:14,
-        width:60,
-        left:15 ,
-        borderRadius:5     
+    day: {
+        fontSize: 16,
+        fontWeight: "700",
     },
-    icon:{
-        top:12,
-        left:5
+    datacontainer: {
+        marginTop: '3%',
+        width: '75%',
+        paddingBottom: '3%',
     },
-    datacontainer:{
-        paddingLeft:25,
-        top:10
-        
+    dataheader: {
+        fontSize: 15,
+        fontWeight: "700"
     },
-    dataheader:{
-        fontSize:15,
-        fontWeight:"700"
+    data: {
+        fontSize: 16,
     },
-    data:{
-         paddingRight:70 ,
-         top:5      
-    },
-    deleteicon:{
-        left:85
+    deleteicon: {
+        marginLeft: '50%'
     }
 })

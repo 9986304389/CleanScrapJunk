@@ -1,46 +1,79 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView, ScrollView } from "react-native";
 import { Feather, AntDesign, Fontisto, FontAwesome, Ionicons } from '@expo/vector-icons';
 
 function ProfileEdit() {
     return (
-        <View style={styles.container}>
-            <View>
-                <Image
-                    source={require('../../../assets/man.png')}
-                    style={styles.profile}
-                />
-                <TouchableOpacity style={styles.profileEdit}>
-                    <Ionicons name="camera" size={25} color="white" style={styles.peIcon} />
-                </TouchableOpacity>
-            </View>
-            <View style={{ top: 280, height: 300, width: 300 }}>
-                <Text style={styles.name}>Full Name</Text>
-                <TextInput
-                    keyboardType="default"
-                    style={styles.nameinput}
-                />
-                <Text style={styles.email}>Email</Text>
-                <AntDesign name="user" size={24} color="black" style={styles.icon1} />
-                <TextInput
-                    style={styles.emailinput}
-                    keyboardType="email-address"
-                />
-                <Fontisto name="email" size={24} color="black" style={styles.icon2} />
-                <Text style={styles.mobile}>Mobile No</Text>
-                <TextInput
-                    style={styles.mobileinput}
-                    keyboardType="number-pad"
-                />
-                <Feather name="phone-call" size={24} color="black" style={styles.icon3} />
+        <ScrollView>
+            <KeyboardAvoidingView>
+                <View style={styles.container}>
+                    <View>
+                        <Image
+                            source={require('../../../assets/man.png')}
+                            style={styles.profile}
+                        />
+                        <TouchableOpacity style={styles.profileEdit}>
+                            <Ionicons name="camera" size={25} color="white" style={styles.peIcon} />
+                        </TouchableOpacity>
+                    </View>
 
-            </View>
-            <TouchableOpacity
-                style={styles.button}
-            >
-                <Text style={styles.buttontxt}>Submit</Text>
-            </TouchableOpacity>
-        </View>
+                    {/* <View style={{ top: 280, height: 300, width: 300 }}>
+                        <Text style={styles.name}>Full Name</Text>
+                        <TextInput
+                            keyboardType="default"
+                            style={styles.nameinput}
+                        />
+                        <Text style={styles.email}>Email</Text>
+                        <AntDesign name="user" size={24} color="black" style={styles.icon1} />
+                        <TextInput
+                            style={styles.emailinput}
+                            keyboardType="email-address"
+                        />
+                        <Fontisto name="email" size={24} color="black" style={styles.icon2} />
+                        <Text style={styles.mobile}>Mobile No</Text>
+                        <TextInput
+                            style={styles.mobileinput}
+                            keyboardType="number-pad"
+                        />
+                        <Feather name="phone-call" size={24} color="black" style={styles.icon3} />
+
+                    </View>
+                    <TouchableOpacity
+                        style={styles.button}
+                    >
+                        <Text style={styles.buttontxt}>Submit</Text>
+                    </TouchableOpacity> */}
+                    <View style={styles.loginFormView}>
+                        <Text style={styles.label_text}>Full Name</Text>
+                        <TextInput
+                            placeholder="Full Name"
+                            placeholderColor="#c4c3cb"
+                            style={styles.loginFormTextInput}
+                        />
+                        <Text style={styles.label_text}>Email</Text>
+                        <TextInput
+                            placeholder="Email"
+                            placeholderColor="#c4c3cb"
+                            style={styles.loginFormTextInput}
+                        />
+                        <Text style={styles.label_text}>Mobile No</Text>
+                        <TextInput
+                            placeholder="Mobile No"
+                            placeholderColor="#c4c3cb"
+                            style={styles.loginFormTextInput}
+                        />
+
+                    </View>
+
+                    <TouchableOpacity style={styles.submitAddressBtn}>
+                        <Text style={styles.submitAddressText}>
+                            Save
+                        </Text>
+                    </TouchableOpacity>
+
+                </View>
+            </KeyboardAvoidingView>
+        </ScrollView>
     );
 }
 
@@ -48,7 +81,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        paddingVertical: '10%'
+        paddingVertical: '10%',
+        paddingHorizontal: '5%'
     },
     profile: {
         borderRadius: 75,
@@ -61,7 +95,7 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         position: 'absolute',
         top: '75%',
-        left: '25%'
+        left: '30%'
     },
     peIcon: {
         padding: '15%'
@@ -142,6 +176,41 @@ const styles = StyleSheet.create({
         top: 10,
         fontSize: 17,
         color: 'white'
+    },
+    loginFormView: {
+        flex: 1,
+        width: '100%',
+        marginTop: '5%'
+    },
+    loginFormTextInput: {
+        height: 43,
+        fontSize: 14,
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: "#eaeaea",
+        backgroundColor: "#fafafa",
+        paddingLeft: 10,
+        marginTop: 5,
+        marginBottom: 10,
+
+    },
+    submitAddressBtn: {
+        backgroundColor: "#347855",
+        borderRadius: 5,
+        height: 45,
+        marginTop: '10%',
+        width: '50%',
+        alignItems: "center",
+        justifyContent: 'center'
+    },
+    submitAddressText: {
+        color: 'white',
+        fontSize: 16
+    },
+    label_text: {
+        fontSize: 18,
+        paddingLeft: 10,
+        paddingTop: 4
     },
 
 });
