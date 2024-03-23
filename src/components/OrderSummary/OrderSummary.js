@@ -222,7 +222,7 @@ const OrderSteps = (props) => {
 
         });
     }, [navigation]);
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(2);
 
     const onNext = () => {
         if (currentPage < 3) {

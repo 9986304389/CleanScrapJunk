@@ -57,7 +57,7 @@ const MenuItems = ({ navigation }) => {
                 <FontAwesome name="chevron-right" style={[styles.rightArrow, { marginLeft: '63%' }]} />
             </TouchableOpacity>
             <Text style={styles.menuHeads}>Account Settings</Text>
-            <TouchableOpacity style={styles.menuItem}>
+            <TouchableOpacity onPress={() => navigation.navigate('AddressPage')} style={styles.menuItem}>
                 <FontAwesome name="map-marker" style={styles.icons} />
                 <Text style={styles.menuItemTxt}>Address</Text>
                 <FontAwesome name="chevron-right" style={[styles.rightArrow, { marginLeft: '67%' }]} />
@@ -73,7 +73,7 @@ const MenuItems = ({ navigation }) => {
                 <FontAwesome name="chevron-right" style={[styles.rightArrow, { marginLeft: '67%' }]} />
             </TouchableOpacity>
             <Text style={styles.menuHeads}>App Settings</Text>
-            <TouchableOpacity style={styles.menuItem}>
+            <TouchableOpacity onPress={() => navigation.navigate('NotificationsPage')} style={styles.menuItem}>
                 <FontAwesome name="bell" style={styles.icons} />
                 <Text style={styles.menuItemTxt}>Notifications</Text>
                 <FontAwesome name="chevron-right" style={[styles.rightArrow, { marginLeft: '54%' }]} />

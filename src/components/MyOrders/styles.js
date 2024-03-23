@@ -52,7 +52,8 @@ const styles = StyleSheet.create({
         // borderBottomWidth: 1
     },
     card: {
-        padding: 10,
+        paddingVertical: 8,
+        paddingHorizontal: 10,
         width: '100%',
         // borderWidth: 1,
         // borderColor: 'lightgray',
@@ -61,14 +62,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     image: {
-        width: 150,
+        width: 140,
         height: 150,
-        borderRadius: 10
+        borderRadius: 10,
+        backgroundColor: '#ccc'
     },
     textCard: {
         flexDirection: 'column',
-        marginHorizontal: 10,
-        marginLeft: '7%'
+        marginHorizontal: 5,
+        marginLeft: '5%'
     },
     name: {
         fontSize: 20,
@@ -84,7 +86,9 @@ const styles = StyleSheet.create({
         // marginLeft: 'auto',
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: '10%'
+        justifyContent: 'center',
+        marginVertical: '3%',
+        width: '100%'
     },
     icon: {
         width: 24,
@@ -95,15 +99,74 @@ const styles = StyleSheet.create({
     orderButton: {
         backgroundColor: '#347855',
         paddingVertical: 10,
-        paddingHorizontal: 20,
+        paddingHorizontal: '5%',
+        marginHorizontal: '5%',
         borderRadius: 5,
-        // marginTop: 20,
+    },
+    cancelBtn: {
+        // backgroundColor: '#347855',
+        borderWidth: 1,
+        borderColor: 'red',
+        paddingVertical: 10,
+        paddingHorizontal: '5%',
+        marginHorizontal: '5%',
+        borderRadius: 5,
     },
     orderButtonText: {
         color: 'white',
         fontWeight: 'bold',
         textAlign: 'center'
     },
+    cancelButtonText: {
+        color: 'red',
+        fontWeight: 'bold',
+        textAlign: 'center'
+    },
+    status: {
+        borderWidth: 1,
+        borderColor: '#347855',
+        color: '#347855',
+        width: '85%',
+        textAlign: 'center',
+        paddingVertical: '2.5%',
+        borderRadius: 5,
+        marginVertical: '4%'
+    },
+    statusCompleted: {
+        borderWidth: 1,
+        borderColor: 'lightgreen',
+        color: 'lightgreen',
+        width: '65%',
+        textAlign: 'center',
+        paddingVertical: '2.5%',
+        borderRadius: 5,
+        marginVertical: '4%'
+    },
+    statusCancelled: {
+        borderWidth: 1,
+        borderColor: 'red',
+        color: 'red',
+        width: '65%',
+        textAlign: 'center',
+        paddingVertical: '2.5%',
+        borderRadius: 5,
+        marginVertical: '4%'
+    },
+    amt: {
+        fontSize: 18,
+        fontWeight: '500'
+    },
+    orderDate: {
+        display: 'flex',
+        flexDirection: 'row',
+        width: '90%',
+        marginTop: '2%',
+        marginBottom: '4%'
+    },
+    orderDateTxt: {
+        marginLeft: '5%',
+        fontSize: 16
+    }
 })
 
 export default styles;

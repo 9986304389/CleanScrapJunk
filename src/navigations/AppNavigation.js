@@ -23,6 +23,9 @@ import OTPPage from '../screens/OTPPage/Otppage';
 import ProfileEdit from '../components/Profile/Profilepage';
 import ProfilePage from '../components/Profile/Profile';
 import MyOrders from '../components/MyOrders/MyOrders';
+import { AdressPage } from '../components/Address/AdressPage';
+import AddAddress from '../components/Address/AddAddress';
+import { NotificationPage } from '../components/Notification/NotificationPage';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -53,6 +56,9 @@ function MainNavigator() {
       <Stack.Screen name='ProfileEdit' component={ProfileEdit} />
       <Stack.Screen name='ProfilePage' component={ProfilePage} />
       <Stack.Screen name='MyOrders' component={MyOrders} />
+      <Stack.Screen name='AddressPage' component={AdressPage} />
+      <Stack.Screen name='AddAddressPage' component={AddAddress} />
+      <Stack.Screen name='NotificationsPage' component={NotificationPage} />
     </Stack.Navigator>
   )
 }
