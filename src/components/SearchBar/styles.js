@@ -11,8 +11,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         marginHorizontal: 15,
         marginTop: 20,
-        shadowColor:'#ffff',
-        minHeight:50
+        shadowColor: '#ffff',
+        minHeight: 50
     },
     icon: {
         marginRight: 10,
@@ -23,6 +23,12 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#333',
         fontFamily: 'Montserrat_400Regular'
+    },
+    searchResult: {
+        // Style for the search result text
+        marginTop: 10, // Adjust as needed
+        fontSize: 16, // Adjust as needed
+        color: 'black', // Adjust as needed
     },
 })
 

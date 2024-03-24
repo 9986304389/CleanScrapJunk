@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
 import styles from "./styles";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import { useSelector, useDispatch } from 'react-redux'
 // import { useNavigation } from "@react-navigation/native";
 import useApi from '../../apiCalls/ApiCalls';
@@ -43,7 +43,7 @@ const MyCart = (props) => {
         });
     }, [navigation]);
     useEffect(() => {
-        
+
         const fetchData = async () => {
             try {
                 const queryParameters = {
@@ -55,9 +55,9 @@ const MyCart = (props) => {
                 const queryString = new URLSearchParams(queryParameters).toString();
                 // Construct the complete URL with query parameters
                 const url = `https://clean-scrap-jnck-backend.vercel.app/api/getProductsByUser?${queryString}`;
-               
+
                 const response = await get(url, jwtToken);
-               
+
 
                 if (response?.status == true) {
                     setAllMyCartProducts(response.result)
@@ -79,7 +79,7 @@ const MyCart = (props) => {
         fetchData()
     }, [])
 
-   
+
 
     // const { productName, productPrice, quantity } = route.params;
 
@@ -127,25 +127,6 @@ const MyCart = (props) => {
                 <Text style={styles.title}>My Cart</Text>
             </View> */}
             <View style={styles.container}>
-                {/* {cartItems.map((item, index) => ( */}
-                {/* <View style={styles.cartItem}>
-                    <View style={styles.card}>
-                        <Image source={require('../../../assets/desk.jpg')} style={styles.image} />
-                        <View style={styles.textCard}>
-                            <Text style={styles.name}>productName</Text>
-                            <Text style={styles.price}>productPrice</Text>
-                            <Text>Quantity: quantity</Text>
-                            <View style={styles.iconContainer}>
-                                <TouchableOpacity style={styles.orderButton} onPress={placeOrder}>
-                                    <Text style={styles.orderButtonText}>Buy Now</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => removeItem(index)}>
-                                    <AntDesign name="delete" size={24} color="black" style={styles.icon} />
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    </View>
-                </View> */}
 
                 {allMyCartProducts.map((item, index) => (
                     <View style={styles.cartItem} key={index}>
@@ -156,54 +137,20 @@ const MyCart = (props) => {
                                 <Text style={styles.price}>{item.price}</Text>
                                 <Text>Quantity: {item.quantity}</Text>
                                 <View style={styles.iconContainer}>
-                                    <TouchableOpacity style={styles.orderButton} onPress={placeOrder}>
-                                        <Text style={styles.orderButtonText}>Buy Now</Text>
-                                    </TouchableOpacity>
                                     <TouchableOpacity onPress={() => removeItem(index)}>
-                                        <AntDesign name="delete" size={24} color="black" style={styles.icon} />
+                                        <FontAwesome name="trash" size={24} color="black" style={styles.icon} />
                                     </TouchableOpacity>
                                 </View>
                             </View>
                         </View>
                     </View>
                 ))}
-                {/* <View style={styles.cartItem}>
-                    <View style={styles.card}>
-                        <Image source={require('../../../assets/desk.jpg')} style={styles.image} />
-                        <View style={styles.textCard}>
-                            <Text style={styles.name}>{productName}</Text>
-                            <Text style={styles.price}>${productPrice}</Text>
-                            <Text>Quantity: {quantity}</Text>
-                            <View style={styles.iconContainer}>
-                                <TouchableOpacity style={styles.orderButton} onPress={placeOrder}>
-                                    <Text style={styles.orderButtonText}>Buy Now</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => removeItem(index)}>
-                                    <AntDesign name="delete" size={24} color="black" style={styles.icon} />
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    </View>
-                </View>
-                <View style={styles.cartItem}>
-                    <View style={styles.card}>
-                        <Image source={require('../../../assets/desk.jpg')} style={styles.image} />
-                        <View style={styles.textCard}>
-                            <Text style={styles.name}>{productName}</Text>
-                            <Text style={styles.price}>${productPrice}</Text>
-                            <Text>Quantity: {quantity}</Text>
-                            <View style={styles.iconContainer}>
-                                <TouchableOpacity style={styles.orderButton} onPress={placeOrder}>
-                                    <Text style={styles.orderButtonText}>Buy Now</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => removeItem(index)}>
-                                    <AntDesign name="delete" size={24} color="black" style={styles.icon} />
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    </View>
-                </View> */}
-                {/* ))} */}
+
+                <TouchableOpacity style={styles.orderButton} onPress={placeOrder}>
+                    <Text style={styles.orderButtonText}>Buy Now</Text>
+                </TouchableOpacity>
+
+
                 <CustomAlert
                     isVisible={isVisible}
                     title={modelTitle}
