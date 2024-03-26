@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     },
     titleIcon: {
         marginTop: '1%',
-        marginLeft:20
+        marginLeft: 20
     },
     title: {
         fontSize: 20,
@@ -86,18 +86,20 @@ const styles = StyleSheet.create({
     icon: {
         width: 24,
         height: 24,
-        marginLeft: '30%',
+        marginLeft: '70%',
         // marginTop: '1%'
     },
     orderButton: {
         backgroundColor: '#347855',
+        width: '50%',
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 5,
-        // marginTop: 20,
+        marginTop: '15%',
     },
     orderButtonText: {
         color: 'white',
+        fontSize: 18,
         fontWeight: 'bold',
         textAlign: 'center'
     },

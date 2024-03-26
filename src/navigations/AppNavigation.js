@@ -94,7 +94,7 @@ function MainNavigator_OrderSummary() {
         }
       }}
     >
-      <Stack.Screen name='OrderSummary' component={OrderSteps} />
+      <Stack.Screen name='MyOrders' component={MyOrders} />
     </Stack.Navigator>
   )
 }
