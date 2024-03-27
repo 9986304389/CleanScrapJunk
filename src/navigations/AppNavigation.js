@@ -26,6 +26,8 @@ import MyOrders from '../components/MyOrders/MyOrders';
 import { AdressPage } from '../components/Address/AdressPage';
 import AddAddress from '../components/Address/AddAddress';
 import { NotificationPage } from '../components/Notification/NotificationPage';
+import EnquiryForm from '../components/EnquiryForm/EnquiryForm';
+import PriceList from '../components/Prices/PricePage';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -59,6 +61,7 @@ function MainNavigator() {
       <Stack.Screen name='AddressPage' component={AdressPage} />
       <Stack.Screen name='AddAddressPage' component={AddAddress} />
       <Stack.Screen name='NotificationsPage' component={NotificationPage} />
+      <Stack.Screen name='EnquiryForm' component={EnquiryForm} />
     </Stack.Navigator>
   )
 }
@@ -179,6 +182,18 @@ function BottomTabNavigator() {
           tabBarIcon: ({ color, size }) => (
             <View style={{ paddingTop: 7 }}>
               <FontAwesome name="list-alt" color={color} size={size} />
+            </View>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Price"
+        component={PriceList}
+        options={{
+          tabBarLabel: '',
+          tabBarIcon: ({ color, size }) => (
+            <View style={{ paddingTop: 7 }}>
+              <FontAwesome name="inr" color={color} size={size} />
             </View>
           ),
         }}

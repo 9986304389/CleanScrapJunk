@@ -62,7 +62,7 @@ const MenuItems = ({ navigation }) => {
                 <Text style={styles.menuItemTxt}>Address</Text>
                 <FontAwesome name="chevron-right" style={[styles.rightArrow, { marginLeft: '67%' }]} />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.menuItem}>
+            <TouchableOpacity onPress={() => navigation.navigate('EnquiryForm')} style={styles.menuItem}>
                 <FontAwesome name="credit-card" style={styles.icons} />
                 <Text style={styles.menuItemTxt}>Payment Methods</Text>
                 <FontAwesome name="chevron-right" style={[styles.rightArrow, { marginLeft: '43%' }]} />
