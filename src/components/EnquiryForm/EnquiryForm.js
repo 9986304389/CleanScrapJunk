@@ -53,6 +53,8 @@ const EnquiryForm = () => {
                             <CheckBox
                                 checked={item.checked}
                                 onPress={() => handleCheckBoxChange(index)}
+                                checkedColor='green' // Change the color when checked
+                                uncheckedColor='black'
                             />
                             <Text>{item.label}</Text>
                         </View>

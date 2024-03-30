@@ -66,7 +66,42 @@ const styles = StyleSheet.create({
     rightArrow: {
         position: 'absolute',
         right: '7%'
-    }
+    },
+    col75: {
+        width: '75%',
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    col25: {
+        width: '25%',
+        paddingLeft: '3%'
+    },
+    priceTxt: {
+        fontSize: 16,
+        fontWeight: '600'
+    },
+    shareStatus: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    shareStatusTxt: {
+        color: 'green',
+        fontSize: 14,
+        marginRight: '5%'
+    },
+    Prdtname: {
+        fontSize: 16,
+        fontWeight: '700',
+        marginBottom: 7
+    },
+    header2: {
+        height: 50,
+        backgroundColor: '#347855',
+        justifyContent: 'center',
+        paddingHorizontal: '7%',
+    },
 })
 
 export default styles;

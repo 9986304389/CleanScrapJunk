@@ -22,7 +22,7 @@ const PriceList = (props) => {
             </View> */}
                 <View style={styles.container}>
 
-                    <Pressable style={styles.cartItem}>
+                    <Pressable onPress={() => navigation.navigate('PricesPage')} style={styles.cartItem}>
                         <Image source={require('../../../assets/desk.jpg')} style={styles.image} />
                         <Text style={styles.name}>Iron Scrap</Text>
                         <FontAwesome name='chevron-right' size={16} color='black' style={styles.rightArrow} />

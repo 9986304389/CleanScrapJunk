@@ -28,6 +28,7 @@ import AddAddress from '../components/Address/AddAddress';
 import { NotificationPage } from '../components/Notification/NotificationPage';
 import EnquiryForm from '../components/EnquiryForm/EnquiryForm';
 import PriceList from '../components/Prices/PricePage';
+import PricesPage from '../components/Prices/PricesPage';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -62,6 +63,7 @@ function MainNavigator() {
       <Stack.Screen name='AddAddressPage' component={AddAddress} />
       <Stack.Screen name='NotificationsPage' component={NotificationPage} />
       <Stack.Screen name='EnquiryForm' component={EnquiryForm} />
+      <Stack.Screen name='PricesPage' component={PricesPage} />
     </Stack.Navigator>
   )
 }

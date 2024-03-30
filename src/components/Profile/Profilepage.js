@@ -52,12 +52,14 @@ function ProfileEdit() {
                         />
                         <Text style={styles.label_text}>Email</Text>
                         <TextInput
+                            readOnly
                             placeholder="Email"
                             placeholderColor="#c4c3cb"
                             style={styles.loginFormTextInput}
                         />
                         <Text style={styles.label_text}>Mobile No</Text>
                         <TextInput
+                            readOnly
                             placeholder="Mobile No"
                             placeholderColor="#c4c3cb"
                             style={styles.loginFormTextInput}

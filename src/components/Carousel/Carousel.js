@@ -17,7 +17,7 @@ export default function CarouselComponent() {
     useEffect(() => {
         const scrollInterval = Animated.timing(scrollX, {
             toValue: 1,
-            duration: 20000, // Adjust the duration for scrolling speed
+            duration: 40000, // Adjust the duration for scrolling speed
             useNativeDriver: true,
             isInteraction: false,
             repeat: true,
