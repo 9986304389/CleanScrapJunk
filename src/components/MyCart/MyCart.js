@@ -11,7 +11,7 @@ import { State } from "react-native-gesture-handler";
 
 const MyCart = (props) => {
     const { navigation, route } = props;
-    const { loading, error, get, fetchData, post } = useApi();
+    const { loading, error, get, fetchData, post, remove } = useApi();
     const jwtToken = useSelector((state) => state.auth.token);
     const phoneNumber = useSelector((state) => state.profile.user.phoneNumber);
     const [allMyCartProducts, setAllMyCartProducts] = useState([]);
@@ -42,9 +42,11 @@ const MyCart = (props) => {
 
         });
     }, [navigation]);
+
     useEffect(() => {
 
         const fetchData = async () => {
+            console.log("htt")
             try {
                 const queryParameters = {
                     customer_id: phoneNumber, // Add your product code parameter value here
@@ -63,7 +65,7 @@ const MyCart = (props) => {
                     setAllMyCartProducts(response.result)
                 }
                 else {
-                    setModelTitle('Get OTP Fail')
+                    setModelTitle('Get cart prodct fail')
                     // Call the alert 
                     setColorTitle('red');
                     setColorDescription('black');
@@ -77,7 +79,7 @@ const MyCart = (props) => {
             }
         }
         fetchData()
-    }, [])
+    }, [allMyCartProducts])
 
 
 
@@ -86,11 +88,49 @@ const MyCart = (props) => {
     // const [cartItems, setCartItems] = useState([]);
 
     // // Function to remove item from cart
-    // const removeItem = (index) => {
-    //     const updatedCartItems = [...cartItems];
-    //     updatedCartItems.splice(index, 1);
-    //     setCartItems(updatedCartItems);
-    // };
+    const removeItem = async (product_code) => {
+
+        try {
+            const queryParameters = {
+                customer_id: phoneNumber, // Add your product code parameter value here
+                product_code: product_code
+
+            };
+            console.log(queryParameters)
+            // Convert query parameters to string
+            const queryString = new URLSearchParams(queryParameters).toString();
+            // Construct the complete URL with query parameters
+            const url = `https://clean-scrap-jnck-backend.vercel.app/api/removeCartProductByUser?${queryString}`;
+
+            const response = await remove(url, jwtToken);
+
+
+            if (response?.status == true) {
+
+                setAllMyCartProducts(prevProducts =>
+                    prevProducts.filter(product => product.product_code !== product_code)
+                  );
+                setModelTitle('Remove cart item successfully')
+                // Call the alert 
+                setColorTitle('green');
+                setColorDescription('black');
+                setResponseMessage(response?.message)
+                showAlert();
+            }
+            else {
+                setModelTitle('Fail remove cart item')
+                // Call the alert 
+                setColorTitle('red');
+                setColorDescription('black');
+                setResponseMessage(response?.message)
+                showAlert();
+            }
+
+        } catch (error) {
+            console.error('Error fetching initial data:', error);
+            // Handle error if needed
+        }
+    };
 
     // // Function to place order
     // const placeOrder = () => {
@@ -137,7 +177,7 @@ const MyCart = (props) => {
                                 <Text style={styles.price}>{item.price}</Text>
                                 <Text>Quantity: {item.quantity}</Text>
                                 <View style={styles.iconContainer}>
-                                    <TouchableOpacity onPress={() => removeItem(index)}>
+                                    <TouchableOpacity onPress={async () => await removeItem(item.product_code)}>
                                         <FontAwesome name="trash" size={24} color="black" style={styles.icon} />
                                     </TouchableOpacity>
                                 </View>
@@ -146,9 +186,9 @@ const MyCart = (props) => {
                     </View>
                 ))}
 
-                <TouchableOpacity style={styles.orderButton} onPress={placeOrder}>
+                {allMyCartProducts.length !== 0 && (<TouchableOpacity style={styles.orderButton} onPress={placeOrder}>
                     <Text style={styles.orderButtonText}>Buy Now</Text>
-                </TouchableOpacity>
+                </TouchableOpacity>)}
 
 
                 <CustomAlert

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import useApi from '../../apiCalls/ApiCalls';
 import styles from "./style";
 import {
     Alert,
@@ -9,7 +9,8 @@ import {
     TextInput,
     TouchableWithoutFeedback,
     View,
-    TouchableOpacity
+    TouchableOpacity,
+    ScrollView
 } from "react-native";
 import { Button, SocialIcon, Icon } from "react-native-elements";
 import * as Facebook from "expo-facebook";
@@ -17,11 +18,15 @@ import * as Facebook from "expo-facebook";
 const appId = "1047121222092614";
 
 export default function SignUP() {
-
+    const { loading, error, get, fetchData, post } = useApi();
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [passwordreenter, setPasswordReenter] = useState('');
     const [showPasswordReEnter, setShowPasswordReenter] = useState(false);
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [phonenumber, setPhoneNumber] = useState('');
+
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
@@ -30,31 +35,40 @@ export default function SignUP() {
     };
 
 
-    const onLoginPress = () => { };
+    const onLoginPress = async () => {
 
-    const onSignUp = async () => {
-        Alert.alert(
-            `Please use our React Native Starer Kit instead. You can download it for free at https://instamobile.io`
-        );
-        // try {
-        //   await Facebook.initializeAsync({
-        //     appId,
-        //   });
-        //   const { type, token } = await Facebook.logInWithReadPermissionsAsync({
-        //     permissions: ["public_profile", "email"],
-        //   });
-        //   if (type === "success") {
-        //     const response = await fetch(
-        //       `https://graph.facebook.com/me?access_token=${token}`
-        //     );
-        //     Alert.alert("Logged in!", `Hi ${(await response.json()).name}!`);
-        //   }
-        // } catch ({ message }) {
-        //   Alert.alert(`Facebook Login Error: ${message}`);
-        // }
+
+        try {
+
+            if (passwordreenter == password) {
+                let data = {
+                    "name": name,
+                    "email": email,
+                    "phonenumber": phonenumber,
+                    "password": password
+                }
+                console.log(data)
+                const response = await post('https://clean-scrap-jnck-backend.vercel.app/api/usersiginup', data)
+
+                console.log(response)
+                if (response?.status === true) {
+                    Alert.alert("user Profile created ")
+                }
+                else {
+                    Alert.alert(`user Profile not created ${response.message}`)
+                }
+            }
+            else {
+                Alert.alert("Password and reenter password not macth")
+            }
+        } catch (err) {
+
+        }
     };
 
+
     return (
+        <ScrollView>
         <KeyboardAvoidingView style={styles.containerView} behavior="padding">
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.loginScreenContainer}>
@@ -62,18 +76,21 @@ export default function SignUP() {
                         <Text style={styles.logoText}>Create Your {'\n'}Account</Text>
                         <Text style={styles.label_text}>Full Name</Text>
                         <TextInput
+                            onChangeText={setName}
                             placeholder="Full Name"
                             placeholderColor="#c4c3cb"
                             style={styles.loginFormTextInput}
                         />
                         <Text style={styles.label_text}>Email</Text>
                         <TextInput
+                            onChangeText={setEmail}
                             placeholder="Email"
                             placeholderColor="#c4c3cb"
                             style={styles.loginFormTextInput}
                         />
                         <Text style={styles.label_text}>Phnone Number</Text>
                         <TextInput
+                            onChangeText={setPhoneNumber}
                             placeholder="Phone Number"
                             placeholderColor="#c4c3cb"
                             style={styles.loginFormTextInput}
@@ -127,5 +144,6 @@ export default function SignUP() {
                 </View>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
+        </ScrollView>
     );
 }

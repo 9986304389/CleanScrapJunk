@@ -1,8 +1,58 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView, ScrollView } from "react-native";
 import { Feather, AntDesign, Fontisto, FontAwesome, Ionicons } from '@expo/vector-icons';
+import useApi from '../../apiCalls/ApiCalls';
+import CustomAlert from '../alert/Alert'
+function ProfileEdit({ route }) {
+    const { profile } = route.params;
+    const [name, setName] = useState("");
+    const jwtToken = useSelector((state) => state.auth.token);
 
-function ProfileEdit() {
+    const [modelTitle, setModelTitle] = useState('');
+    const [showButton, setShowButton] = useState(false);
+    const [color_title, setColorTitle] = useState('');
+    const [color_description, setColorDescription] = useState('');
+    const [responseMessage, setResponseMessage] = useState('');
+    const [isVisible, setIsVisible] = useState(false);
+    const showAlert = () => {
+        setIsVisible(true);
+    };
+
+    const hideAlert = () => {
+        setIsVisible(false);
+    };
+    const editProfile = async () => {
+        let data = {
+            "phonenumber": profile.phonenumber,
+            "name": name,
+            "email": profile.email,
+            "shipping_address": profile.shipping_address
+        }
+        console.log(data)
+        console.log(jwtToken)
+        const response = await post('https://clean-scrap-jnck-backend.vercel.app/api/editUserProfile', data, jwtToken)
+
+        if (response?.status === true) {
+            console.log("call api if it success give alert ")
+
+
+            setModelTitle('Edit profile successfully')
+            // Call the alert 
+            setColorTitle('green');
+            setColorDescription('black');
+            setResponseMessage(response?.message)
+            showAlert();
+        }
+        else {
+            setModelTitle('Edit Profile fail')
+            // Call the alert 
+            setColorTitle('red');
+            setColorDescription('black');
+            setResponseMessage(response?.message)
+            showAlert();
+        }
+    }
+
     return (
         <ScrollView>
             <KeyboardAvoidingView>
@@ -44,13 +94,14 @@ function ProfileEdit() {
                         <Text style={styles.buttontxt}>Submit</Text>
                     </TouchableOpacity> */}
                     <View style={styles.loginFormView}>
-                        <Text style={styles.label_text}>Full Name</Text>
+                        <Text style={styles.label_text}>{profile.name}</Text>
                         <TextInput
+                            onChangeText={setName}
                             placeholder="Full Name"
                             placeholderColor="#c4c3cb"
                             style={styles.loginFormTextInput}
                         />
-                        <Text style={styles.label_text}>Email</Text>
+                        <Text style={styles.label_text}>{profile.email}</Text>
                         <TextInput
                             readOnly
                             placeholder="Email"
@@ -67,13 +118,24 @@ function ProfileEdit() {
 
                     </View>
 
-                    <TouchableOpacity style={styles.submitAddressBtn}>
+                    <TouchableOpacity style={styles.submitAddressBtn} onPress={editProfile}>
                         <Text style={styles.submitAddressText}>
                             Save
                         </Text>
                     </TouchableOpacity>
 
                 </View>
+                <CustomAlert
+                    isVisible={isVisible}
+                    title={modelTitle}
+                    description={responseMessage}
+                    buttonText={showButton ? "OK" : ""}
+                    onPress={hideAlert}
+                    onClose={hideAlert}
+                    btnisVisible={false}
+                    color_title={color_title}
+                    color_description={color_description}
+                />
             </KeyboardAvoidingView>
         </ScrollView>
     );
