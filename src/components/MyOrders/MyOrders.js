@@ -265,7 +265,7 @@ const MyOrders = (props) => {
         return (
             <ScrollView>
                 {allSucess.map((item, index) => (
-                    <View style={styles.container}>
+                    <View key={item.id} style={styles.container}>
 
                         <View style={styles.orderDate}>
                             <FontAwesome name="calendar" size={20} color='black' />
@@ -278,7 +278,7 @@ const MyOrders = (props) => {
                                 <View style={styles.textCard}>
                                     <Text style={styles.name}>{item?.name}</Text>
                                     <Text style={styles.price}>{item?.total_amount}</Text>
-                                    <Text style={styles.status}>{item?.status}</Text>
+                                    <Text style={styles.statusCompleted}>{item?.status}</Text>
                                     <Text style={styles.amt}>₹ {item?.total_amount}</Text>
                                 </View>
                             </View>
