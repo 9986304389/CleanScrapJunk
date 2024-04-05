@@ -47,7 +47,7 @@ function ProfileEdit({ route }) {
             showAlert();
         }
         else {
-          
+
             setModelTitle('Edit Profile fail')
             // Call the alert 
             setColorTitle('red');
@@ -98,7 +98,7 @@ function ProfileEdit({ route }) {
                         <Text style={styles.buttontxt}>Submit</Text>
                     </TouchableOpacity> */}
                     <View style={styles.loginFormView}>
-                        <Text style={styles.label_text}>{profile.name}</Text>
+                        <Text style={styles.label_text}>Name</Text>
                         <TextInput
                             onChangeText={setName}
                             placeholder="Full Name"
@@ -106,11 +106,11 @@ function ProfileEdit({ route }) {
                             style={styles.loginFormTextInput}
                         // value={profile[0]?.name}
                         />
-                        <Text style={styles.label_text}>{profile.email}</Text>
+                        <Text style={styles.label_text}>Email</Text>
                         <TextInput
                             readOnly
                             placeholder="Email"
-                            placeholderColor="#c4c3cb"
+                            // placeholderColor="#c4c3cb"
                             value={profile[0]?.email}
                             style={styles.loginFormTextInput}
                         />
@@ -260,6 +260,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: "#eaeaea",
         backgroundColor: "#fafafa",
+        color: '#000000',
         paddingLeft: 10,
         marginTop: 5,
         marginBottom: 10,

@@ -68,16 +68,18 @@ const styles = StyleSheet.create({
         backgroundColor: '#ccc'
     },
     textCard: {
+        width: '70%',
         flexDirection: 'column',
         marginHorizontal: 5,
         marginLeft: '5%',
-       
+
     },
     name: {
+        width: '85%',
         fontSize: 18,
         fontWeight: '700',
         marginBottom: 7,
-      
+
     },
     price: {
         fontSize: 18,
@@ -125,7 +127,7 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     status: {
-        minWidth:'16%',
+        minWidth: '16%',
         borderWidth: 1,
         borderColor: '#347855',
         color: '#347855',
@@ -137,8 +139,8 @@ const styles = StyleSheet.create({
     },
     statusCompleted: {
         borderWidth: 1,
-        borderColor: 'lightgreen',
-        color: 'lightgreen',
+        borderColor: '#347855',
+        color: '#347855',
         width: '65%',
         textAlign: 'center',
         paddingVertical: '2.5%',
@@ -158,8 +160,8 @@ const styles = StyleSheet.create({
     amt: {
         fontSize: 18,
         fontWeight: '500',
-     
-    
+
+
     },
     orderDate: {
         display: 'flex',
