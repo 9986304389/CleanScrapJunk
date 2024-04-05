@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, Image, ScrollView,Pressable } from "react-native";
 import styles from "./styles";
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import { useSelector, useDispatch } from 'react-redux'
@@ -81,12 +81,6 @@ const MyCart = (props) => {
         fetchData()
     }, [allMyCartProducts])
 
-
-
-    // const { productName, productPrice, quantity } = route.params;
-
-    // const [cartItems, setCartItems] = useState([]);
-
     // // Function to remove item from cart
     const removeItem = async (product_code) => {
 
@@ -109,7 +103,7 @@ const MyCart = (props) => {
 
                 setAllMyCartProducts(prevProducts =>
                     prevProducts.filter(product => product.product_code !== product_code)
-                  );
+                );
                 setModelTitle('Remove cart item successfully')
                 // Call the alert 
                 setColorTitle('green');
@@ -132,33 +126,16 @@ const MyCart = (props) => {
         }
     };
 
-    // // Function to place order
-    // const placeOrder = () => {
-    //     // Implement logic to place the order
-    //     navigation.navigate('OrderSummary', {
-    //         productName: productName,
-    //         productPrice: productPrice,
-    //         quantity: quantity
-    //     })
-    //     console.log("Placing order...");
-    // };
+    // Function to place order
     const placeOrder = () => {
+        // Implement logic to place the order
+        navigation.navigate('OrderSummary', {
+            getallgoingtoorderproducts: allMyCartProducts,
+         
+        })
         console.log("Placing order...");
-    }
-
-    // useEffect(() => {
-    //     // Check if the product is already in the cart
-    //     const existingItemIndex = cartItems.findIndex(item => item.productName === productName);
-    //     if (existingItemIndex !== -1) {
-    //         // If the product is already in the cart, update its quantity
-    //         const updatedCartItems = [...cartItems];
-    //         updatedCartItems[existingItemIndex].quantity += quantity;
-    //         setCartItems(updatedCartItems);
-    //     } else {
-    //         setCartItems([...cartItems, { productName, productPrice, quantity }]);
-    //     }
-    // }, [productName, productPrice, quantity]);
-
+    };
+   
 
     return (
         <ScrollView>
@@ -186,9 +163,10 @@ const MyCart = (props) => {
                     </View>
                 ))}
 
-                {allMyCartProducts.length !== 0 && (<TouchableOpacity style={styles.orderButton} onPress={placeOrder}>
-                    <Text style={styles.orderButtonText}>Buy Now</Text>
-                </TouchableOpacity>)}
+                {allMyCartProducts.length !== 0 && (
+                    <Pressable style={styles.orderButton} onPress={() => placeOrder()}>
+                        <Text style={styles.orderButtonText}>Buy Now</Text>
+                    </Pressable>)}
 
 
                 <CustomAlert

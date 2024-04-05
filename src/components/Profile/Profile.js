@@ -38,7 +38,7 @@ const ProfileHeader = (props) => {
     const { loading, error, get, fetchData, post, remove } = useApi();
     const { navigation, route } = props;
     const user = useSelector((state) => state.profile.user);
-    const [profile, setProfile] = useState("");
+    const [profile, setProfile] = useState([]);
     const [modelTitle, setModelTitle] = useState('');
     const [showButton, setShowButton] = useState(false);
     const [color_title, setColorTitle] = useState('');
@@ -56,22 +56,21 @@ const ProfileHeader = (props) => {
     useEffect(() => {
 
         const fetchData = async () => {
-            console.log("htt")
+    
             try {
                 const queryParameters = {
                     email: user.email, // Add your product code parameter value here
                     phonenumber: user.phoneNumber
                 };
 
-                console.log(queryParameters)
-                console.log(jwtToken)
+              
                 // Convert query parameters to string
                 const queryString = new URLSearchParams(queryParameters).toString();
                 // Construct the complete URL with query parameters
                 const url = `https://clean-scrap-jnck-backend.vercel.app/api/getprofile?${queryString}`;
 
                 const response = await get(url, jwtToken);
-                console.log(response)
+              
 
                 if (response?.status == true) {
                     setProfile(response.result)
@@ -93,17 +92,20 @@ const ProfileHeader = (props) => {
         fetchData()
     }, [])
 
-    console.log("profile", profile)
+   
     return (
         <View style={styles.header}>
             <TouchableOpacity style={styles.dp}>
                 <Image source={require('../../../assets/man.png')} style={styles.image} />
                 {/* <Ionicons name="edit" size={20} color="#000" /> */}
             </TouchableOpacity>
-            <View>
-                <Text style={styles.name}>{profile.name}</Text>
-                <Text style={styles.number}>{profile.phonenumber}</Text>
-            </View>
+            {profile.map((item, index) => (
+                <View>
+                    <Text style={styles.name}>{item.name}</Text>
+                    <Text style={styles.number}>{item.phonenumber}</Text>
+                </View>
+            ))}
+
             <TouchableOpacity onPress={() => navigation.navigate('ProfileEdit', { profile: profile })} style={styles.iconContainer}>
                 <FontAwesome name="edit" style={styles.icon} />
             </TouchableOpacity>

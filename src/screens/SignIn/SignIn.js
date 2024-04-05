@@ -20,7 +20,9 @@ import CustomAlert from '../../components/alert/Alert';
 import { setToken } from '../../components/store/auth/authSlice';
 import { useDispatch, Provider } from 'react-redux';
 import store from '../../store/mainreduxstore';
-import {setUser} from '../../components/store/profile/profileSlice';
+import { setUser } from '../../components/store/profile/profileSlice';
+
+
 export default function LoginScreen({ navigation }) {
   const { loading, error, get, fetchData, post } = useApi();
   const { domainname } = domain();
@@ -57,7 +59,7 @@ export default function LoginScreen({ navigation }) {
       "phonenumber": phonenumber,//9986304389
       "password": password//kavitha
     }
-    console.log(data)
+
     const response = await post('https://clean-scrap-jnck-backend.vercel.app/api/login', data)
 
     if (response?.status === true) {
@@ -75,7 +77,7 @@ export default function LoginScreen({ navigation }) {
 
       dispatch(setUser(userData));
       // let jwtToken = response?.result[0].token;
-       navigation.navigate('Home')
+      navigation.navigate('Home')
       // try {
       //   const queryParameters = {
       //     phonenumber: phonenumber, // Add your product code parameter value here

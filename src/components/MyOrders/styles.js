@@ -70,12 +70,14 @@ const styles = StyleSheet.create({
     textCard: {
         flexDirection: 'column',
         marginHorizontal: 5,
-        marginLeft: '5%'
+        marginLeft: '5%',
+       
     },
     name: {
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: '700',
-        marginBottom: 7
+        marginBottom: 7,
+      
     },
     price: {
         fontSize: 18,
@@ -123,10 +125,11 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     status: {
+        minWidth:'16%',
         borderWidth: 1,
         borderColor: '#347855',
         color: '#347855',
-        width: '85%',
+        width: '96%',
         textAlign: 'center',
         paddingVertical: '2.5%',
         borderRadius: 5,
@@ -154,7 +157,9 @@ const styles = StyleSheet.create({
     },
     amt: {
         fontSize: 18,
-        fontWeight: '500'
+        fontWeight: '500',
+     
+    
     },
     orderDate: {
         display: 'flex',

@@ -3,11 +3,12 @@ import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity, KeyboardAvo
 import { Feather, AntDesign, Fontisto, FontAwesome, Ionicons } from '@expo/vector-icons';
 import useApi from '../../apiCalls/ApiCalls';
 import CustomAlert from '../alert/Alert'
+import { useSelector } from 'react-redux'
 function ProfileEdit({ route }) {
     const { profile } = route.params;
     const [name, setName] = useState("");
     const jwtToken = useSelector((state) => state.auth.token);
-
+    const { loading, error, get, fetchData, post, remove } = useApi();
     const [modelTitle, setModelTitle] = useState('');
     const [showButton, setShowButton] = useState(false);
     const [color_title, setColorTitle] = useState('');
@@ -21,20 +22,22 @@ function ProfileEdit({ route }) {
     const hideAlert = () => {
         setIsVisible(false);
     };
+
     const editProfile = async () => {
+
+
         let data = {
-            "phonenumber": profile.phonenumber,
+            "phonenumber": profile[0]?.phonenumber,
             "name": name,
-            "email": profile.email,
-            "shipping_address": profile.shipping_address
+            "email": profile[0]?.email,
+            "shipping_address": profile[0].shipping_address
         }
-        console.log(data)
-        console.log(jwtToken)
+
+
         const response = await post('https://clean-scrap-jnck-backend.vercel.app/api/editUserProfile', data, jwtToken)
 
-        if (response?.status === true) {
-            console.log("call api if it success give alert ")
 
+        if (response?.status === true) {
 
             setModelTitle('Edit profile successfully')
             // Call the alert 
@@ -44,6 +47,7 @@ function ProfileEdit({ route }) {
             showAlert();
         }
         else {
+          
             setModelTitle('Edit Profile fail')
             // Call the alert 
             setColorTitle('red');
@@ -100,12 +104,14 @@ function ProfileEdit({ route }) {
                             placeholder="Full Name"
                             placeholderColor="#c4c3cb"
                             style={styles.loginFormTextInput}
+                        // value={profile[0]?.name}
                         />
                         <Text style={styles.label_text}>{profile.email}</Text>
                         <TextInput
                             readOnly
                             placeholder="Email"
                             placeholderColor="#c4c3cb"
+                            value={profile[0]?.email}
                             style={styles.loginFormTextInput}
                         />
                         <Text style={styles.label_text}>Mobile No</Text>
@@ -113,12 +119,13 @@ function ProfileEdit({ route }) {
                             readOnly
                             placeholder="Mobile No"
                             placeholderColor="#c4c3cb"
+                            value={profile[0]?.phonenumber}
                             style={styles.loginFormTextInput}
                         />
 
                     </View>
 
-                    <TouchableOpacity style={styles.submitAddressBtn} onPress={editProfile}>
+                    <TouchableOpacity style={styles.submitAddressBtn} onPress={async () => await editProfile()}>
                         <Text style={styles.submitAddressText}>
                             Save
                         </Text>

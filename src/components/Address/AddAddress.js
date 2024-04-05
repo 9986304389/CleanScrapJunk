@@ -4,33 +4,46 @@ import styles from "./styles";
 import { FontAwesome } from "@expo/vector-icons";
 import useApi from '../../apiCalls/ApiCalls';
 import CustomAlert from '../alert/Alert'
+import { useSelector } from "react-redux";
 const AddAddress = () => {
-    const { loading, error, get, fetchData, post,remove } = useApi();
+    const jwtToken = useSelector((state) => state.auth.token);
+    const { loading, error, get, fetchData, post, remove } = useApi();
     const user = useSelector((state) => state.profile.user);
     const [address_line1, setaddress_line1] = useState("");
     const [address_line2, setaddress_line2] = useState("");
     const [city, setcity] = useState("");
     const [state, setstate] = useState("");
     const [postal_code, setpostal_code] = useState("");
+    const [modelTitle, setModelTitle] = useState('');
+    const [showButton, setShowButton] = useState(false);
+    const [color_title, setColorTitle] = useState('');
+    const [color_description, setColorDescription] = useState('');
+    const [responseMessage, setResponseMessage] = useState('');
+    const [isVisible, setIsVisible] = useState(false);
 
+    const showAlert = () => {
+        setIsVisible(true);
+    };
+
+    const hideAlert = () => {
+        setIsVisible(false);
+    };
 
     const add_Address = async () => {
+
         let data = {
-            "customer_id": user.phoneNumber,
+            "customer_id": user?.phoneNumber,
             "address_line1": address_line1,
             "address_line2": address_line2,
             "city": city,
             "state": state,
-            "postal_code": pincode,
-            "name": user.name
+            "postal_code": postal_code,
+            "name": user?.name
         }
-        console.log(data)
-        console.log(jwtToken)
+
         const response = await post('https://clean-scrap-jnck-backend.vercel.app/api/AddressAddAndEdit', data, jwtToken)
 
         if (response?.status === true) {
-            console.log("call api if it success give alert ")
-
 
             setModelTitle('Add Address successfully')
             // Call the alert 
@@ -100,7 +113,7 @@ const AddAddress = () => {
                     />
                 </View>
 
-                <TouchableOpacity style={styles.submitAddressBtn} onPress={add_Address}>
+                <TouchableOpacity style={styles.submitAddressBtn} onPress={async () => await add_Address()}>
                     <Text style={styles.submitAddressText}>
                         Submit your address
                     </Text>

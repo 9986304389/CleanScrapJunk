@@ -103,9 +103,10 @@ const styles = StyleSheet.create({
     address: {
         marginTop: 2,
         marginLeft: 15,
-        fontSize: 16,
+        fontSize: 18,
         maxWidth: '60%',
         flexWrap: 'wrap',
+        textAlign:"left"
     },
     card: {
         padding: 10,
@@ -280,7 +281,7 @@ const styles = StyleSheet.create({
     pageContainer: {
         flex: 1,
         flexDirection: 'column',
-        // justifyContent: 'center',
+         justifyContent: 'center',
         alignItems: 'center',
     },
 })

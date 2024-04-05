@@ -38,10 +38,7 @@ const ProductDescription = ({ route, navigation }) => {
         }
     };
 
-    const handlePlaceOrder = () => {
-        // Implement logic to place the order
-        console.log(`Placing order for ${quantity} items.`);
-    };
+  
 
     const handleAddToCart = ({ navigation }) => {
         // const { navigation } = props;
@@ -64,14 +61,11 @@ const ProductDescription = ({ route, navigation }) => {
             "image_url": item.image_url
 
         }
-        console.log(data)
-        console.log(jwtToken)
+
         const response = await post('https://clean-scrap-jnck-backend.vercel.app/api/addProductstoCartByUser', data, jwtToken)
 
         if (response?.status === true) {
-            console.log("call api if it success give alert ")
-
-
+        
             setModelTitle('Add Cart successfully')
             // Call the alert 
             setColorTitle('green');
@@ -88,6 +82,8 @@ const ProductDescription = ({ route, navigation }) => {
             showAlert();
         }
     }
+
+    item.quantity = quantity;
 
     return (
         <View style={styles.container}>
@@ -118,7 +114,7 @@ const ProductDescription = ({ route, navigation }) => {
                     <TouchableOpacity style={styles.cartBtn} onPress={addToCart}>
                         <Text style={styles.cardBtnText}>Add to Cart</Text>
                     </TouchableOpacity>
-                    <Pressable style={styles.buyBtn} onPress={() => navigation.navigate('OrderSummary', { productName: item.name, productPrice: item.price, quantity: item.quantity })}>
+                    <Pressable style={styles.buyBtn} onPress={() => navigation.navigate('OrderSummary', {getallgoingtoorderproducts:item})}>
                         <Text style={styles.buyBtnText}>Buy Now</Text>
                     </Pressable>
                 </View>

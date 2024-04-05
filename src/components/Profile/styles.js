@@ -83,9 +83,10 @@ const styles = StyleSheet.create({
     icon: {
         fontSize: 26,
         color: 'black',
+        alignContent:"center"
     },
     iconContainer: {
-        marginLeft: '35%'
+        marginLeft: '25%'
     }
 })
 

@@ -54,23 +54,25 @@ const MyOrders = (props) => {
 
                 try {
                     const queryParameters = {
-                        customer_id: phoneNumber, // Add your product code parameter value here
-                        status: "Onprogress"
+                        status: 'OnProgress',
+                        customer_id: phoneNumber// Add your product code parameter value here
+
                     };
+
 
                     // Convert query parameters to string
                     const queryString = new URLSearchParams(queryParameters).toString();
                     // Construct the complete URL with query parameters
-                    const url = `https://clean-scrap-jnck-backend.vercel.app/api/getProductsByUser?${queryString}`;
+                    const url = `https://clean-scrap-jnck-backend.vercel.app/api/getOrdersByStatus?${queryString}`;
 
-                    const response = await post(url, jwtToken);
+                    const response = await post(url, null, jwtToken);
 
 
                     if (response?.status == true) {
                         setAllOnProgress(response.result)
                     }
                     else {
-                        setModelTitle('Get cart prodct fail')
+                        setModelTitle('Get onprogress prodct fail')
                         // Call the alert 
                         setColorTitle('red');
                         setColorDescription('black');
@@ -99,9 +101,9 @@ const MyOrders = (props) => {
                     {allOnProgress.map((item, index) => (
                         <View style={styles.cartItem}>
                             <View style={styles.card}>
-                                <Image source={{ uri: item.image_url }} style={styles.image} />
+                                <Image source={{ uri: item?.img_url }} style={styles.image} />
                                 <View style={styles.textCard}>
-                                    <Text style={styles.name}>productName</Text>
+                                    <Text style={styles.name}>{item?.name}</Text>
                                     <Text style={styles.price}>{item.total_amount}</Text>
                                     <Text style={styles.status}>{item.status}</Text>
                                     <Text style={styles.amt}>₹ {item.total_amount}</Text>
@@ -228,22 +230,22 @@ const MyOrders = (props) => {
                 try {
                     const queryParameters = {
                         customer_id: phoneNumber, // Add your product code parameter value here
-                        status: "Sucess"
+                        status: "Completed"
                     };
 
                     // Convert query parameters to string
                     const queryString = new URLSearchParams(queryParameters).toString();
                     // Construct the complete URL with query parameters
-                    const url = `https://clean-scrap-jnck-backend.vercel.app/api/getProductsByUser?${queryString}`;
+                    const url = `https://clean-scrap-jnck-backend.vercel.app/api/getOrdersByStatus?${queryString}`;
 
-                    const response = await post(url, jwtToken);
+                    const response = await post(url, null, jwtToken);
 
 
                     if (response?.status == true) {
                         setAllSucess(response.result)
                     }
                     else {
-                        setModelTitle('Get cart prodct fail')
+                        setModelTitle('Get all sucess prodct fail')
                         // Call the alert 
                         setColorTitle('red');
                         setColorDescription('black');
@@ -260,16 +262,36 @@ const MyOrders = (props) => {
         }, [allSucess])
 
 
-
         return (
             <ScrollView>
-                <View style={styles.container}>
+                {allSucess.map((item, index) => (
+                    <View style={styles.container}>
 
-                    <View style={styles.orderDate}>
-                        <FontAwesome name="calendar" size={20} color='black' />
-                        <Text style={styles.orderDateTxt}>May 26, 2024</Text>
-                    </View>
-                    <View style={styles.cartItem}>
+                        <View style={styles.orderDate}>
+                            <FontAwesome name="calendar" size={20} color='black' />
+                            <Text style={styles.orderDateTxt}>{item?.order_date}</Text>
+                        </View>
+
+                        <View style={styles.cartItem}>
+                            <View style={styles.card}>
+                                <Image source={{ uri: item?.img_url }} style={styles.image} />
+                                <View style={styles.textCard}>
+                                    <Text style={styles.name}>{item?.name}</Text>
+                                    <Text style={styles.price}>{item?.total_amount}</Text>
+                                    <Text style={styles.status}>{item?.status}</Text>
+                                    <Text style={styles.amt}>₹ {item?.total_amount}</Text>
+                                </View>
+                            </View>
+
+                            <View style={styles.iconContainer}>
+                                <TouchableOpacity style={styles.orderButton}>
+                                    <Text style={styles.orderButtonText}>Track Order</Text>
+                                </TouchableOpacity>
+                               
+                            </View>
+                        </View>
+
+                        {/* <View style={styles.cartItem}>
                         <View style={styles.card}>
                             <Image source={require('../../../assets/desk.jpg')} style={styles.image} />
                             <View style={styles.textCard}>
@@ -327,19 +349,108 @@ const MyOrders = (props) => {
                                 <Text style={styles.amt}>₹ 550.00</Text>
                             </View>
                         </View>
+                    </View> */}
                     </View>
+                ))}
 
-                </View>
+                <CustomAlert
+                    isVisible={isVisible}
+                    title={modelTitle}
+                    description={responseMessage}
+                    buttonText={showButton ? "OK" : ""}
+                    onPress={hideAlert}
+                    onClose={hideAlert}
+                    btnisVisible={false}
+                    color_title={color_title}
+                    color_description={color_description}
+                />
+
+
             </ScrollView>
         )
     }
 
     const Cancelled = (props) => {
+        const { navigation, route } = props;
+        const { loading, error, get, fetchData, post, remove } = useApi();
+        const jwtToken = useSelector((state) => state.auth.token);
+        const phoneNumber = useSelector((state) => state.profile.user.phoneNumber);
+        const [allCancelled, setAllCancelled] = useState([]);
+        const [modelTitle, setModelTitle] = useState('');
+        const [showButton, setShowButton] = useState(false);
+        const [color_title, setColorTitle] = useState('');
+        const [color_description, setColorDescription] = useState('');
+        const [responseMessage, setResponseMessage] = useState('');
+        const [isVisible, setIsVisible] = useState(false);
+        const showAlert = () => {
+            setIsVisible(true);
+        };
+
+        const hideAlert = () => {
+            setIsVisible(false);
+        };
+
+
+        useEffect(() => {
+
+            const fetchData = async () => {
+
+                try {
+                    const queryParameters = {
+                        customer_id: phoneNumber, // Add your product code parameter value here
+                        status: "Cancelled"
+                    };
+
+                    // Convert query parameters to string
+                    const queryString = new URLSearchParams(queryParameters).toString();
+                    // Construct the complete URL with query parameters
+                    const url = `https://clean-scrap-jnck-backend.vercel.app/api/getOrdersByStatus?${queryString}`;
+
+                    const response = await post(url, null, jwtToken);
+
+
+                    if (response?.status == true) {
+                        setAllCancelled(response.result)
+                    }
+                    else {
+                        setModelTitle('Get all setAllCancelled prodct fail')
+                        // Call the alert 
+                        setColorTitle('red');
+                        setColorDescription('black');
+                        setResponseMessage(response?.message)
+                        showAlert();
+                    }
+
+                } catch (error) {
+                    console.error('Error fetching initial data:', error);
+                    // Handle error if needed
+                }
+            }
+            fetchData()
+        }, [allCancelled])
         return (
             <ScrollView>
-                <View style={styles.container}>
+                {allCancelled.map((item, index) => (
 
-                    <View style={styles.orderDate}>
+                    <View style={styles.container}>
+
+                        <View style={styles.orderDate}>
+                            <FontAwesome name="calendar" size={20} color='black' />
+                            <Text style={styles.orderDateTxt}>{item?.order_date}</Text>
+                        </View>
+                        <View style={styles.cartItem}>
+                            <View style={styles.card}>
+                                <Image source={{ uri: item?.img_url }} style={styles.image} />
+                                <View style={styles.textCard}>
+                                    <Text style={styles.name}>{item?.name}</Text>
+                                    <Text style={styles.price}>{item?.total_amount}</Text>
+                                    <Text style={styles.status}>{item?.status}</Text>
+                                    <Text style={styles.amt}>₹ {item?.total_amount}</Text>
+                                </View>
+                            </View>
+                        </View>
+
+                        {/* <View style={styles.orderDate}>
                         <FontAwesome name="calendar" size={20} color='black' />
                         <Text style={styles.orderDateTxt}>May 26, 2024</Text>
                     </View>
@@ -385,25 +496,11 @@ const MyOrders = (props) => {
                                 <Text style={styles.amt}>₹ 550.00</Text>
                             </View>
                         </View>
+                    </View> */}
                     </View>
+                ))}
 
-                    <View style={styles.orderDate}>
-                        <FontAwesome name="calendar" size={20} color='black' />
-                        <Text style={styles.orderDateTxt}>May 26, 2024</Text>
-                    </View>
-                    <View style={styles.cartItem}>
-                        <View style={styles.card}>
-                            <Image source={require('../../../assets/desk.jpg')} style={styles.image} />
-                            <View style={styles.textCard}>
-                                <Text style={styles.name}>productName</Text>
-                                <Text style={styles.price}>productPrice</Text>
-                                <Text style={styles.statusCancelled}>Cancelled</Text>
-                                <Text style={styles.amt}>₹ 550.00</Text>
-                            </View>
-                        </View>
-                    </View>
 
-                </View>
             </ScrollView>
         )
     }

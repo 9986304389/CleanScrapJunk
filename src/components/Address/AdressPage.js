@@ -4,6 +4,7 @@ import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import useApi from '../../apiCalls/ApiCalls';
 import CustomAlert from '../alert/Alert'
 import styles from "./styles";
+import { useSelector } from "react-redux";
 
 export function AdressPage(props) {
 
@@ -18,6 +19,7 @@ export function AdressPage(props) {
     const [color_description, setColorDescription] = useState('');
     const [responseMessage, setResponseMessage] = useState('');
     const [isVisible, setIsVisible] = useState(false);
+    const [selectedAddress, setSelectedAddress] = useState(null);
     const showAlert = () => {
         setIsVisible(true);
     };
@@ -30,7 +32,7 @@ export function AdressPage(props) {
     useEffect(() => {
 
         const fetchData = async () => {
-            console.log("htt")
+
             try {
                 const queryParameters = {
                     customer_id: phoneNumber, // Add your product code parameter value here
@@ -65,6 +67,8 @@ export function AdressPage(props) {
         fetchData()
     }, [allMyAddress])
 
+
+
     const deleteAddress = async (customer_id, address_id) => {
         try {
             const queryParameters = {
@@ -72,7 +76,7 @@ export function AdressPage(props) {
                 address_id: address_id
 
             };
-            console.log(queryParameters)
+    
             // Convert query parameters to string
             const queryString = new URLSearchParams(queryParameters).toString();
             // Construct the complete URL with query parameters
@@ -108,16 +112,17 @@ export function AdressPage(props) {
         }
     }
 
+
     return (
         <View style={styles.maincontainer}>
-            <View style={styles.container}>
+            {/* <View style={styles.container}>
                 <FontAwesome name="search" size={20} color="#888" style={styles.icon} />
                 <TextInput
                     style={styles.input}
                     placeholder="Search..."
                     placeholderTextColor="#888"
                 />
-            </View>
+            </View> */}
             {allMyAddress.map((item, index) => (
                 <View style={styles.adresscontainer}>
                     <View style={styles.addressTopContainer}>
@@ -130,20 +135,10 @@ export function AdressPage(props) {
                     <View>
                         <Text>{item.address_line1} {item.address_line2} {item.city} {item.state} {item.postal_code}</Text>
                     </View>
+
                 </View>
             ))}
-            {/* <View style={styles.adresscontainer}>
-                <View style={styles.addressTopContainer}>
-                    <FontAwesome name="home" size={24} color="black" style={styles.homeIcon} />
-                    <Text style={{ fontSize: 18 }}>Home</Text>
-                    <TouchableOpacity style={styles.deleteIcon}>
-                        <FontAwesome name="trash" size={24} color="black" />
-                    </TouchableOpacity>
-                </View>
-                <View>
-                    <Text>53, Raja Muthiah Rd, Kannappar Thidal,Periyampet, Chennai,+91 1234567891</Text>
-                </View>
-            </View> */}
+
             <TouchableOpacity onPress={() => navigation.navigate('AddAddressPage')}>
                 <Ionicons name="add-circle-sharp" size={45} color="black" />
             </TouchableOpacity>

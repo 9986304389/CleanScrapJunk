@@ -47,10 +47,9 @@ export default function SignUP() {
                     "phonenumber": phonenumber,
                     "password": password
                 }
-                console.log(data)
+             
                 const response = await post('https://clean-scrap-jnck-backend.vercel.app/api/usersiginup', data)
 
-                console.log(response)
                 if (response?.status === true) {
                     Alert.alert("user Profile created ")
                 }

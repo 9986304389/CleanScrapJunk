@@ -54,7 +54,7 @@ function MainNavigator() {
       <Stack.Screen name='Search' component={SearchScreen} />
       <Stack.Screen name='IngredientsDetails' component={IngredientsDetailsScreen} />
       <Stack.Screen name='ProductDescription' component={ProductDescription} />
-      <Stack.Screen name='MyCart' component={MyCart} />
+      {/* <Stack.Screen name='MyCart' component={MyCart} /> */}
       <Stack.Screen name='OrderSummary' component={OrderSteps} />
       <Stack.Screen name='ProfileEdit' component={ProfileEdit} />
       <Stack.Screen name='ProfilePage' component={ProfilePage} />
@@ -99,7 +99,7 @@ function MainNavigator_OrderSummary() {
         }
       }}
     >
-      <Stack.Screen name='MyOrders' component={MyOrders} />
+    <Stack.Screen name='OrderSummary' component={OrderSummary} />
     </Stack.Navigator>
   )
 }
@@ -176,7 +176,7 @@ function BottomTabNavigator() {
           ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="OrderSummary"
         component={MainNavigator_OrderSummary}
         options={{
@@ -187,7 +187,7 @@ function BottomTabNavigator() {
             </View>
           ),
         }}
-      />
+      /> */}
       <Tab.Screen
         name="Price"
         component={PriceList}

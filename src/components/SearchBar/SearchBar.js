@@ -10,7 +10,7 @@ export default function SearchBar() {
 
     const handleSearch = () => {
         // Perform search based on the searchText state
-        console.log("Performing search for:", searchText);
+      
         // You can implement your search logic here, such as filtering data based on the search text
         // For now, let's just log the search text to the console
         setSearchResult(searchText); // Set the search result to the searched text
