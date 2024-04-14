@@ -144,8 +144,8 @@ const MenuItems = ({ navigation }) => {
                 <Text style={styles.menuItemTxt}>Payment Methods</Text>
                 <FontAwesome name="chevron-right" style={[styles.rightArrow, { marginLeft: '43%' }]} />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.menuItem}>
-                <FontAwesome name="sign-out" style={styles.icons} />
+            <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('SignIn')}>
+                <FontAwesome name="sign-out" style={styles.icons}/>
                 <Text style={styles.menuItemTxt}>Logout</Text>
                 <FontAwesome name="chevron-right" style={[styles.rightArrow, { marginLeft: '67%' }]} />
             </TouchableOpacity>

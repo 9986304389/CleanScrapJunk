@@ -66,6 +66,7 @@ export default function LoginScreen({ navigation }) {
       // Dispatch action to store token in Redux store
       dispatch(setToken(response?.result[0].token));
 
+      email = response?.result[0].email;
       // //Simulating fetching user data from an API
       const userData = {
         name: response?.result[0].name,
@@ -76,38 +77,37 @@ export default function LoginScreen({ navigation }) {
       };
 
       dispatch(setUser(userData));
-      // let jwtToken = response?.result[0].token;
-      navigation.navigate('Home')
-      // try {
-      //   const queryParameters = {
-      //     phonenumber: phonenumber, // Add your product code parameter value here
+       let jwtToken = response?.result[0].token;
+      //navigation.navigate('Home')
+      try {
+        const queryParameters = {
+          email: email, // Add your product code parameter value here
 
-      //   };
+        };
 
-      //   // Convert query parameters to string
-      //   const queryString = new URLSearchParams(queryParameters).toString();
-      //   // Construct the complete URL with query parameters
-      //   const url = `https://clean-scrap-jnck-backend.vercel.app/api/getOTP?${queryString}`;
-      //   console.log('URL:', url);
-      //   const response = await get(url, jwtToken);
-      //   //console.log('Response:', response); // Log the response
+        // Convert query parameters to string
+        const queryString = new URLSearchParams(queryParameters).toString();
+        // Construct the complete URL with query parameters
+        const url = `https://clean-scrap-jnck-backend.vercel.app/api/getOTP?${queryString}`;
+       
+        const response = await get(url, jwtToken);
+       
+        if (response?.status == true) {
+          navigation.navigate('OTP', { email_address: email })
+        }
+        else {
+          setModelTitle('Get OTP Fail')
+          // Call the alert 
+          setColorTitle('red');
+          setColorDescription('black');
+          setResponseMessage(response?.message)
+          showAlert();
+        }
 
-      //   if (response?.status == true) {
-      //     navigation.navigate('OTP', { phoneNumber: phonenumber })
-      //   }
-      //   else {
-      //     setModelTitle('Get OTP Fail')
-      //     // Call the alert 
-      //     setColorTitle('red');
-      //     setColorDescription('black');
-      //     setResponseMessage(response?.message)
-      //     showAlert();
-      //   }
-
-      // } catch (error) {
-      //   console.error('Error fetching initial data:', error);
-      //   // Handle error if needed
-      // }
+      } catch (error) {
+        console.error('Error fetching initial data:', error);
+        // Handle error if needed
+      }
 
     }
     else {

@@ -17,8 +17,8 @@ const CustomAlert = ({ isVisible, title, description, buttonText, onPress, onClo
                         onPress={onClose} // Call onClose function when close icon is pressed
                         containerStyle={{ position: 'absolute', top: 10, right: 10 }} // Position the close icon
                     />
-                    <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10, color: color_title }}>{title}</Text>
-                    <Text style={{ fontSize: 18, minWidth: 100, marginBottom: 20, color: color_description }}>{description}</Text>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10, }}>{title}</Text>
+                    <Text style={{ fontSize: 18, minWidth: 100, marginBottom: 20, }}>{description}</Text>
                     {btnisVisible && (
                         <View>
                             <Button title={buttonText} onPress={onPress} />

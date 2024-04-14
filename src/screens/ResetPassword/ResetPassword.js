@@ -12,7 +12,7 @@ import {
     TouchableOpacity
 } from "react-native";
 import { Button, SocialIcon, Icon } from "react-native-elements";
-import * as Facebook from "expo-facebook";
+
 
 
 export default function RestPassword({ navigation }) {

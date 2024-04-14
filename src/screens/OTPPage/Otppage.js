@@ -7,7 +7,7 @@ import useApi from '../../apiCalls/ApiCalls';
 import CustomAlert from '../../components/alert/Alert';
 export default function OTPPage({ route, navigation }) {
 
-    const { phoneNumber } = route.params;
+    const { email_address } = route.params;
     const [buttonPressCount, setButtonPressCount] = useState(0);
     const jwtToken = useSelector((state) => state.auth.token);
     const { loading, error, get, fetchData, post } = useApi();
@@ -19,11 +19,7 @@ export default function OTPPage({ route, navigation }) {
     const [responseMessage, setResponseMessage] = useState('');
     const [otp, setOTP] = useState(Array(6).fill(''));
 
-    // Hide the first digits of the phone number
-    const hiddenPhoneNumber = phoneNumber.substring(0, phoneNumber.length - 4).replace(/./g, '.');
 
-    // Extract the last four digits of the phone number
-    const lastFourDigits = phoneNumber.substring(phoneNumber.length - 4);
     const showAlert = () => {
         setIsVisible(true);
     };
@@ -45,7 +41,7 @@ export default function OTPPage({ route, navigation }) {
     const handleOTPInput = (text, index) => {
         const newOTP = [...otp];
         newOTP[index] = text;
-       
+
         setOTP(newOTP);
 
         // Move to the next input field after entering a digit
@@ -63,11 +59,11 @@ export default function OTPPage({ route, navigation }) {
 
     const validate_OTP = async () => {
         const concatenatedOTP = otp.join('');
-        
+
         if (concatenatedOTP.length == 6) {
             try {
                 const queryParameters = {
-                    phonenumber: phoneNumber,
+                    email: email_address,
                     otp: concatenatedOTP
 
                 };
@@ -75,9 +71,9 @@ export default function OTPPage({ route, navigation }) {
                 const queryString = new URLSearchParams(queryParameters).toString();
                 // Construct the complete URL with query parameters
                 const url = `https://clean-scrap-jnck-backend.vercel.app/api/verifyOTP?${queryString}`;
-                
+
                 const response = await get(url, jwtToken);
-              
+
 
                 if (response?.status == true) {
 
@@ -115,7 +111,7 @@ export default function OTPPage({ route, navigation }) {
         <View style={styles.container}>
             <View style={{ top: 50 }}>
                 <Text style={{ fontStyle: "normal", fontWeight: "200", fontSize: 20 }}>An 6 Digits code has been sent to</Text>
-                <Text style={{ fontStyle: "normal", fontWeight: "200", fontSize: 20, textAlign: "center" }}>your phone number{hiddenPhoneNumber}{lastFourDigits}</Text>
+                <Text style={{ fontStyle: "normal", fontWeight: "200", fontSize: 20, textAlign: "center" }}>your email{email}</Text>
             </View>
             <View style={styles.otp}>
 
