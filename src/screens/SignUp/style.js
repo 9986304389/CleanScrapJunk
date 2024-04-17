@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
   containerView: {
     flex: 1,
     alignItems: "center",
-    
+
 
   },
   loginScreenContainer: {
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     height: 45,
     marginTop: 10,
-
+    marginBottom: '5%',
     width: 320,
     alignItems: "center"
   },
@@ -54,8 +54,8 @@ const styles = StyleSheet.create({
   },
   label_text: {
     fontSize: 18,
-    paddingLeft:10,
-    paddingTop:4
+    paddingLeft: 10,
+    paddingTop: 4
   },
   eyeIconContainer1: {
     position: 'absolute',
@@ -66,6 +66,44 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 550,
     right: 20,
+  },
+
+  touchableHighlight: {
+    height: 43,
+    fontSize: 14,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#eaeaea",
+    backgroundColor: "#fafafa",
+    paddingLeft: 10,
+    marginTop: 5,
+    marginBottom: 10,
+    alignItems: 'flex-start',
+    justifyContent: 'center'
+  },
+  selectedValueText: {
+    fontSize: 16,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 10,
+    width: 250,
+    maxHeight: 300,
+  },
+  optionItem: {
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  optionText: {
+    fontSize: 16,
   },
 });
 export default styles;

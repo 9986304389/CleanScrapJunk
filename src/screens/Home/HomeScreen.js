@@ -77,7 +77,7 @@ export default function HomeScreen(props) {
     <TouchableWithoutFeedback onPress={dismissKeyboard}>
       <View style={{ flex: 1 }}>
         <SearchBar />
-        <CarouselComponent />
+        <CarouselComponent navigation={navigation} />
         <ProductTab />
         {/* <MainBar/> */}
         {/* <Text style={styles.title}>Hello</Text> */}

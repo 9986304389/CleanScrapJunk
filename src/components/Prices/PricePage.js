@@ -7,12 +7,22 @@ const PriceList = (props) => {
 
     const { navigation, route } = props;
 
+    const userType = 'admin'
+
     return (
         <>
             <View style={styles.header}>
-                <View style={{ flexDirection: 'row' }}>
+                <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                     <FontAwesome name='inr' size={24} color='white' style={{ marginRight: '5%' }} />
                     <Text style={{ fontSize: 18, color: 'white', fontWeight: '600' }}>PRICES</Text>
+                </View>
+
+                <View style={styles.spOffers}>
+                    {userType === 'admin' && (
+                        <TouchableOpacity onPress={() => navigation.navigate('AddProducts')} style={styles.iconContainer}>
+                            <FontAwesome name="edit" size={24} style={styles.icon2} />
+                        </TouchableOpacity>
+                    )}
                 </View>
             </View>
             <ScrollView>

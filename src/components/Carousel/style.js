@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
         // alignItems: 'center',
     },
     specialOffers: {
+        width: '80%',
         fontSize: 20,
         fontWeight: 'bold',
         marginHorizontal: 10,
@@ -52,6 +53,20 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         borderRadius: 30
     },
+    icon: {
+        fontSize: 26,
+        color: 'black',
+        alignContent: "center"
+    },
+    spOffers: {
+        display: 'flex',
+        flexDirection: 'row',
+    },
+    iconContainer: {
+        width: '20%',
+        // marginHorizontal: 10,
+        marginVertical: 15,
+    }
 })
 
 export default styles;

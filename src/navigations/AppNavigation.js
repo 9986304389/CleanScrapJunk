@@ -29,6 +29,8 @@ import { NotificationPage } from '../components/Notification/NotificationPage';
 import EnquiryForm from '../components/EnquiryForm/EnquiryForm';
 import PriceList from '../components/Prices/PricePage';
 import PricesPage from '../components/Prices/PricesPage';
+import AddSpOffers from '../components/SpecialOffersAdd/AddSPOffers';
+import AddProducts from '../components/AddProducts/AddProducts';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -54,6 +56,8 @@ function MainNavigator() {
       <Stack.Screen name='Search' component={SearchScreen} />
       <Stack.Screen name='IngredientsDetails' component={IngredientsDetailsScreen} />
       <Stack.Screen name='ProductDescription' component={ProductDescription} />
+      <Stack.Screen name='AddSPOffers' component={AddSpOffers} />
+      <Stack.Screen name='AddProducts' component={AddProducts} />
       {/* <Stack.Screen name='MyCart' component={MyCart} /> */}
       <Stack.Screen name='OrderSummary' component={OrderSteps} />
       <Stack.Screen name='ProfileEdit' component={ProfileEdit} />
@@ -99,7 +103,7 @@ function MainNavigator_OrderSummary() {
         }
       }}
     >
-    <Stack.Screen name='OrderSummary' component={OrderSummary} />
+      <Stack.Screen name='OrderSummary' component={OrderSummary} />
     </Stack.Navigator>
   )
 }
