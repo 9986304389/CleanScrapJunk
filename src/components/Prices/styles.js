@@ -102,6 +102,22 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingHorizontal: '7%',
     },
+    spOffers: {
+        position: 'absolute',
+        right: '15%'
+        // display: 'flex',
+        // flexDirection: 'row',
+    },
+    iconContainer: {
+        width: '20%',
+        // marginHorizontal: 10,
+        marginVertical: 15,
+    },
+    icon2: {
+        width: 24,
+        height: 24,
+        color: 'white'
+    },
 })
 
 export default styles;

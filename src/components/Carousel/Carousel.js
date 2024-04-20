@@ -1,7 +1,8 @@
 import React, { useRef, useEffect } from "react";
-import { View, Text, ScrollView, ImageBackground, Animated, Dimensions } from "react-native";
+import { View, Text, ScrollView, ImageBackground, Animated, Dimensions, TouchableOpacity } from "react-native";
 import Carousel from "react-native-snap-carousel";
 import styles from "./style";
+import { FontAwesome } from "@expo/vector-icons";
 
 const data = [
     { id: '1', title: '30% Discount', desc: 'Get discound for every order only valid for today', shop: 'Shop Now' },
@@ -10,7 +11,7 @@ const data = [
     { id: '4', title: '30% Discount', desc: 'Get discound for every order only valid for today', shop: 'Shop Now' },
 ]
 
-export default function CarouselComponent() {
+export default function CarouselComponent({ navigation }) {
     const scrollX = useRef(new Animated.Value(0)).current;
     const scrollViewRef = useRef();
 
@@ -75,10 +76,19 @@ export default function CarouselComponent() {
         </View>
     }
 
+    const userType = 'admin'
+
     return (
 
         <View style={styles.container}>
-            <Text style={styles.specialOffers}>Special Offers</Text>
+            <View style={styles.spOffers}>
+                <Text style={styles.specialOffers}>Special Offers</Text>
+                {userType === 'admin' && (
+                    <TouchableOpacity onPress={() => navigation.navigate('AddSPOffers')} style={styles.iconContainer}>
+                        <FontAwesome name="edit" style={styles.icon} />
+                    </TouchableOpacity>
+                )}
+            </View>
             <ScrollView ref={scrollViewRef} horizontal showsHorizontalScrollIndicator={true} style={{ width: '100%', maxHeight: 200 }}>
                 <View style={styles.cardContainer}>
                     {data.map((item, index) => (
