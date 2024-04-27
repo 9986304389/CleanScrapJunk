@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, Image, ScrollView,Pressable } from "react-native";
+import { View, Text, TouchableOpacity, Image, ScrollView, Pressable } from "react-native";
 import styles from "./styles";
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import { useSelector, useDispatch } from 'react-redux'
@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import useApi from '../../apiCalls/ApiCalls';
 import CustomAlert from '../alert/Alert'
 import { State } from "react-native-gesture-handler";
-
+import  MidnightAPIComponent  from'./emailAPIComponent'
 
 const MyCart = (props) => {
     const { navigation, route } = props;
@@ -46,7 +46,7 @@ const MyCart = (props) => {
     useEffect(() => {
 
         const fetchData = async () => {
-            console.log("htt")
+            
             try {
                 const queryParameters = {
                     customer_id: phoneNumber, // Add your product code parameter value here
@@ -79,7 +79,17 @@ const MyCart = (props) => {
             }
         }
         fetchData()
-    }, [allMyCartProducts])
+
+    }, [])
+
+    // Function to make API call
+const callAPI = () => {
+    // Make your API call here
+    console.log("API call triggered at midnight");
+  };
+  
+ 
+
 
     // // Function to remove item from cart
     const removeItem = async (product_code) => {
@@ -90,7 +100,7 @@ const MyCart = (props) => {
                 product_code: product_code
 
             };
-            console.log(queryParameters)
+            
             // Convert query parameters to string
             const queryString = new URLSearchParams(queryParameters).toString();
             // Construct the complete URL with query parameters
@@ -131,18 +141,15 @@ const MyCart = (props) => {
         // Implement logic to place the order
         navigation.navigate('OrderSummary', {
             getallgoingtoorderproducts: allMyCartProducts,
-         
+
         })
         console.log("Placing order...");
     };
-   
+
 
     return (
         <ScrollView>
-            {/* <View style={styles.titleView}>
-                <AntDesign name="shoppingcart" size={25} color="black" style={styles.titleIcon} />
-                <Text style={styles.title}>My Cart</Text>
-            </View> */}
+
             <View style={styles.container}>
 
                 {allMyCartProducts.map((item, index) => (
@@ -167,7 +174,7 @@ const MyCart = (props) => {
                     <Pressable style={styles.orderButton} onPress={() => placeOrder()}>
                         <Text style={styles.orderButtonText}>Buy Now</Text>
                     </Pressable>)}
-
+                    <MidnightAPIComponent />
 
                 <CustomAlert
                     isVisible={isVisible}

@@ -73,41 +73,42 @@ export default function LoginScreen({ navigation }) {
         phoneNumber: response?.result[0].phonenumber,
         email: response?.result[0].email,
         userType: response?.result[0].usertype,
+        location: response?.result[0].location,
         loginTime: new Date().toISOString(),
       };
 
       dispatch(setUser(userData));
-       let jwtToken = response?.result[0].token;
-      //navigation.navigate('Home')
-      try {
-        const queryParameters = {
-          email: email, // Add your product code parameter value here
+      let jwtToken = response?.result[0].token;
+      navigation.navigate('Home')
+      // try {
+      //   const queryParameters = {
+      //     email: email, // Add your product code parameter value here
 
-        };
+      //   };
 
-        // Convert query parameters to string
-        const queryString = new URLSearchParams(queryParameters).toString();
-        // Construct the complete URL with query parameters
-        const url = `https://clean-scrap-jnck-backend.vercel.app/api/getOTP?${queryString}`;
-       
-        const response = await get(url, jwtToken);
-       
-        if (response?.status == true) {
-          navigation.navigate('OTP', { email_address: email })
-        }
-        else {
-          setModelTitle('Get OTP Fail')
-          // Call the alert 
-          setColorTitle('red');
-          setColorDescription('black');
-          setResponseMessage(response?.message)
-          showAlert();
-        }
+      //   // Convert query parameters to string
+      //   const queryString = new URLSearchParams(queryParameters).toString();
+      //   // Construct the complete URL with query parameters
+      //   const url = `https://clean-scrap-jnck-backend.vercel.app/api/getOTP?${queryString}`;
 
-      } catch (error) {
-        console.error('Error fetching initial data:', error);
-        // Handle error if needed
-      }
+      //   const response = await get(url, jwtToken);
+
+      //   if (response?.status == true) {
+      //     navigation.navigate('OTP', { email_address: email })
+      //   }
+      //   else {
+      //     setModelTitle('Get OTP Fail')
+      //     // Call the alert 
+      //     setColorTitle('red');
+      //     setColorDescription('black');
+      //     setResponseMessage(response?.message)
+      //     showAlert();
+      //   }
+
+      // } catch (error) {
+      //   console.error('Error fetching initial data:', error);
+      //   // Handle error if needed
+      // }
 
     }
     else {

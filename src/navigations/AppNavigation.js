@@ -49,12 +49,6 @@ function MainNavigator() {
       }}
     >
       <Stack.Screen name='Home' component={HomeScreen} />
-      <Stack.Screen name='Categories' component={CategoriesScreen} />
-      <Stack.Screen name='Recipe' component={RecipeScreen} />
-      <Stack.Screen name='RecipesList' component={RecipesListScreen} />
-      <Stack.Screen name='Ingredient' component={IngredientScreen} />
-      <Stack.Screen name='Search' component={SearchScreen} />
-      <Stack.Screen name='IngredientsDetails' component={IngredientsDetailsScreen} />
       <Stack.Screen name='ProductDescription' component={ProductDescription} />
       <Stack.Screen name='AddSPOffers' component={AddSpOffers} />
       <Stack.Screen name='AddProducts' component={AddProducts} />
@@ -200,6 +194,18 @@ function BottomTabNavigator() {
           tabBarIcon: ({ color, size }) => (
             <View style={{ paddingTop: 7 }}>
               <FontAwesome name="inr" color={color} size={size} />
+            </View>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Service's"
+        component={PriceList}
+        options={{
+          tabBarLabel: '',
+          tabBarIcon: ({ color, size }) => (
+            <View style={{ paddingTop: 7 }}>
+              <FontAwesome name="cog" color={color} size={size} />
             </View>
           ),
         }}

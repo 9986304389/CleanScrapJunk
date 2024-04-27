@@ -221,7 +221,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginVertical: 20,
-        marginHorizontal: '5%'
+        marginHorizontal: '20%',
+        marginRight: 10,
+        
     },
     stepContainer: {
         flexDirection: 'row',

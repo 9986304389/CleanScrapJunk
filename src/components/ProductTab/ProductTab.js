@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Dimensions, Text, View, Image, TouchableOpacity, FlatList, ImageBackground, ScrollView, TouchableWithoutFeedback } from 'react-native';
+import {
+    Dimensions, Text, View, Image,
+    TouchableOpacity, FlatList, ImageBackground, ScrollView,
+    TouchableWithoutFeedback, TextInput, Alert, Modal, Button
+} from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import styles from './styles';
 import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome } from "@expo/vector-icons";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useSelector, useDispatch } from 'react-redux'
@@ -19,50 +24,36 @@ const initialLayout = { width: Dimensions.get('window').width };
 
 
 const FirstRoute = (props) => {
-
+    const { loading, error, get, fetchData, post, remove } = useApi();
     const { allProducts, navigation } = props;
+    const user = useSelector((state) => state.profile.user.userType);
+    const jwtToken = useSelector((state) => state.auth.token);
+
     return (
         <ScrollView>
             <View style={styles.container}>
-                {/* {data.map((item, index) => (
-                    <TouchableOpacity style={styles.cardContainer} key={item.id} onPress={() => navigation.navigate("ProductDescription", { itemId: item.id, productName: item.title, productPrice: item.price, likedStatus: item.liked, productDescription: item.desc })}>
-                        <View key={item.id}>
-                            <View style={styles.card}>
-                                <Image source={require('../../../assets/desk.jpg')} style={styles.image} />
-                                <TouchableOpacity style={styles.heartIcon} onPress={() => console.log('Heart icon pressed')}>
-                                    <Text>{item.liked ? (
-                                        <Ionicons name="heart" size={24} color="red" /> // Use heart icon if liked
-                                    ) : (
-                                        <Ionicons name="heart-outline" size={24} color="black" /> // Use heart outline icon if not liked
-                                    )}</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <Text style={styles.title}>{item.title}</Text>
-                            <Text style={styles.price}>{item.price}</Text>
-                        </View>
-                    </TouchableOpacity>
-                ))} */}
                 {allProducts.map((item, index) => (
-                    <TouchableOpacity style={styles.cardContainer} key={item.product_id} onPress={() => navigation.navigate("ProductDescription", { item: item })}>
-                        <View key={item.id}>
+                    <TouchableOpacity style={styles.cardContainer} key={item?.product_id} onPress={() => navigation.navigate("ProductDescription", { item: item })}>
+                        <View key={item?.id}>
 
                             <View style={styles.card}>
                                 <Image source={{ uri: item?.image_url }} style={styles.image} />
-                                <TouchableOpacity style={styles.heartIcon} onPress={() => console.log('Heart icon pressed')}>
-                                    <Text>{false ? (
-                                        <Ionicons name="heart" size={30} color="red" /> // Use heart icon if liked
-                                    ) : (
-                                        <Ionicons name="heart-outline" size={30} color="black" /> // Use heart outline icon if not liked
-                                    )}</Text>
-                                </TouchableOpacity>
+                                {user === '1' && (
+                                    <TouchableOpacity style={styles.heartIcon} onPress={() => navigation.navigate("ProductDescription", { item: item })}>
+                                        <Text>  <FontAwesome name="edit" style={styles.icon} /></Text>
+                                    </TouchableOpacity>
+                                )}
                             </View>
 
-                            <Text style={styles.title}>{item.name}</Text>
-                            <Text style={styles.price}>₹{item.price}</Text>
+                            <Text style={styles.title}>{item?.name}</Text>
+                            <Text style={styles.price}>₹{item?.price}</Text>
+
+
                         </View>
                     </TouchableOpacity>
                 ))}
             </View>
+
         </ScrollView >
     )
 }
@@ -73,25 +64,26 @@ const FirstRoute = (props) => {
 const OldTabContent = (props) => {
 
     const { navigation, allOldProducts } = props;
+    const user = useSelector((state) => state.profile.user.userType);
 
     return (
         <ScrollView>
             <View style={styles.container}>
                 {allOldProducts.map((item, index) => (
-                    <TouchableOpacity style={styles.cardContainer} key={item.product_id} onPress={() => navigation.navigate("ProductDescription", { item: item })}>
-                        <View key={item.product_id}>
+                    <TouchableOpacity style={styles.cardContainer} key={item?.product_id} onPress={() => navigation.navigate("ProductDescription", { item: item })}>
+                        <View key={item?.product_id}>
                             <View style={styles.card}>
                                 <Image source={{ uri: item?.image_url }} style={styles.image} />
                                 <TouchableOpacity style={styles.heartIcon} onPress={() => console.log('Heart icon pressed')}>
-                                    <Text>{false ? (
-                                        <Ionicons name="heart" size={24} color="red" /> // Use heart icon if liked
-                                    ) : (
-                                        <Ionicons name="heart-outline" size={24} color="black" /> // Use heart outline icon if not liked
-                                    )}</Text>
+                                    {user === '1' && (
+                                        <TouchableOpacity style={styles.heartIcon} onPress={() => console.log('Heart icon pressed')}>
+                                            <Text>  <FontAwesome name="edit" style={styles.icon} /></Text>
+                                        </TouchableOpacity>
+                                    )}
                                 </TouchableOpacity>
                             </View>
-                            <Text style={styles.title}>{item.name}</Text>
-                            <Text style={styles.price}>{item.price}</Text>
+                            <Text style={styles.title}>{item?.name}</Text>
+                            <Text style={styles.price}>{item?.price} Kg</Text>
                         </View>
                     </TouchableOpacity>
                 ))}
@@ -105,26 +97,26 @@ const OldTabContent = (props) => {
 const NewTabContent = (props) => {
 
     const { navigation, allNewProducts } = props;
-
+    const user = useSelector((state) => state.profile.user.userType);
 
     return (
         <ScrollView>
             <View style={styles.container}>
                 {allNewProducts.map((item, index) => (
-                    <TouchableOpacity style={styles.cardContainer} key={item.product_id} onPress={() => navigation.navigate("ProductDescription", { item: item })}>
-                        <View key={item.product_id}>
+                    <TouchableOpacity style={styles.cardContainer} key={item?.product_id} onPress={() => navigation.navigate("ProductDescription", { item: item })}>
+                        <View key={item?.product_id}>
                             <View style={styles.card}>
                                 <Image source={{ uri: item?.image_url }} style={styles.image} />
                                 <TouchableOpacity style={styles.heartIcon} onPress={() => console.log('Heart icon pressed')}>
-                                    <Text>{false ? (
-                                        <Ionicons name="heart" size={24} color="red" /> // Use heart icon if liked
-                                    ) : (
-                                        <Ionicons name="heart-outline" size={24} color="black" /> // Use heart outline icon if not liked
-                                    )}</Text>
+                                    {user === '1' && (
+                                        <TouchableOpacity style={styles.heartIcon} onPress={() => console.log('Heart icon pressed')}>
+                                            <Text>  <FontAwesome name="edit" style={styles.icon} /></Text>
+                                        </TouchableOpacity>
+                                    )}
                                 </TouchableOpacity>
                             </View>
-                            <Text style={styles.title}>{item.name}</Text>
-                            <Text style={styles.price}>{item.price}</Text>
+                            <Text style={styles.title}>{item?.name}</Text>
+                            <Text style={styles.price}>{item?.price} Kg</Text>
                         </View>
                     </TouchableOpacity>
                 ))}
@@ -133,7 +125,8 @@ const NewTabContent = (props) => {
     );
 };
 
-const SecondRoute = ({ allNewProducts, allOldProducts }) => {
+const SecondRoute = ({ allNewProducts, allOldProducts, user }) => {
+
     return (
         <TopTab.Navigator>
             <TopTab.Screen name='Old'>
@@ -155,37 +148,9 @@ const renderTabBar = props => (
     />
 );
 
-// const ProductTab = () => {
-//     const [index, setIndex] = useState(0);
-//     const [routes] = useState([
-//         { key: 'first', title: 'First' },
-//         { key: 'second', title: 'Second' },
-//     ]);
-
-//     const renderScene = ({ route }) => {
-//         switch (route.key) {
-//             case 'first':
-//                 return <FirstRoute />;
-//             case 'second':
-//                 return <SecondRoute />;
-//             default:
-//                 return null;
-//         }
-//     };
-
-//     return (
-//         <TabView
-//             navigationState={{ index, routes }}
-//             renderScene={renderScene}
-//             onIndexChange={setIndex}
-//             initialLayout={initialLayout}
-//             renderTabBar={renderTabBar}
-//             swipeEnabled={true}
-//         />
-//     );
-// }
 
 const TabNavigator = ({ allProducts, allNewProducts, allOldProducts }) => {
+
     return (
         <TopTab.Navigator>
             <TopTab.Screen name='We Buy'>
@@ -199,6 +164,7 @@ const TabNavigator = ({ allProducts, allNewProducts, allOldProducts }) => {
 };
 
 const ProductTab = (props) => {
+
     const { loading, error, get } = useApi();
     const [allProducts, setAllProducts] = useState([]);
     const [allNewProducts, setAllNewProducts] = useState([]);
@@ -206,7 +172,7 @@ const ProductTab = (props) => {
     const jwtToken = useSelector((state) => state.auth.token);
 
     useEffect(() => {
-       
+
         const fetchData = async () => {
             try {
                 const url = `https://clean-scrap-jnck-backend.vercel.app/api/getAllWeBuyProducts`;
@@ -255,7 +221,7 @@ const ProductTab = (props) => {
             allProducts={allProducts}
             allNewProducts={allNewProducts}
             allOldProducts={allOldProducts}
-            {...props} // Pass additional props if needed
+            {...props}
         />
     );
 };

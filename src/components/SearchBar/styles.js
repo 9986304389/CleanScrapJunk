@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-// import { Montserrat_400Regular } from "@expo-google-fonts/montserrat";
+
 
 const styles = StyleSheet.create({
     container: {
@@ -22,7 +22,6 @@ const styles = StyleSheet.create({
         height: 40,
         fontSize: 16,
         color: '#333',
-        fontFamily: 'Montserrat_400Regular'
     },
     searchResult: {
         // Style for the search result text

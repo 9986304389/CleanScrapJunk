@@ -6,6 +6,7 @@ const initialState = {
     phoneNumber: null,
     email: null,
     userType: null,
+    location:null,
     loginTime: null,
   },
   loading: false,

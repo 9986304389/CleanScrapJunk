@@ -45,7 +45,10 @@ export default function SignUP() {
     const [email, setEmail] = useState('');
     const [phonenumber, setPhoneNumber] = useState('');
     const [location, setLocation] = useState('');
+    const [gstnumber, setGstnumber] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
+
+
     const options = [
         { label: 'Chennai', value: 'Chennai' },
         { label: 'Coimbatore', value: 'Coimbatore' },
@@ -68,7 +71,6 @@ export default function SignUP() {
 
     const onLoginPress = async () => {
 
-
         try {
 
             if (passwordreenter == password) {
@@ -78,6 +80,7 @@ export default function SignUP() {
                     "phonenumber": phonenumber,
                     "password": password,
                     "location": location,
+                    "gst": gstnumber
                 }
 
                 const response = await post('https://clean-scrap-jnck-backend.vercel.app/api/usersiginup', data)
@@ -156,7 +159,7 @@ export default function SignUP() {
                             />
                             <Text style={styles.label_text}>GST Number</Text>
                             <TextInput
-                                // onChangeText={setEmail}
+                                onChangeText={setGstnumber}
                                 placeholder="GST No."
                                 placeholderColor="#c4c3cb"
                                 style={styles.loginFormTextInput}

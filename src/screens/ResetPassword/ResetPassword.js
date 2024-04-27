@@ -12,20 +12,50 @@ import {
     TouchableOpacity
 } from "react-native";
 import { Button, SocialIcon, Icon } from "react-native-elements";
-
+import useApi from '../../apiCalls/ApiCalls';
 
 
 export default function RestPassword({ navigation }) {
-    const onLoginPress = () => { navigation.navigate('OTPPage') };
+    const { loading, error, get, fetchData, post } = useApi();
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [passwordreenter, setPasswordReenter] = useState('');
     const [showPasswordReEnter, setShowPasswordReenter] = useState(false);
+    const [phoneNumber, setPhonenumber] = useState("");
+
+    
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
     const togglePasswordVisibility2 = () => {
         setShowPasswordReenter(!showPasswordReEnter);
+    };
+
+    const onLoginPress = async () => {
+        //api call
+       
+        try {
+            let data = {
+
+                "phonenumber": phoneNumber,
+                "password": password,
+
+            }
+
+            const response = await post('https://clean-scrap-jnck-backend.vercel.app/api/resetPassword', data)
+
+            if (response?.status === true) {
+                Alert.alert("Reaset Password successfully ")
+            }
+            else {
+                Alert.alert(`${response.message}`)
+            }
+
+        } catch (err) {
+
+            console.log("err",err)
+        }
+
     };
 
 
@@ -35,9 +65,10 @@ export default function RestPassword({ navigation }) {
                 <View style={styles.loginScreenContainer}>
                     <View style={styles.loginFormView}>
                         <Text style={styles.logoText}>Forgot{'\n'}Password</Text>
-                        <Text style={styles.label_text}>Email</Text>
+                        <Text style={styles.label_text}>Phone Number</Text>
                         <TextInput
-                            placeholder="email"
+                            onChangeText={setPhonenumber}
+                            placeholder="Phone Number"
                             placeholderColor="#c4c3cb"
                             style={styles.loginFormTextInput}
                         />
@@ -61,14 +92,14 @@ export default function RestPassword({ navigation }) {
                             />
 
                         </TouchableOpacity>
-                        <Text style={styles.label_text}>ReEnterPassword</Text>
+                        {/* <Text style={styles.label_text}>ReEnterPassword</Text>
                         <TextInput
                             onChangeText={setPasswordReenter}
                             placeholder="ReEnterPassword"
                             placeholderColor="#c4c3cb"
                             style={styles.loginFormTextInput}
                             secureTextEntry={!showPasswordReEnter}
-                        />
+                        /> */}
                         <TouchableOpacity
                             style={styles.eyeIconContainer2}
                             onPress={togglePasswordVisibility2}

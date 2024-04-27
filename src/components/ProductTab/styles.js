@@ -56,8 +56,8 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         resizeMode: 'cover',
-        alignContent:'center',
-        alignItems:"center"
+        alignContent: 'center',
+        alignItems: "center"
     },
     heartIcon: {
         position: 'absolute',
@@ -65,9 +65,20 @@ const styles = StyleSheet.create({
         right: 5,
         backgroundColor: '#ffff',
         padding: 2,
-        opacity:0.8,
-        textAlign:'center',
-        alignSelf:'center',
+        opacity: 0.8,
+        textAlign: 'center',
+        alignSelf: 'center',
+        borderRadius: 10,
+    },
+    heartIcon1: {
+        position: 'absolute',
+        top: 5,
+        left: 5,
+        backgroundColor: '#ffff',
+        padding: 2,
+        opacity: 0.8,
+        textAlign: 'center',
+        alignSelf: 'center',
         borderRadius: 10,
     },
     title: {
@@ -83,7 +94,22 @@ const styles = StyleSheet.create({
         marginBottom: '3%',
         marginLeft: '5%',
         color: 'green'
-    }
+    },
+    iconContainer: {
+        width: '20%',
+        // marginHorizontal: 10,
+        marginVertical: 15,
+    },
+    spOffers: {
+        display: 'flex',
+        flexDirection: 'row',
+    },
+    icon: {
+        fontSize: 26,
+        color: 'black',
+        alignContent: "center"
+    },
+   
 })
 
 export default styles;

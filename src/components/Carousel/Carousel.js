@@ -1,113 +1,162 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { View, Text, ScrollView, ImageBackground, Animated, Dimensions, TouchableOpacity } from "react-native";
 import Carousel from "react-native-snap-carousel";
 import styles from "./style";
 import { FontAwesome } from "@expo/vector-icons";
+import useApi from '../../apiCalls/ApiCalls';
+import CustomAlert from '../alert/Alert';
+import { useSelector, useDispatch } from 'react-redux'
+// const getOfferProducts = [
+//     { id: '1', title: '30% Discount', desc: 'Get discound for every order only valid for today', shop: 'Shop Now' },
+//     { id: '2', title: '30% Discount', desc: 'Get discound for every order only valid for today', shop: 'Shop Now' },
+//     { id: '3', title: '30% Discount', desc: 'Get discound for every order only valid for today', shop: 'Shop Now' },
+//     { id: '4', title: '30% Discount', desc: 'Get discound for every order only valid for today', shop: 'Shop Now' },
+// ]
 
-const data = [
-    { id: '1', title: '30% Discount', desc: 'Get discound for every order only valid for today', shop: 'Shop Now' },
-    { id: '2', title: '30% Discount', desc: 'Get discound for every order only valid for today', shop: 'Shop Now' },
-    { id: '3', title: '30% Discount', desc: 'Get discound for every order only valid for today', shop: 'Shop Now' },
-    { id: '4', title: '30% Discount', desc: 'Get discound for every order only valid for today', shop: 'Shop Now' },
-]
+export default function CarouselComponent({ navigation, user }) {
 
-export default function CarouselComponent({ navigation }) {
-    const scrollX = useRef(new Animated.Value(0)).current;
+    // const scrollX = useRef(new Animated.Value(0)).current;
     const scrollViewRef = useRef();
+    const { loading, error, get, fetchgetOfferProducts, post, remove } = useApi();
+    const [getOfferProducts, setOfferProducts] = useState([]);
+    const [modelTitle, setModelTitle] = useState('');
+    const [showButton, setShowButton] = useState(false);
+    const [color_title, setColorTitle] = useState('');
+    const [color_description, setColorDescription] = useState('');
+    const [responseMessage, setResponseMessage] = useState('');
+    const [isVisible, setIsVisible] = useState(false);
+    const jwtToken = useSelector((state) => state.auth.token);
+    const showAlert = () => {
+        setIsVisible(true);
+    };
+
+    const hideAlert = () => {
+        setIsVisible(false);
+    };
+
+
+    // useEffect(() => {
+    //     const scrollInterval = Animated.timing(scrollX, {
+    //         toValue: 1,
+    //         duration: 40000, // Adjust the duration for scrolling speed
+    //         useNativeDriver: true,
+    //         isInteraction: false,
+    //         repeat: true,
+    //     });
+
+    //     scrollInterval.start();
+
+    //     return () => {
+    //         scrollInterval.stop();
+    //     };
+    // }, []);
+
+    // useEffect(() => {
+    //     scrollX.addListener(({ value }) => {
+    //         if (scrollViewRef.current) {
+    //             const contentWidth = (getOfferProducts.length * 300) * 2; // Assuming each item has a width of 200 (adjust according to your item width)
+    //             const scrollViewWidth = Dimensions.get('window').width; // Width of the scrollView
+    //             const maxOffsetX = contentWidth - scrollViewWidth;
+    //             let offsetX = value * maxOffsetX;
+
+    //             if (offsetX > maxOffsetX) {
+    //                 // Calculate the excess distance past the end
+    //                 const excess = offsetX - maxOffsetX;
+
+    //                 // Smoothly transition back to the start position
+    //                 Animated.timing(scrollX, {
+    //                     toValue: 0,
+    //                     duration: 500, // Adjust the duration for smoothness
+    //                     useNativeDriver: true,
+    //                     isInteraction: false,
+    //                 }).start(() => {
+    //                     // Reset the scrollX value after transitioning back to the start
+    //                     scrollX.setValue(0);
+    //                 });
+
+    //                 // Adjust offsetX to the start position
+    //                 offsetX = excess % maxOffsetX;
+    //             }
+
+    //             scrollViewRef.current.scrollTo({ x: offsetX, animated: false });
+    //         }
+    //     });
+
+    //     return () => {
+    //         scrollX.removeAllListeners();
+    //     };
+    // }, []);
 
     useEffect(() => {
-        const scrollInterval = Animated.timing(scrollX, {
-            toValue: 1,
-            duration: 40000, // Adjust the duration for scrolling speed
-            useNativeDriver: true,
-            isInteraction: false,
-            repeat: true,
-        });
-
-        scrollInterval.start();
-
-        return () => {
-            scrollInterval.stop();
-        };
-    }, []);
-
-    useEffect(() => {
-        scrollX.addListener(({ value }) => {
-            if (scrollViewRef.current) {
-                const contentWidth = (data.length * 300) * 2; // Assuming each item has a width of 200 (adjust according to your item width)
-                const scrollViewWidth = Dimensions.get('window').width; // Width of the scrollView
-                const maxOffsetX = contentWidth - scrollViewWidth;
-                let offsetX = value * maxOffsetX;
-
-                if (offsetX > maxOffsetX) {
-                    // Calculate the excess distance past the end
-                    const excess = offsetX - maxOffsetX;
-
-                    // Smoothly transition back to the start position
-                    Animated.timing(scrollX, {
-                        toValue: 0,
-                        duration: 500, // Adjust the duration for smoothness
-                        useNativeDriver: true,
-                        isInteraction: false,
-                    }).start(() => {
-                        // Reset the scrollX value after transitioning back to the start
-                        scrollX.setValue(0);
-                    });
-
-                    // Adjust offsetX to the start position
-                    offsetX = excess % maxOffsetX;
+        const fetchgetOfferProducts = async () => {
+            try {
+                const url = `https://clean-scrap-jnck-backend.vercel.app/api/getAllofferProducts`;
+                const response = await get(url, jwtToken);
+                if (response?.status == true) {
+                    setOfferProducts(response.result);
+                } else {
+                    setModelTitle('Get offer product fail');
+                    setColorTitle('red');
+                    setColorDescription('black');
+                    setResponseMessage(response?.message);
+                    showAlert();
                 }
-
-                scrollViewRef.current.scrollTo({ x: offsetX, animated: false });
+            } catch (error) {
+                console.error('Error fetching initial getOfferProducts:', error);
+                // Handle error if needed
             }
-        });
-
-        return () => {
-            scrollX.removeAllListeners();
         };
+
+        fetchgetOfferProducts();
+
     }, []);
 
-    const renderItem = ({ item }) => {
-        <View style={styles.card}>
-            <Text style={styles.specialOffers}>Special Offers</Text>
-            <Text style={styles.title}>{item.title}</Text>
-            <Text style={styles.text}>{item.desc}</Text>
-            <Text style={styles.shopNow}>{item.shop}</Text>
-        </View>
-    }
 
-    const userType = 'admin'
+
 
     return (
 
         <View style={styles.container}>
             <View style={styles.spOffers}>
                 <Text style={styles.specialOffers}>Special Offers</Text>
-                {userType === 'admin' && (
-                    <TouchableOpacity onPress={() => navigation.navigate('AddSPOffers')} style={styles.iconContainer}>
+                {user === '1' && (
+                    <TouchableOpacity onPress={() => navigation.navigate('AddProducts')} style={styles.iconContainer}>
                         <FontAwesome name="edit" style={styles.icon} />
                     </TouchableOpacity>
                 )}
             </View>
             <ScrollView ref={scrollViewRef} horizontal showsHorizontalScrollIndicator={true} style={{ width: '100%', maxHeight: 200 }}>
                 <View style={styles.cardContainer}>
-                    {data.map((item, index) => (
+                    {getOfferProducts.map((item, index) => (
                         <ImageBackground
                             key={item.id}
                             source={require('../../../assets/desk.jpg')} // Change the path to your image
                             style={styles.card}
-                            imageStyle={{ borderRadius: 10, opacity: 0.3 }}
+                            imageStyle={{ borderRadius: 10, opacity: 0.4, backgroundColor: "black" }}
                         >
-                            <View key={item.id} style={styles.cardContent}>
+                            <View key={item.id} style={{ width: '100%', paddingHorizontal: 10}} >
                                 {/* <Text style={styles.specialOffers}>Special Offers</Text> */}
-                                <Text style={styles.title}>{item.title}</Text>
-                                <Text style={styles.text}>{item.desc}</Text>
-                                <Text style={styles.shopNow}>{item.shop}</Text>
+                                <Text style={styles.title}>Name:{item?.product_name}</Text>
+                                <Text style={styles.title}>Rate:{item?.rate}</Text>
+                                <Text style={styles.title}>Description:{item?.description}</Text>
+                                <Text style={styles.title}>Quantity:{item.quantity}</Text>
+                                <Text style={styles.title}>Size:{item.size}</Text>
                             </View>
                         </ImageBackground>
                     ))}
                 </View>
             </ScrollView>
+            <CustomAlert
+                isVisible={isVisible}
+                title={modelTitle}
+                description={responseMessage}
+                buttonText={showButton ? "OK" : ""}
+                onPress={hideAlert}
+                onClose={hideAlert}
+                btnisVisible={false}
+                color_title={color_title}
+                color_description={color_description}
+            />
         </View>
     )
 }

@@ -1,5 +1,4 @@
 import { StyleSheet } from "react-native";
-// import { Montserrat_400Regular } from "@expo-google-fonts/montserrat";
 import { Platform } from "react-native";
 
 const styles = StyleSheet.create({
@@ -8,7 +7,9 @@ const styles = StyleSheet.create({
         // justifyContent: 'center',
         alignItems: 'center',
         paddingHorizontal: 20,
-        paddingTop: 30
+        paddingTop: 30,
+        marginBottom: 20
+
     },
     title: {
         fontSize: 20,
@@ -71,7 +72,7 @@ const styles = StyleSheet.create({
     buttonRow: {
         flexDirection: "row",
         width: '100%',
-        marginTop: '25%'
+        marginTop: '20%'
     },
     cartBtn: {
         borderColor: '#347855',
@@ -96,6 +97,19 @@ const styles = StyleSheet.create({
         paddingVertical: 15,
         borderRadius: 10
     },
+    editbutton: {
+        borderColor: '#347855',
+        backgroundColor: '#347855',
+        borderWidth: 2,
+        marginHorizontal: 10,
+        textAlign: 'center',
+        alignItems: 'center', // Align content horizontally
+        justifyContent: 'center', // Align content vertically
+        width: '45%',
+        paddingVertical: 15,
+        borderRadius: 10,
+        marginTop: 20
+    },
     cardBtnText: {
         fontSize: 16,
         fontWeight: '600',
@@ -104,6 +118,101 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '600',
         color: 'white',
+    },
+    modelcontainer: {
+        display: 'flex',
+        flex: 1,
+        justifyContent: 'center',
+        alignContent: 'center',
+        backgroundColor: '#fff'
+    },
+    modelmodalContainer: {
+
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        position: 'absolute',
+    },
+    modelmodelmodalView: {
+        flex: 1,
+        alignContent: 'center',
+        justifyContent: 'center'
+    },
+    modelalert: {
+        width: '100%',
+        maxWidth: 300,
+        margin: 35,
+        elevation: 24,
+        borderRadius: 2,
+        backgroundColor: '#fff'
+    },
+    modelalertTitle: {
+        margin: 24,
+        fontWeight: "bold",
+        fontSize: 24,
+        color: "#000"
+    },
+    modeltextInput: {
+        marginLeft: 24,
+        marginRight: 24,
+        marginBottom: 24,
+        fontSize: 16
+    },
+    modelalertButtonGroup: {
+        marginTop: 0,
+        marginRight: 0,
+        marginBottom: 8,
+        marginLeft: 24,
+        padding: 10,
+        display: "flex",
+        flexDirection: 'row',
+        justifyContent: "flex-end"
+    },
+    modelalertButton: {
+        borderColor: '#347855',
+        backgroundColor: '#347855',
+        borderWidth: 2,
+        marginHorizontal: 10,
+        textAlign: 'center',
+        alignItems: 'center', // Align content horizontally
+        justifyContent: 'center', // Align content vertically
+        width: '25%',
+        paddingVertical: 5,
+        borderRadius: 10,
+        marginTop: 20,
+        marginBottom: 10,
+
+
+    },
+    textInput: {
+        marginLeft: 24,
+        marginRight: 24,
+        marginBottom: 24,
+        fontSize: 16
+    },
+    modelokaybtn: {
+        fontSize: 16,
+        fontWeight: '600',
+        color: 'white',
+    },
+    alertButtonGroup:{
+        marginTop:0,
+        marginRight:0,
+        marginBottom:8,
+        marginLeft:24,
+        display:"flex",
+        flexDirection:'row',
+        justifyContent:"flex-end"
+       
+    },
+    alertButton:{
+        marginTop:12,
+        marginRight:8,
+        backgroundColor:"black",
+    },
+    ButtonCollor:{
+        backgroundColor:"green",
     }
 })
 

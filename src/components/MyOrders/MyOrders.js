@@ -287,7 +287,7 @@ const MyOrders = (props) => {
                                 <TouchableOpacity style={styles.orderButton}>
                                     <Text style={styles.orderButtonText}>Track Order</Text>
                                 </TouchableOpacity>
-                               
+
                             </View>
                         </View>
 
@@ -517,9 +517,9 @@ const MyOrders = (props) => {
                     "borderRadius": 10
                 }
             }}>
-            <TopTab.Screen name='OnProgress' component={OnProgress} />
+            {/* <TopTab.Screen name='OnProgress' component={OnProgress} /> */}
             <TopTab.Screen name='Success' component={Success} />
-            <TopTab.Screen name='Cancelled' component={Cancelled} />
+            {/* <TopTab.Screen name='Cancelled' component={Cancelled} /> */}
         </TopTab.Navigator>
     );
 

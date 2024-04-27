@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
     },
     cardContainer: {
         flexDirection: 'row',
+        marginBottom:10
     },
     cardDiv: {
         width: '100%',
@@ -16,11 +17,13 @@ const styles = StyleSheet.create({
     card: {
         width: 300,
         height: 150,
-        // backgroundColor: '#ffffff',
+        backgroundColor: 'black',
         // borderRadius: 10,
         marginHorizontal: 5,
         padding: 15,
         elevation: 4,
+        opacity: 0.7,
+        borderRadius: 10
     },
     cardContent: {
         flex: 1,
@@ -35,9 +38,13 @@ const styles = StyleSheet.create({
         marginVertical: 15,
     },
     title: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        marginBottom: 15,
+        fontSize: 18,
+        fontWeight: "900",
+        marginBottom: 0,
+        alignContent:"center",
+        alignItems:"center",
+        color:"#FFFFFFFF"
+
     },
     text: {
         fontSize: 14,

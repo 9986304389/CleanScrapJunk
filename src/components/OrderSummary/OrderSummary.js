@@ -21,10 +21,10 @@ const ProgressBar = ({ currentPage, pageNames }) => {
             <View style={[styles.stepContainer, { flex: 1 }]}>
                 <StepIndicator step={2} currentPage={currentPage} />
                 <Text style={styles.pageName2}>{pageNames[1]}</Text>
-                <View style={[styles.stepLine, currentPage >= 3 ? styles.activeLine : null]} />
+                {/* <View style={[styles.stepLine, currentPage >= 3 ? styles.activeLine : null]} /> */}
             </View>
-            <StepIndicator step={3} currentPage={currentPage} />
-            <Text style={styles.pageName3}>{pageNames[2]}</Text>
+            {/* <StepIndicator step={3} currentPage={currentPage} />
+            <Text style={styles.pageName3}>{pageNames[2]}</Text> */}
         </View>
     );
 };
@@ -150,6 +150,7 @@ const OrderSummaryPage = ({ onNext, onPrev, route, selectAddress }) => {
     const [arrayOfOrderItems, setArrayOfOrderItems] = useState([]);
     const jwtToken = useSelector((state) => state.auth.token);
     const phoneNumber = useSelector((state) => state.profile.user.phoneNumber);
+    const user = useSelector((state) => state.profile.user);
     const [allMyAddress, setAllMyAddress] = useState([]);
     const [selectedAddress, setSelectedAddress] = useState(null);
     const Address = useSelector((state) => state.address.address);
@@ -168,9 +169,43 @@ const OrderSummaryPage = ({ onNext, onPrev, route, selectAddress }) => {
         setIsVisible(false);
     };
 
-    const handleNext = (selectedAddress, orderItems, totalAmount) => {
-        onNext(selectedAddress, orderItems, totalAmount); // Invoke the parent function passed as prop
+    const handleNext = async (selectAddress, orderItems, totalAmount) => {
+        // onNext(selectedAddress, orderItems, totalAmount); // Invoke the parent function passed as prop
+
+        try {
+            let data = {
+                "userdetails": user,
+                "orderdetails": orderItems,
+                "totalAmount": totalAmount,
+                "address": selectAddress,
+            }
+            
+           // console.log(data)
+
+            const response = await post('https://clean-scrap-jnck-backend.vercel.app/api/sendPlaceorderemail', data, jwtToken)
+
+            if (response?.status === true) {
+                setModelTitle('Order Placed successfully');
+                setColorTitle('green');
+                setColorDescription('black');
+                setResponseMessage(response?.message)
+                showAlert();
+            }
+            else {
+
+                setModelTitle('Unable Order Placed')
+                // Call the alert 
+                setColorTitle('red');
+                setColorDescription('black');
+                setResponseMessage(response?.message)
+                showAlert();
+            }
+
+        } catch (err) {
+            console.error('add data:', error);
+        }
     }
+
     useEffect(() => {
 
         // Check if route.params.getallgoingtoorderproducts is an array
@@ -255,18 +290,18 @@ const OrderSummaryPage = ({ onNext, onPrev, route, selectAddress }) => {
                 <View style={styles.addressContainer}>
                     <View style={styles.addressDiv}>
                         <Text style={styles.label}>Delivery Address:</Text>
-                        {selectedAddress ? (
+                        {/* {selectedAddress ? (
                             <Text style={styles.address}>
                                 {selectedAddress.address_line1} {selectedAddress.address_line2} {selectedAddress.city} {selectedAddress.state} {selectedAddress.postal_code}
                             </Text>
-                        ) : (
-                            <Text style={styles.address}>{selectAddress.address_line1} {selectAddress.address_line2} {selectAddress.city} {selectAddress.state} {selectAddress.postal_code}</Text>
-                        )}
+                        ) : ( */}
+                        <Text style={styles.address}>{selectAddress.address_line1} {selectAddress.address_line2} {selectAddress.city} {selectAddress.state} {selectAddress.postal_code}</Text>
+                        {/* )} */}
 
                     </View>
                     <View style={styles.changeAddressBtnContainer}>
                         <TouchableOpacity title="Change Address" onPress={onPrev} style={styles.changeAddressBtn} >
-                            <Text style={styles.changeAddressTxt}>Change Address</Text>
+                            <Text style={styles.changeAddressTxt}>Select Addres</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -280,17 +315,18 @@ const OrderSummaryPage = ({ onNext, onPrev, route, selectAddress }) => {
                         </View>
                     </View>
                 ))}
-                <View style={styles.totalAmountContainer}>
+                {/* <View style={styles.totalAmountContainer}>
                     <Text style={styles.label}>Total Amount:</Text>
                     <Text style={styles.totalAmount}>₹{getTotalAmount()}</Text>
-                </View>
+                </View> */}
                 <View style={styles.lastcontainer}>
                     <View style={styles.totalAmountContainer}>
                         <Text style={styles.label}>Total Amount:</Text>
                         <Text style={styles.totalAmount}>₹{getTotalAmount()}</Text>
                     </View>
+
                     <View style={styles.continueBtnContainer}>
-                        <TouchableOpacity onPress={() => handleNext(selectedAddress, arrayOfOrderItems, totalAmount)} style={styles.continueBtn} >
+                        <TouchableOpacity onPress={() => handleNext(selectAddress, arrayOfOrderItems, totalAmount)} style={styles.continueBtn} >
                             <Text style={styles.continueTxt}>Continue</Text>
                         </TouchableOpacity>
                     </View>
@@ -330,7 +366,7 @@ const PaymentPage = ({ onPrev, navigation, selectAddress, orderItems, totalAmoun
     };
 
     const PlaceOrder = async () => {
-        console.log("hey")
+
         const productsData = orderItems.map((item) => ({
             product_code: item?.product_code,
             customer_id: phoneNumber,
@@ -355,7 +391,7 @@ const PaymentPage = ({ onPrev, navigation, selectAddress, orderItems, totalAmoun
 
             const responseData = await response.json();
 
-            console.log(responseData)
+
             if (response.ok) {
                 setModelTitle('Order Place');
                 setColorTitle('green');
@@ -452,12 +488,12 @@ const OrderSteps = (props) => {
     return (
         <>
             <View style={styles.progressBarContainer}>
-                <ProgressBar currentPage={currentPage} pageNames={['Address', 'Order Summary', 'Payment']} />
+                <ProgressBar currentPage={currentPage} pageNames={['Address', 'Order Summary']} />
             </View>
             <View style={styles.container}>
                 {currentPage === 1 && <AddressPage onNext={onNext} navigation={navigation} route={route} />}
                 {currentPage === 2 && <OrderSummaryPage onNext={onNext} onPrev={onPrev} navigation={navigation} route={route} selectAddress={selectAddress} currentPage={currentPage} />}
-                {currentPage === 3 && <PaymentPage onPrev={onPrev} navigation={navigation} selectAddress={selectAddress} orderItems={orderItems} totalAmount={totalAmount} />}
+                {/* {currentPage === 3 && <PaymentPage onPrev={onPrev} navigation={navigation} selectAddress={selectAddress} orderItems={orderItems} totalAmount={totalAmount} />} */}
             </View>
         </>
     );

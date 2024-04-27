@@ -83,7 +83,7 @@ export default function OTPPage({ route, navigation }) {
                     setButtonPressCount(prevCount => prevCount + 1);
                     if (buttonPressCount === 2) {
                         // If button has been pressed 3 times, navigate to home page
-                        navigation.navigate('SignIn'); // Replace 'Home' with your actual screen name
+                        navigation.navigate('SignIn');
                     }
                     else {
                         setModelTitle('Verify OTP Fail')
@@ -103,15 +103,48 @@ export default function OTPPage({ route, navigation }) {
         }
     }
 
-    const resend_OTP = () => {
+    const resend_OTP = async () => {
+        try {
+            const queryParameters = {
+                email: email_address, // Add your product code parameter value here
 
+            };
+
+            // Convert query parameters to string
+            const queryString = new URLSearchParams(queryParameters).toString();
+            // Construct the complete URL with query parameters
+            const url = `https://clean-scrap-jnck-backend.vercel.app/api/getOTP?${queryString}`;
+
+            const response = await get(url, jwtToken);
+
+            if (response?.status == true) {
+                setModelTitle('Get OTP success please enter otp')
+                // Call the alert 
+                setColorTitle('green');
+                setColorDescription('black');
+                setResponseMessage(response?.message)
+                showAlert();
+            }
+            else {
+                setModelTitle('Get OTP Fail')
+                // Call the alert 
+                setColorTitle('red');
+                setColorDescription('black');
+                setResponseMessage(response?.message)
+                showAlert();
+            }
+
+        } catch (error) {
+            console.error('Error fetching initial data:', error);
+            // Handle error if needed
+        }
     }
 
     return (
         <View style={styles.container}>
             <View style={{ top: 50 }}>
                 <Text style={{ fontStyle: "normal", fontWeight: "200", fontSize: 20 }}>An 6 Digits code has been sent to</Text>
-                <Text style={{ fontStyle: "normal", fontWeight: "200", fontSize: 20, textAlign: "center" }}>your email{email}</Text>
+                <Text style={{ fontStyle: "normal", fontWeight: "200", fontSize: 20, textAlign: "center" }}>your email {email}</Text>
             </View>
             <View style={styles.otp}>
 

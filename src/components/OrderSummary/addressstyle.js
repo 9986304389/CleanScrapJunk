@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
         height: 40,
         fontSize: 16,
         color: '#333',
-        fontFamily: 'Montserrat_400Regular'
+        
     },
     containerView: {
         flex: 1,

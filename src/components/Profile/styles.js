@@ -1,5 +1,4 @@
 import { StyleSheet } from "react-native";
-// import { Montserrat_400Regular } from "@expo-google-fonts/montserrat";
 import { Platform } from "react-native";
 
 const styles = StyleSheet.create({
