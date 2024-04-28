@@ -179,8 +179,8 @@ const OrderSummaryPage = ({ onNext, onPrev, route, selectAddress }) => {
                 "totalAmount": totalAmount,
                 "address": selectAddress,
             }
-            
-           // console.log(data)
+
+            // console.log(data)
 
             const response = await post('https://clean-scrap-jnck-backend.vercel.app/api/sendPlaceorderemail', data, jwtToken)
 
@@ -306,7 +306,7 @@ const OrderSummaryPage = ({ onNext, onPrev, route, selectAddress }) => {
                     </View>
                 </View>
                 {arrayOfOrderItems?.map((item, index) => (
-                    <View style={styles.productDetailsContainer}>
+                    <View key={index} style={styles.productDetailsContainer}>
                         <Image source={{ uri: item?.image_url }} style={styles.image} />
                         <View style={styles.textCard}>
                             <Text style={styles.name}>{item?.name}</Text>

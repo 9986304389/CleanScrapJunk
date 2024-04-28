@@ -1,12 +1,6 @@
-import React, { useLayoutEffect } from "react";
-import { FlatList, Text, View, TouchableHighlight, Image, TouchableWithoutFeedback, Keyboard } from "react-native";
-import styles from "./styles";
-import { recipes } from "../../data/dataArrays";
-import MenuImage from "../../components/MenuImage/MenuImage";
-import { getCategoryName } from "../../data/MockDataAPI";
-import BottomBar from "../../components/BottomBar/BottomBar";
-import MainBar from "../../components/MainBar/MainBar";
-import { Appbar, FAB, useTheme } from 'react-native-paper';
+import React, { useLayoutEffect, useState } from "react";
+import { FlatList, Text, View, TouchableHighlight, Image, TouchableWithoutFeedback, Keyboard, ScrollView, RefreshControl } from "react-native";
+
 import { Avatar, Icon } from 'react-native-elements';
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useSelector, useDispatch } from 'react-redux'
@@ -20,6 +14,31 @@ export default function HomeScreen(props) {
   const userName = useSelector((state) => state.profile.user.name);
   const userLocation = useSelector((state) => state.profile.user.location);
   const { navigation } = props;
+  const [refreshing, setRefreshing] = React.useState(false);
+  const [refreshCount, setRefreshCount] = useState(0);
+  const [scrollPosition, setScrollPosition] = useState(0);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+    setRefreshCount(prevCount => prevCount + 1);
+
+  }, []);
+
+
+  const handleScroll = (event) => {
+    const currentScrollPosition = event.nativeEvent.contentOffset.y;
+    // If the user scrolls up and is at the top of the scroll view, enable refresh
+    if (currentScrollPosition < scrollPosition && currentScrollPosition === 0) {
+      setScrollPosition(currentScrollPosition);
+      setRefreshing(true);
+      onRefresh();
+    }
+    // Update the scroll position
+    setScrollPosition(currentScrollPosition);
+  };
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -56,12 +75,29 @@ export default function HomeScreen(props) {
   }
 
   return (
+
     <TouchableWithoutFeedback onPress={dismissKeyboard}>
+
       <View style={{ flex: 1 }}>
-        <SearchBar />
+        <View style={{ flex: 0 }}>
+          <ScrollView
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+          >
+            {/* ScrollView content */}
+            <SearchBar />
+          </ScrollView>
+        </View>
+
+
+
         <CarouselComponent navigation={navigation} user={userType} />
-        <ProductTab user={userType} />
+
+
+        <ProductTab count={refreshCount} />
+
+
       </View>
     </TouchableWithoutFeedback>
+
   );
 }

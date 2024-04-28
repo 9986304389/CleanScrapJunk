@@ -2,26 +2,16 @@ import React, { useEffect, useState } from 'react';
 import {
     Dimensions, Text, View, Image,
     TouchableOpacity, FlatList, ImageBackground, ScrollView,
-    TouchableWithoutFeedback, TextInput, Alert, Modal, Button
+    TouchableWithoutFeedback, TextInput, Alert, Modal, Button, RefreshControl
 } from 'react-native';
-import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import styles from './styles';
-import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome } from "@expo/vector-icons";
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 import { useSelector, useDispatch } from 'react-redux'
 import useApi from '../../apiCalls/ApiCalls';
-const Tab = createMaterialTopTabNavigator();
-const Stack = createStackNavigator();
+
 
 const TopTab = createMaterialTopTabNavigator();
-
-
-const initialLayout = { width: Dimensions.get('window').width };
-
-
 
 const FirstRoute = (props) => {
     const { loading, error, get, fetchData, post, remove } = useApi();
@@ -34,7 +24,7 @@ const FirstRoute = (props) => {
             <View style={styles.container}>
                 {allProducts.map((item, index) => (
                     <TouchableOpacity style={styles.cardContainer} key={item?.product_id} onPress={() => navigation.navigate("ProductDescription", { item: item })}>
-                        <View key={item?.id}>
+                        <View key={index}>
 
                             <View style={styles.card}>
                                 <Image source={{ uri: item?.image_url }} style={styles.image} />
@@ -57,8 +47,6 @@ const FirstRoute = (props) => {
         </ScrollView >
     )
 }
-
-
 
 // Component for the "Old" tab content
 const OldTabContent = (props) => {
@@ -139,16 +127,6 @@ const SecondRoute = ({ allNewProducts, allOldProducts, user }) => {
     )
 }
 
-const renderTabBar = props => (
-    <TabBar
-        {...props}
-        indicatorStyle={styles.indicator}
-        style={styles.tabBar}
-        labelStyle={styles.label}
-    />
-);
-
-
 const TabNavigator = ({ allProducts, allNewProducts, allOldProducts }) => {
 
     return (
@@ -170,6 +148,7 @@ const ProductTab = (props) => {
     const [allNewProducts, setAllNewProducts] = useState([]);
     const [allOldProducts, setAllOldProducts] = useState([]);
     const jwtToken = useSelector((state) => state.auth.token);
+    const { count } = props
 
     useEffect(() => {
 
@@ -182,6 +161,7 @@ const ProductTab = (props) => {
                     setAllProducts(response.result);
                     await getProductsByType('new', jwtToken);
                     await getProductsByType('old', jwtToken);
+
                 } else {
                     // Handle error response
                 }
@@ -192,7 +172,7 @@ const ProductTab = (props) => {
         };
 
         fetchData();
-    }, []);
+    }, [count]);
 
     const getProductsByType = async (type, jwtToken) => {
         try {

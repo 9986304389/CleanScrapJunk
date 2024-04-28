@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, Image, ScrollView, Pressable } from "react-native";
+import { View, Text, TouchableOpacity, Image, ScrollView, Pressable, RefreshControl, SafeAreaView, StyleSheet } from "react-native";
 import styles from "./styles";
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import { useSelector, useDispatch } from 'react-redux'
@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import useApi from '../../apiCalls/ApiCalls';
 import CustomAlert from '../alert/Alert'
 import { State } from "react-native-gesture-handler";
-import  MidnightAPIComponent  from'./emailAPIComponent'
+import MidnightAPIComponent from './emailAPIComponent'
 
 const MyCart = (props) => {
     const { navigation, route } = props;
@@ -21,6 +21,16 @@ const MyCart = (props) => {
     const [color_description, setColorDescription] = useState('');
     const [responseMessage, setResponseMessage] = useState('');
     const [isVisible, setIsVisible] = useState(false);
+    const [refreshing, setRefreshing] = React.useState(false);
+    const [refreshCount, setRefreshCount] = useState(0);
+
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+
+        setRefreshCount(prevCount => prevCount + 1);
+
+    }, []);
+
     const showAlert = () => {
         setIsVisible(true);
     };
@@ -46,7 +56,7 @@ const MyCart = (props) => {
     useEffect(() => {
 
         const fetchData = async () => {
-            
+
             try {
                 const queryParameters = {
                     customer_id: phoneNumber, // Add your product code parameter value here
@@ -62,7 +72,8 @@ const MyCart = (props) => {
 
 
                 if (response?.status == true) {
-                    setAllMyCartProducts(response.result)
+                    setAllMyCartProducts(response.result);
+                    setRefreshing(false);
                 }
                 else {
                     setModelTitle('Get cart prodct fail')
@@ -80,18 +91,10 @@ const MyCart = (props) => {
         }
         fetchData()
 
-    }, [])
-
-    // Function to make API call
-const callAPI = () => {
-    // Make your API call here
-    console.log("API call triggered at midnight");
-  };
-  
- 
+    }, [refreshCount])
 
 
-    // // Function to remove item from cart
+    // Function to remove item from cart
     const removeItem = async (product_code) => {
 
         try {
@@ -100,7 +103,7 @@ const callAPI = () => {
                 product_code: product_code
 
             };
-            
+
             // Convert query parameters to string
             const queryString = new URLSearchParams(queryParameters).toString();
             // Construct the complete URL with query parameters
@@ -148,47 +151,52 @@ const callAPI = () => {
 
 
     return (
-        <ScrollView>
+        
+            <ScrollView
+                contentContainerStyle={styles.scrollView}
+                refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                }>
+                <View style={styles.container}>
 
-            <View style={styles.container}>
-
-                {allMyCartProducts.map((item, index) => (
-                    <View style={styles.cartItem} key={index}>
-                        <View style={styles.card}>
-                            <Image source={{ uri: item.image_url }} style={styles.image} />
-                            <View style={styles.textCard}>
-                                <Text style={styles.name}>{item.name}</Text>
-                                <Text style={styles.price}>{item.price}</Text>
-                                <Text>Quantity: {item.quantity}</Text>
-                                <View style={styles.iconContainer}>
-                                    <TouchableOpacity onPress={async () => await removeItem(item.product_code)}>
-                                        <FontAwesome name="trash" size={24} color="black" style={styles.icon} />
-                                    </TouchableOpacity>
+                    {allMyCartProducts.map((item, index) => (
+                        <View style={styles.cartItem} key={index}>
+                            <View style={styles.card}>
+                                <Image source={{ uri: item.image_url }} style={styles.image} />
+                                <View style={styles.textCard}>
+                                    <Text style={styles.name}>{item.name}</Text>
+                                    <Text style={styles.price}>{item.price}</Text>
+                                    <Text>Quantity: {item.quantity}</Text>
+                                    <View style={styles.iconContainer}>
+                                        <TouchableOpacity onPress={async () => await removeItem(item.product_code)}>
+                                            <FontAwesome name="trash" size={24} color="black" style={styles.icon} />
+                                        </TouchableOpacity>
+                                    </View>
                                 </View>
                             </View>
                         </View>
-                    </View>
-                ))}
+                    ))}
 
-                {allMyCartProducts.length !== 0 && (
-                    <Pressable style={styles.orderButton} onPress={() => placeOrder()}>
-                        <Text style={styles.orderButtonText}>Buy Now</Text>
-                    </Pressable>)}
+                    {allMyCartProducts.length !== 0 && (
+                        <Pressable style={styles.orderButton} onPress={() => placeOrder()}>
+                            <Text style={styles.orderButtonText}>Buy Now</Text>
+                        </Pressable>)}
                     <MidnightAPIComponent />
 
-                <CustomAlert
-                    isVisible={isVisible}
-                    title={modelTitle}
-                    description={responseMessage}
-                    buttonText={showButton ? "OK" : ""}
-                    onPress={hideAlert}
-                    onClose={hideAlert}
-                    btnisVisible={false}
-                    color_title={color_title}
-                    color_description={color_description}
-                />
-            </View>
-        </ScrollView>
+                    <CustomAlert
+                        isVisible={isVisible}
+                        title={modelTitle}
+                        description={responseMessage}
+                        buttonText={showButton ? "OK" : ""}
+                        onPress={hideAlert}
+                        onClose={hideAlert}
+                        btnisVisible={false}
+                        color_title={color_title}
+                        color_description={color_description}
+                    />
+                </View>
+            </ScrollView>
+      
     );
 }
 

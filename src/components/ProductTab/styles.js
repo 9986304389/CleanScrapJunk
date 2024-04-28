@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     scene: {
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         // For iOS
         shadowColor: '#000',
         shadowRadius: 50,
-        backgroundColor: "#e7e7e7"
+        backgroundColor: '#e7e7e7'
     },
     image: {
         width: '100%',
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
         height: '100%',
         resizeMode: 'cover',
         alignContent: 'center',
-        alignItems: "center"
+        alignItems: 'center'
     },
     heartIcon: {
         position: 'absolute',
@@ -83,14 +83,14 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 20,
-        fontWeight: "600",
+        fontWeight: '600',
         marginTop: '2%',
         marginLeft: '5%'
     },
     price: {
         fontSize: 18,
         fontWeight: '500',
-        fontWeight: "400",
+        fontWeight: '400',
         marginBottom: '3%',
         marginLeft: '5%',
         color: 'green'
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     icon: {
         fontSize: 26,
         color: 'black',
-        alignContent: "center"
+        alignContent: 'center'
     },
    
 })

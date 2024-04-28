@@ -6,12 +6,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import useApi from '../../apiCalls/ApiCalls';
 import CustomAlert from '../alert/Alert';
 import { useSelector, useDispatch } from 'react-redux'
-// const getOfferProducts = [
-//     { id: '1', title: '30% Discount', desc: 'Get discound for every order only valid for today', shop: 'Shop Now' },
-//     { id: '2', title: '30% Discount', desc: 'Get discound for every order only valid for today', shop: 'Shop Now' },
-//     { id: '3', title: '30% Discount', desc: 'Get discound for every order only valid for today', shop: 'Shop Now' },
-//     { id: '4', title: '30% Discount', desc: 'Get discound for every order only valid for today', shop: 'Shop Now' },
-// ]
+
 
 export default function CarouselComponent({ navigation, user }) {
 

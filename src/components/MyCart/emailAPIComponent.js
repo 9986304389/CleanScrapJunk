@@ -112,7 +112,7 @@ const MidnightAPIComponent = () => {
                 let data_result = await get(url, jwtToken);
                 console.log(data_result?.result.length)
                 if (data_result?.status === true && data_result?.result.length !== 0) {
-                    console.log("hello,", data_result.result)
+                   
                     let location = {}
                     location.address_line1 = user_details.location;
 

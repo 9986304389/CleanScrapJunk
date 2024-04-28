@@ -78,7 +78,7 @@ export default function LoginScreen({ navigation }) {
       };
 
       dispatch(setUser(userData));
-      let jwtToken = response?.result[0].token;
+      //let jwtToken = response?.result[0].token;
       navigation.navigate('Home')
       // try {
       //   const queryParameters = {

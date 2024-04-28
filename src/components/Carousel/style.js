@@ -39,11 +39,11 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 18,
-        fontWeight: "900",
+        fontWeight: '900',
         marginBottom: 0,
-        alignContent:"center",
-        alignItems:"center",
-        color:"#FFFFFFFF"
+        alignContent:'center',
+        alignItems:'center',
+        color:'#FFFFFFFF'
 
     },
     text: {

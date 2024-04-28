@@ -9,7 +9,8 @@
     "icon": "./assets/cleanscrap.png",
     "userInterfaceStyle": "light",
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/b420a4a0-264e-4098-9473-d1cf155cee97"
     },
     "splash": {
       "image": "./assets/splash.png",
@@ -36,6 +37,9 @@
       "eas": {
         "projectId": "b420a4a0-264e-4098-9473-d1cf155cee97"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
     }
   }
 }
