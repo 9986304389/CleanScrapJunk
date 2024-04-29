@@ -301,17 +301,21 @@ const OrderSummaryPage = ({ onNext, onPrev, route, selectAddress }) => {
                     </View>
                     <View style={styles.changeAddressBtnContainer}>
                         <TouchableOpacity title="Change Address" onPress={onPrev} style={styles.changeAddressBtn} >
-                            <Text style={styles.changeAddressTxt}>Select Addres</Text>
+                            <Text style={styles.changeAddressTxt}>Select Address</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
                 {arrayOfOrderItems?.map((item, index) => (
                     <View key={index} style={styles.productDetailsContainer}>
-                        <Image source={{ uri: item?.image_url }} style={styles.image} />
-                        <View style={styles.textCard}>
-                            <Text style={styles.name}>{item?.name}</Text>
-                            <Text style={styles.price}>${item?.price}</Text>
-                            <Text>Quantity: {item?.quantity}</Text>
+                        <View style={{ flexDirection: 'row' }}>
+                            <View>
+                                <Image source={{ uri: item?.image_url }} style={styles.image} />
+                            </View>
+                            <View style={styles.textCard}>
+                                <Text style={styles.name}>{item?.name}</Text>
+                                <Text style={styles.price}>${item?.price}</Text>
+                                <Text>Quantity: {item?.quantity}</Text>
+                            </View>
                         </View>
                     </View>
                 ))}

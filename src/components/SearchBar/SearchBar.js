@@ -4,16 +4,15 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from './styles';
 
 
-export default function SearchBar() {
+export default function SearchBar({ onSearch }) {
     const [searchText, setSearchText] = useState(""); // State to hold the search text
     const [searchResult, setSearchResult] = useState(""); // State to hold the search result
 
     const handleSearch = () => {
-        // Perform search based on the searchText state
-      
-        // You can implement your search logic here, such as filtering data based on the search text
-        // For now, let's just log the search text to the console
-        setSearchResult(searchText); // Set the search result to the searched text
+        // Pass the search text to the parent component
+        onSearch(searchText);
+        // Dismiss keyboard
+        Keyboard.dismiss();
     };
 
     const handleChangeText = (text) => {
