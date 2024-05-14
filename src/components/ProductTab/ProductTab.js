@@ -15,9 +15,15 @@ const TopTab = createMaterialTopTabNavigator();
 
 const FirstRoute = (props) => {
     const { loading, error, get, fetchData, post, remove } = useApi();
-    const { allProducts, navigation } = props;
+    const { allProducts, navigation, searchText } = props;
     const user = useSelector((state) => state.profile.user.userType);
     const jwtToken = useSelector((state) => state.auth.token);
+
+    // Function to highlight search text in product name
+    const highlightSearchText = (productName) => {
+        const regex = new RegExp(`(${searchText})`, 'gi');
+        return productName.replace(regex, '<b>$1</b>');
+    };
 
     return (
         <ScrollView>
@@ -35,7 +41,7 @@ const FirstRoute = (props) => {
                                 )}
                             </View>
 
-                            <Text style={styles.title}>{item?.name}</Text>
+                            <Text style={styles.title} dangerouslySetInnerHTML={{ __html: highlightSearchText(item?.name) }}>{item?.name}</Text>
                             <Text style={styles.price}>₹{item?.price}</Text>
 
 
@@ -148,7 +154,8 @@ const ProductTab = (props) => {
     const [allNewProducts, setAllNewProducts] = useState([]);
     const [allOldProducts, setAllOldProducts] = useState([]);
     const jwtToken = useSelector((state) => state.auth.token);
-    const { count } = props
+    const { count, searchText } = props
+    const [filteredProducts, setFilteredProducts] = useState([]);
 
     useEffect(() => {
 
@@ -174,6 +181,11 @@ const ProductTab = (props) => {
         fetchData();
     }, [count]);
 
+    useEffect(() => {
+        // Update filtered products whenever all products change or search text changes
+        setFilteredProducts(allProducts.filter(product => product.name.toLowerCase().includes(searchText.toLowerCase())));
+    }, [allProducts, searchText]);
+
     const getProductsByType = async (type, jwtToken) => {
         try {
             const queryParameters = { type };
@@ -196,11 +208,18 @@ const ProductTab = (props) => {
         }
     };
 
+    // Function to highlight search text in product name
+    const highlightSearchText = (productName) => {
+        const regex = new RegExp(`(${searchText})`, 'gi');
+        return productName.replace(regex, '<b>$1</b>');
+    };
+
     return (
         <TabNavigator
             allProducts={allProducts}
             allNewProducts={allNewProducts}
             allOldProducts={allOldProducts}
+            searchText={searchText}
             {...props}
         />
     );

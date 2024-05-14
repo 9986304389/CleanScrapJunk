@@ -73,6 +73,12 @@ export default function HomeScreen(props) {
   const dismissKeyboard = () => {
     Keyboard.dismiss();
   }
+  const [searchText, setSearchText] = useState(""); // State to hold search text
+
+  const handleSearch = (text) => {
+    setSearchText(text); // Update search text state
+  };
+
 
   return (
 
@@ -84,7 +90,7 @@ export default function HomeScreen(props) {
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
           >
             {/* ScrollView content */}
-            <SearchBar />
+            <SearchBar onSearch={handleSearch} />
           </ScrollView>
         </View>
 
@@ -93,7 +99,7 @@ export default function HomeScreen(props) {
         <CarouselComponent navigation={navigation} user={userType} />
 
 
-        <ProductTab count={refreshCount} />
+        <ProductTab searchText={searchText} count={refreshCount} />
 
 
       </View>

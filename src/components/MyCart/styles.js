@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
         borderRadius: 10
     },
     textCard: {
+        width: '50%',
         flexDirection: 'column',
         marginHorizontal: 10,
         marginLeft: '7%'
