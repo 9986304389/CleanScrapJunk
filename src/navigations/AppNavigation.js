@@ -5,12 +5,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/Home/HomeScreen';
-import CategoriesScreen from '../screens/Categories/CategoriesScreen';
-import RecipeScreen from '../screens/Recipe/RecipeScreen';
-import RecipesListScreen from '../screens/RecipesList/RecipesListScreen';
-import IngredientScreen from '../screens/Ingredient/IngredientScreen';
-import SearchScreen from '../screens/Search/SearchScreen';
-import IngredientsDetailsScreen from '../screens/IngredientsDetails/IngredientsDetailsScreen';
 import SignIn from '../screens/SignIn/SignIn';
 import SignUP from '../screens/SignUp/SignUp';
 import RestPassword from '../screens/ResetPassword/ResetPassword';
@@ -31,6 +25,8 @@ import PriceList from '../components/Prices/PricePage';
 import PricesPage from '../components/Prices/PricesPage';
 import AddSpOffers from '../components/SpecialOffersAdd/AddSPOffers';
 import AddProducts from '../components/AddProducts/AddProducts';
+import new_stock from '../components/new_stock/new_stock';
+
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -52,7 +48,7 @@ function MainNavigator() {
       <Stack.Screen name='ProductDescription' component={ProductDescription} />
       <Stack.Screen name='AddSPOffers' component={AddSpOffers} />
       <Stack.Screen name='AddProducts' component={AddProducts} />
-      {/* <Stack.Screen name='MyCart' component={MyCart} /> */}
+      <Stack.Screen name='MyCart' component={MyCart} />
       <Stack.Screen name='OrderSummary' component={OrderSteps} />
       <Stack.Screen name='ProfileEdit' component={ProfileEdit} />
       <Stack.Screen name='ProfilePage' component={ProfilePage} />
@@ -62,11 +58,12 @@ function MainNavigator() {
       <Stack.Screen name='NotificationsPage' component={NotificationPage} />
       <Stack.Screen name='EnquiryForm' component={EnquiryForm} />
       <Stack.Screen name='PricesPage' component={PricesPage} />
+      <Stack.Screen name='NewStock' component={new_stock} />
     </Stack.Navigator>
   )
 }
 
-function MainNavigator_MYcart() {
+function MainNavigator_new_stock() {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -79,7 +76,7 @@ function MainNavigator_MYcart() {
         }
       }}
     >
-      <Stack.Screen name='MyCart' component={MyCart} />
+      <Stack.Screen name='NewStock' component={new_stock} />
     </Stack.Navigator>
   )
 }
@@ -163,29 +160,18 @@ function BottomTabNavigator() {
         }}
       />
       <Tab.Screen
-        name="MyCart"
-        component={MainNavigator_MYcart}
+        name="NewStock"
+        component={MainNavigator_new_stock}
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ color, size }) => (
             <View style={{ paddingTop: 7 }}>
-              <FontAwesome name="shopping-cart" color={color} size={size} />
+              <FontAwesome name="envelope" color={color} size={size} />
             </View>
           ),
         }}
       />
-      {/* <Tab.Screen
-        name="OrderSummary"
-        component={MainNavigator_OrderSummary}
-        options={{
-          tabBarLabel: '',
-          tabBarIcon: ({ color, size }) => (
-            <View style={{ paddingTop: 7 }}>
-              <FontAwesome name="list-alt" color={color} size={size} />
-            </View>
-          ),
-        }}
-      /> */}
+
       <Tab.Screen
         name="Price"
         component={PriceList}
@@ -205,7 +191,7 @@ function BottomTabNavigator() {
           tabBarLabel: '',
           tabBarIcon: ({ color, size }) => (
             <View style={{ paddingTop: 7 }}>
-              <FontAwesome name="cog" color={color} size={size} />
+              <FontAwesome name="briefcase" color={color} size={size} />
             </View>
           ),
         }}

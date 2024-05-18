@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
         width: '50%',
         alignItems: "center",
         justifyContent: 'center',
+        marginBottom: '10%'
     },
     fbLoginButton: {
         height: 45,
@@ -101,6 +102,12 @@ const styles = StyleSheet.create({
     },
     optionText: {
         fontSize: 16,
+    },
+    spinnerContainer: {
+        ...StyleSheet.absoluteFillObject, // Position the spinner absolute to cover the entire parent container
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 999,
     },
 });
 export default styles;

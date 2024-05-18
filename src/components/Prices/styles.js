@@ -4,8 +4,8 @@ import { Platform } from "react-native";
 const styles = StyleSheet.create({
 
     header: {
-        marginTop: '8%',
-        height: 50,
+        marginTop: '10%',
+        height: 60,
         backgroundColor: '#347855',
         justifyContent: 'center',
         paddingHorizontal: '10%',

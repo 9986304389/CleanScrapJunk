@@ -21,6 +21,8 @@ export default function CarouselComponent({ navigation, user }) {
     const [responseMessage, setResponseMessage] = useState('');
     const [isVisible, setIsVisible] = useState(false);
     const jwtToken = useSelector((state) => state.auth.token);
+    const userType = useSelector((state) => state.profile.user.userType);
+    
     const showAlert = () => {
         setIsVisible(true);
     };
@@ -113,7 +115,7 @@ export default function CarouselComponent({ navigation, user }) {
 
         <View style={styles.container}>
             <View style={styles.spOffers}>
-                <Text style={styles.specialOffers}>Special Offers</Text>
+                <Text style={styles.specialOffers}>New Stock</Text>
                 {user === '1' && (
                     <TouchableOpacity onPress={() => navigation.navigate('AddProducts')} style={styles.iconContainer}>
                         <FontAwesome name="edit" style={styles.icon} />

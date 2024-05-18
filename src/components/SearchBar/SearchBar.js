@@ -5,19 +5,11 @@ import styles from './styles';
 
 
 export default function SearchBar({ onSearch }) {
-    const [searchText, setSearchText] = useState(""); // State to hold the search text
-    const [searchResult, setSearchResult] = useState(""); // State to hold the search result
+    const [text, setText] = React.useState('');
 
-    const handleSearch = () => {
-        // Pass the search text to the parent component
-        onSearch(searchText);
-        // Dismiss keyboard
-        Keyboard.dismiss();
-    };
-
-    const handleChangeText = (text) => {
-        // Update the searchText state whenever input changes
-        setSearchText(text);
+    const handleTextChange = (newText) => {
+        setText(newText);
+        onSearch(newText);
     };
 
 
@@ -29,9 +21,8 @@ export default function SearchBar({ onSearch }) {
                     style={styles.input}
                     placeholder="Search..."
                     placeholderTextColor="#888"
-                    value={searchText}
-                    onChangeText={handleChangeText} // Call handleChangeText when input changes
-                    onSubmitEditing={handleSearch}
+                    value={text}
+                    onChangeText={handleTextChange}
                 />
             </View>
         </TouchableWithoutFeedback>

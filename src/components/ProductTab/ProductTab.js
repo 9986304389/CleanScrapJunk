@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
     Dimensions, Text, View, Image,
     TouchableOpacity, FlatList, ImageBackground, ScrollView,
-    TouchableWithoutFeedback, TextInput, Alert, Modal, Button, RefreshControl
+    TouchableWithoutFeedback, TextInput, Alert, Modal, Button, RefreshControl,
+    ActivityIndicator
+
 } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import styles from './styles';
@@ -18,6 +20,7 @@ const FirstRoute = (props) => {
     const { allProducts, navigation, searchText } = props;
     const user = useSelector((state) => state.profile.user.userType);
     const jwtToken = useSelector((state) => state.auth.token);
+
 
     // Function to highlight search text in product name
     const highlightSearchText = (productName) => {
@@ -42,7 +45,7 @@ const FirstRoute = (props) => {
                             </View>
 
                             <Text style={styles.title} dangerouslySetInnerHTML={{ __html: highlightSearchText(item?.name) }}>{item?.name}</Text>
-                            <Text style={styles.price}>₹{item?.price}</Text>
+                            {/* <Text style={styles.price}>₹{item?.price}</Text> */}
 
 
                         </View>
@@ -77,7 +80,7 @@ const OldTabContent = (props) => {
                                 </TouchableOpacity>
                             </View>
                             <Text style={styles.title}>{item?.name}</Text>
-                            <Text style={styles.price}>{item?.price} Kg</Text>
+                            {/* <Text style={styles.price}>{item?.price} Kg</Text> */}
                         </View>
                     </TouchableOpacity>
                 ))}
@@ -110,7 +113,7 @@ const NewTabContent = (props) => {
                                 </TouchableOpacity>
                             </View>
                             <Text style={styles.title}>{item?.name}</Text>
-                            <Text style={styles.price}>{item?.price} Kg</Text>
+                            {/* <Text style={styles.price}>{item?.price} Kg</Text> */}
                         </View>
                     </TouchableOpacity>
                 ))}
@@ -156,9 +159,17 @@ const ProductTab = (props) => {
     const jwtToken = useSelector((state) => state.auth.token);
     const { count, searchText } = props
     const [filteredProducts, setFilteredProducts] = useState([]);
+    const [filteredProductsNew, setFilteredProductsNew] = useState([]);
+    const [filteredProductsOld, setFilteredProductsOld] = useState([]);
+    const [loadingSpinner, setLoadingSpinner] = useState(false);
+    const initialLoad = useRef(true);
+
 
     useEffect(() => {
-
+        if (initialLoad.current) {
+            setLoadingSpinner(true);
+            initialLoad.current = false;
+        }
         const fetchData = async () => {
             try {
                 const url = `https://clean-scrap-jnck-backend.vercel.app/api/getAllWeBuyProducts`;
@@ -168,12 +179,15 @@ const ProductTab = (props) => {
                     setAllProducts(response.result);
                     await getProductsByType('new', jwtToken);
                     await getProductsByType('old', jwtToken);
+                    setLoadingSpinner(false)
 
                 } else {
                     // Handle error response
+                    setLoadingSpinner(false)
                 }
             } catch (error) {
                 console.error('Error fetching initial data:', error);
+                setLoadingSpinner(false)
                 // Handle error if needed
             }
         };
@@ -182,9 +196,22 @@ const ProductTab = (props) => {
     }, [count]);
 
     useEffect(() => {
-        // Update filtered products whenever all products change or search text changes
-        setFilteredProducts(allProducts.filter(product => product.name.toLowerCase().includes(searchText.toLowerCase())));
-    }, [allProducts, searchText]);
+        setFilteredProducts(
+            allProducts.filter(product =>
+                product.name?.toLowerCase().includes(searchText?.toLowerCase())
+            )
+        );
+        setFilteredProductsNew(
+            allNewProducts.filter(product =>
+                product.name?.toLowerCase().includes(searchText?.toLowerCase())
+            )
+        );
+        setFilteredProductsOld(
+            allOldProducts.filter(product =>
+                product.name?.toLowerCase().includes(searchText?.toLowerCase())
+            )
+        );
+    }, [allProducts, allNewProducts, allOldProducts, searchText]);
 
     const getProductsByType = async (type, jwtToken) => {
         try {
@@ -215,13 +242,21 @@ const ProductTab = (props) => {
     };
 
     return (
-        <TabNavigator
-            allProducts={allProducts}
-            allNewProducts={allNewProducts}
-            allOldProducts={allOldProducts}
-            searchText={searchText}
-            {...props}
-        />
+        <>
+            {loadingSpinner && ( // Conditionally render ActivityIndicator when loading is true
+                <View style={styles.spinnerContainer}>
+                    <ActivityIndicator size="100" color="#347855" />
+                </View>
+            )}
+            <TabNavigator
+                allProducts={filteredProducts}
+                allNewProducts={filteredProductsNew}
+                allOldProducts={filteredProductsOld}
+                searchText={searchText}
+                {...props}
+            />
+
+        </>
     );
 };
 

@@ -7,8 +7,8 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         paddingTop: '4%',
-        paddingHorizontal: '4%'
-        // justifyContent: 'center',
+        paddingHorizontal: '4%',
+        justifyContent: 'center',
     },
     titleView: {
         flexDirection: 'row',
@@ -26,15 +26,17 @@ const styles = StyleSheet.create({
         marginLeft: '3%'
     },
     cartItem: {
+
         marginBottom: 12,
         width: '100%',
-        paddingHorizontal: 4,
-        marginHorizontal: 5,
+        paddingHorizontal: 0,
+        marginHorizontal: 0,
         borderRadius: 10,
         ...Platform.select({
             android: {
                 elevation: 3,
                 backgroundColor: 'white', // Add elevation for shadow on Android
+
             },
             ios: {
                 shadowColor: '#ccc', // Shadow properties for iOS
@@ -46,37 +48,62 @@ const styles = StyleSheet.create({
                 shadowRadius: 3.84,
             },
         }),
-        // borderBottomWidth: 1
+
+    },
+    imagecard: {
+
+        width: 100,
+        height: 100,
+        borderRadius: 10,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5, // For Android
+        opacity: 0.8
     },
     card: {
         padding: 10,
         width: '100%',
         // borderWidth: 1,
-        // borderColor: 'lightgray',
+
         // borderRadius: 5,
         flexDirection: 'row',
         alignItems: 'center',
+        
     },
     image: {
-        width: 150,
-        height: 150,
-        borderRadius: 10
+        width: 100,
+        height: 100,
+        borderRadius: 10,
+        opacity: 0.8,
+
     },
     textCard: {
-        width: '50%',
+        width: '100%',
         flexDirection: 'column',
-        marginHorizontal: 10,
-        marginLeft: '7%'
+        marginHorizontal: 8,
+        // marginLeft: '7%',
+        alignItems: 'flex-start',
+        flexWrap: 'wrap',
+        
+        
     },
     name: {
         fontSize: 20,
-        fontWeight: '700',
-        marginBottom: 7
+        fontWeight: '400',
+        marginBottom: 7,
+   
+
     },
     price: {
         fontSize: 18,
-        fontWeight: '700',
-        marginBottom: 7
+        fontWeight: '400',
+        marginBottom: 7,
+
     },
     iconContainer: {
         // marginLeft: 'auto',
@@ -97,7 +124,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         borderRadius: 5,
         marginTop: '15%',
-        marginBottom:'15%'
     },
     orderButtonText: {
         color: 'white',

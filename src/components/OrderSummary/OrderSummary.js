@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Button, TextInput, TouchableOpacity, Image, ScrollView } from "react-native";
+import { View, Text, Button, TextInput, TouchableOpacity, Image, ScrollView, ActivityIndicator } from "react-native";
 
 import styles from "./styles";
 import { AdressPage } from "../Address/AdressPage";
@@ -150,6 +150,8 @@ const OrderSummaryPage = ({ onNext, onPrev, route, selectAddress }) => {
     const [arrayOfOrderItems, setArrayOfOrderItems] = useState([]);
     const jwtToken = useSelector((state) => state.auth.token);
     const phoneNumber = useSelector((state) => state.profile.user.phoneNumber);
+    const UserAddress = useSelector((state) => state.profile.user.location);
+
     const user = useSelector((state) => state.profile.user);
     const [allMyAddress, setAllMyAddress] = useState([]);
     const [selectedAddress, setSelectedAddress] = useState(null);
@@ -161,6 +163,7 @@ const OrderSummaryPage = ({ onNext, onPrev, route, selectAddress }) => {
     const [color_description, setColorDescription] = useState('');
     const [responseMessage, setResponseMessage] = useState('');
     const [isVisible, setIsVisible] = useState(false);
+    const [loadingSpinner, setLoadingSpinner] = useState(false);
     const showAlert = () => {
         setIsVisible(true);
     };
@@ -171,13 +174,13 @@ const OrderSummaryPage = ({ onNext, onPrev, route, selectAddress }) => {
 
     const handleNext = async (selectAddress, orderItems, totalAmount) => {
         // onNext(selectedAddress, orderItems, totalAmount); // Invoke the parent function passed as prop
-
+        setLoadingSpinner(true);
         try {
             let data = {
                 "userdetails": user,
                 "orderdetails": orderItems,
                 "totalAmount": totalAmount,
-                "address": selectAddress,
+                "address": { "address_line1": UserAddress },
             }
 
             // console.log(data)
@@ -185,14 +188,16 @@ const OrderSummaryPage = ({ onNext, onPrev, route, selectAddress }) => {
             const response = await post('https://clean-scrap-jnck-backend.vercel.app/api/sendPlaceorderemail', data, jwtToken)
 
             if (response?.status === true) {
+                setLoadingSpinner(false);
                 setModelTitle('Order Placed successfully');
                 setColorTitle('green');
                 setColorDescription('black');
                 setResponseMessage(response?.message)
                 showAlert();
+
             }
             else {
-
+                setLoadingSpinner(false);
                 setModelTitle('Unable Order Placed')
                 // Call the alert 
                 setColorTitle('red');
@@ -202,6 +207,7 @@ const OrderSummaryPage = ({ onNext, onPrev, route, selectAddress }) => {
             }
 
         } catch (err) {
+            setLoadingSpinner(false);
             console.error('add data:', error);
         }
     }
@@ -216,60 +222,60 @@ const OrderSummaryPage = ({ onNext, onPrev, route, selectAddress }) => {
             // If it's not an array, convert it to an array and then set the state
             setArrayOfOrderItems([route.params.getallgoingtoorderproducts]);
         }
-        const fetchData = async () => {
+        // const fetchData = async () => {
 
-            try {
-                const queryParameters = {
-                    customer_id: phoneNumber, // Add your product code parameter value here
+        //     try {
+        //         const queryParameters = {
+        //             customer_id: phoneNumber, // Add your product code parameter value here
 
-                };
-                // Convert query parameters to string
-                const queryString = new URLSearchParams(queryParameters).toString();
-                // Construct the complete URL with query parameters
-                const url = `https://clean-scrap-jnck-backend.vercel.app/api/getAddressByUser?${queryString}`;
+        //         };
+        //         // Convert query parameters to string
+        //         const queryString = new URLSearchParams(queryParameters).toString();
+        //         // Construct the complete URL with query parameters
+        //         const url = `https://clean-scrap-jnck-backend.vercel.app/api/getAddressByUser?${queryString}`;
 
-                const response = await get(url, jwtToken);
+        //         const response = await get(url, jwtToken);
 
 
-                if (response?.status == true) {
-                    setAllMyAddress(response.result);
+        //         if (response?.status == true) {
+        //             setAllMyAddress(response.result);
 
-                    // //Simulating fetching user data from an API
-                    const userData = {
-                        address_line1: response?.result[0].address_line1,
-                        address_line2: response?.result[0].address_line2,
-                        city: response?.result[0].city,
-                        state: response?.result[0].state,
-                        postal_code: response?.result[0].postal_code
+        //             // //Simulating fetching user data from an API
+        //             const userData = {
+        //                 address_line1: response?.result[0].address_line1,
+        //                 address_line2: response?.result[0].address_line2,
+        //                 city: response?.result[0].city,
+        //                 state: response?.result[0].state,
+        //                 postal_code: response?.result[0].postal_code
 
-                    };
+        //             };
 
-                    dispatch(setAddress(userData));
+        //             dispatch(setAddress(userData));
 
-                    if (!selectAddress && response.result.length > 0) {
-                        setSelectedAddress(response.result[0]); // Set the first address as selected if none is provided
-                    }
+        //             if (!selectAddress && response.result.length > 0) {
+        //                 setSelectedAddress(response.result[0]); // Set the first address as selected if none is provided
+        //             }
 
-                    if (Address) {
-                        setSelectedAddress(Address)
-                    }
+        //             if (Address) {
+        //                 setSelectedAddress(Address)
+        //             }
 
-                }
-                else {
-                    setModelTitle('Get address fail')
-                    // Call the alert 
-                    setColorTitle('red');
-                    setColorDescription('black');
-                    setResponseMessage(response?.message)
-                    showAlert();
-                }
+        //         }
+        //         else {
+        //             setModelTitle('Get address fail')
+        //             // Call the alert 
+        //             setColorTitle('red');
+        //             setColorDescription('black');
+        //             setResponseMessage(response?.message)
+        //             showAlert();
+        //         }
 
-            } catch (error) {
-                console.error('Error fetching initial data:', error);
-                // Handle error if needed
-            }
-        }
-        fetchData()
+        //     } catch (error) {
+        //         console.error('Error fetching initial data:', error);
+        //         // Handle error if needed
+        //     }
+        // }
+        // fetchData()
     }, []);
 
 
@@ -286,17 +292,18 @@ const OrderSummaryPage = ({ onNext, onPrev, route, selectAddress }) => {
 
     return (
         <ScrollView>
+            {loadingSpinner && ( // Conditionally render ActivityIndicator when loading is true
+            <View style={styles.spinnerContainer}>
+              <ActivityIndicator size="100" color="#347855" />
+            </View>
+          )}
+
             <View style={styles.container2}>
-                <View style={styles.addressContainer}>
+                {/* <View style={styles.addressContainer}>
                     <View style={styles.addressDiv}>
                         <Text style={styles.label}>Delivery Address:</Text>
-                        {/* {selectedAddress ? (
-                            <Text style={styles.address}>
-                                {selectedAddress.address_line1} {selectedAddress.address_line2} {selectedAddress.city} {selectedAddress.state} {selectedAddress.postal_code}
-                            </Text>
-                        ) : ( */}
+
                         <Text style={styles.address}>{selectAddress.address_line1} {selectAddress.address_line2} {selectAddress.city} {selectAddress.state} {selectAddress.postal_code}</Text>
-                        {/* )} */}
 
                     </View>
                     <View style={styles.changeAddressBtnContainer}>
@@ -304,7 +311,7 @@ const OrderSummaryPage = ({ onNext, onPrev, route, selectAddress }) => {
                             <Text style={styles.changeAddressTxt}>Select Address</Text>
                         </TouchableOpacity>
                     </View>
-                </View>
+                </View> */}
                 {arrayOfOrderItems?.map((item, index) => (
                     <View key={index} style={styles.productDetailsContainer}>
                         <View style={{ flexDirection: 'row' }}>
@@ -491,14 +498,16 @@ const OrderSteps = (props) => {
 
     return (
         <>
-            <View style={styles.progressBarContainer}>
-                <ProgressBar currentPage={currentPage} pageNames={['Address', 'Order Summary']} />
-            </View>
-            <View style={styles.container}>
-                {currentPage === 1 && <AddressPage onNext={onNext} navigation={navigation} route={route} />}
-                {currentPage === 2 && <OrderSummaryPage onNext={onNext} onPrev={onPrev} navigation={navigation} route={route} selectAddress={selectAddress} currentPage={currentPage} />}
-                {/* {currentPage === 3 && <PaymentPage onPrev={onPrev} navigation={navigation} selectAddress={selectAddress} orderItems={orderItems} totalAmount={totalAmount} />} */}
-            </View>
+            <ScrollView>
+                <View style={styles.progressBarContainer}>
+                    <ProgressBar currentPage={currentPage} pageNames={['Address', 'Order Summary']} />
+                </View>
+                <View style={styles.container}>
+                    {currentPage === 1 && <AddressPage onNext={onNext} navigation={navigation} route={route} />}
+                    {currentPage === 2 && <OrderSummaryPage onNext={onNext} onPrev={onPrev} navigation={navigation} route={route} selectAddress={selectAddress} currentPage={currentPage} />}
+                    {/* {currentPage === 3 && <PaymentPage onPrev={onPrev} navigation={navigation} selectAddress={selectAddress} orderItems={orderItems} totalAmount={totalAmount} />} */}
+                </View>
+            </ScrollView>
         </>
     );
 };

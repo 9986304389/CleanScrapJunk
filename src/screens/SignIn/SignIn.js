@@ -13,7 +13,8 @@ import {
   TouchableWithoutFeedback,
   View,
   TouchableOpacity,
-  Image
+  Image,
+  ActivityIndicator
 } from "react-native";
 import { Button, SocialIcon, Icon } from "react-native-elements";
 import CustomAlert from '../../components/alert/Alert';
@@ -37,6 +38,7 @@ export default function LoginScreen({ navigation }) {
   const [color_description, setColorDescription] = useState('');
   const [responseMessage, setResponseMessage] = useState('');
   const dispatch = useDispatch();
+  const [loadingSpinner, setLoadingSpinner] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -54,6 +56,8 @@ export default function LoginScreen({ navigation }) {
 
   const onLoginPress = async () => {
 
+    //spinner show 
+    setLoadingSpinner(true);
 
     let data = {
       "phonenumber": phonenumber,//9986304389
@@ -77,9 +81,12 @@ export default function LoginScreen({ navigation }) {
         loginTime: new Date().toISOString(),
       };
 
+      
       dispatch(setUser(userData));
       //let jwtToken = response?.result[0].token;
       navigation.navigate('Home')
+
+      setLoadingSpinner(false);
       // try {
       //   const queryParameters = {
       //     email: email, // Add your product code parameter value here
@@ -113,6 +120,7 @@ export default function LoginScreen({ navigation }) {
     }
     else {
 
+      setLoadingSpinner(false);
       setModelTitle('Login Fail')
       setColorTitle('red');
       setColorDescription('black');
@@ -126,7 +134,15 @@ export default function LoginScreen({ navigation }) {
 
     <KeyboardAvoidingView style={styles.containerView} behavior="padding">
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+
+
         <View style={styles.loginScreenContainer}>
+
+          {loadingSpinner && ( // Conditionally render ActivityIndicator when loading is true
+            <View style={styles.spinnerContainer}>
+              <ActivityIndicator size="100" color="#347855" />
+            </View>
+          )}
           <View style={styles.loginFormView}>
             <Text style={styles.logoText}>Login</Text>
             <Text style={styles.label_text}>Phone Number</Text>
@@ -162,11 +178,12 @@ export default function LoginScreen({ navigation }) {
                 containerStyle={styles.forgotpassword}
                 type="clear"
                 onPress={() => navigation.navigate('ResetPassword')}
-                title="forgot Password ?"
+                title="Forgot Password ?"
                 titleStyle={styles.buttonText}
               />
             </View>
             <Button
+              disabled={loadingSpinner}
               buttonStyle={styles.loginButton}
               onPress={() => onLoginPress()}
               title="Login"
@@ -174,6 +191,7 @@ export default function LoginScreen({ navigation }) {
             />
 
             <Button
+
               containerStyle={styles.fbLoginButton}
               type="clear"
               onPress={() => navigation.navigate('SignUp')}
@@ -182,7 +200,10 @@ export default function LoginScreen({ navigation }) {
             />
           </View>
         </View>
+
       </TouchableWithoutFeedback>
+
+
       <CustomAlert
         isVisible={isVisible}
         title={modelTitle}

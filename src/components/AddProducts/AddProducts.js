@@ -1,10 +1,11 @@
-import { View, Text, Button, ScrollView, TouchableWithoutFeedback, TextInput, TouchableOpacity, KeyboardAvoidingView, Keyboard } from "react-native";
+import { View, Text, Button, ScrollView, ActivityIndicator, TouchableWithoutFeedback, TextInput, TouchableOpacity, KeyboardAvoidingView, Keyboard } from "react-native";
 import { Icon } from "react-native-paper";
 import styles from "./styles";
 import { useSelector, useDispatch } from 'react-redux'
 import useApi from '../../apiCalls/ApiCalls';
 import CustomAlert from '../alert/Alert';
 import React, { useState, useEffect } from "react";
+import { FontAwesome } from "@expo/vector-icons";
 
 export default function AddProducts(props) {
     const { navigation, route } = props;
@@ -22,6 +23,9 @@ export default function AddProducts(props) {
     const [description, setDescription] = useState('');
     const [quantity, setQuntity] = useState('');
     const [productcode, setProductCode] = useState('');
+    const [loadingSpinner, setLoadingSpinner] = useState(false);
+
+
     const showAlert = () => {
         setIsVisible(true);
     };
@@ -30,7 +34,26 @@ export default function AddProducts(props) {
         setIsVisible(false);
     };
 
+    React.useLayoutEffect(() => {
+        navigation.setOptions({
+            headerTitle: "Add Offer's",
+            headerTitleStyle: {
+                marginLeft: 0,
+                fontWeight: 'bold',
+
+            },
+            headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.navigate('Home')} style={{ marginLeft: 20 }}>
+                    <FontAwesome name="arrow-left" size={20} color="black" style={{ fontWeight: '100' }} />
+                </TouchableOpacity>
+            ),
+        });
+    }, [navigation]);
+
     const onLoginPress = async () => {
+        setLoadingSpinner(true);
+
+
         try {
             let data = {
                 "product_name": productName,
@@ -44,6 +67,8 @@ export default function AddProducts(props) {
             const response = await post('https://clean-scrap-jnck-backend.vercel.app/api/Addofferandeditoffer', data, jwtToken)
 
             if (response?.status === true) {
+                setLoadingSpinner(false);
+
                 setModelTitle('Add offer successfully');
                 setColorTitle('green');
                 setColorDescription('black');
@@ -51,6 +76,7 @@ export default function AddProducts(props) {
                 showAlert();
             }
             else {
+                setLoadingSpinner(false);
 
                 setModelTitle('Unable to add the offer')
                 // Call the alert 
@@ -62,6 +88,8 @@ export default function AddProducts(props) {
 
         } catch (err) {
             console.error('add data:', error);
+            setLoadingSpinner(false);
+
         }
     };
 
@@ -69,7 +97,14 @@ export default function AddProducts(props) {
         <ScrollView>
             <KeyboardAvoidingView style={styles.containerView} behavior="padding">
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+
                     <View style={styles.loginScreenContainer}>
+                        {loadingSpinner && ( // Conditionally render ActivityIndicator when loading is true
+                            <View style={styles.spinnerContainer}>
+                                <ActivityIndicator size="100" color="#347855" />
+                            </View>
+                        )}
+
                         <Text style={styles.logoText}>Add Offer Products</Text>
                         <Text style={styles.label_text}>Product Name</Text>
                         <TextInput
@@ -115,6 +150,7 @@ export default function AddProducts(props) {
                         />
                         <View style={{ alignItems: 'center' }}>
                             <TouchableOpacity
+                                disabled={loadingSpinner}
                                 style={styles.loginButton}
                                 onPress={() => onLoginPress()}
                             >

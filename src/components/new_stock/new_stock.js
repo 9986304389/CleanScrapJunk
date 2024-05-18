@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, Image, ScrollView, Pressable, RefreshControl, ActivityIndicator } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+import { View, Text, TouchableOpacity, Image, ScrollView, Pressable, RefreshControl, SafeAreaView, StyleSheet, ActivityIndicator } from "react-native";
 import styles from "./styles";
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import { useSelector, useDispatch } from 'react-redux'
@@ -7,9 +7,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import useApi from '../../apiCalls/ApiCalls';
 import CustomAlert from '../alert/Alert'
 import { State } from "react-native-gesture-handler";
-import MidnightAPIComponent from './emailAPIComponent'
 
-const MyCart = (props) => {
+
+const new_stock = (props) => {
     const { navigation, route } = props;
     const { loading, error, get, fetchData, post, remove } = useApi();
     const jwtToken = useSelector((state) => state.auth.token);
@@ -24,11 +24,13 @@ const MyCart = (props) => {
     const [refreshing, setRefreshing] = React.useState(false);
     const [refreshCount, setRefreshCount] = useState(0);
     const [loadingSpinner, setLoadingSpinner] = useState(false);
-    const initialLoad = React.useRef(true);
+    const initialLoad = useRef(true);
 
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
+
         setRefreshCount(prevCount => prevCount + 1);
+
     }, []);
 
     const showAlert = () => {
@@ -41,13 +43,13 @@ const MyCart = (props) => {
 
     React.useLayoutEffect(() => {
         navigation.setOptions({
-            headerTitle: 'My Cart',
+            headerTitle: 'New Stock',
             headerTitleStyle: {
                 marginLeft: 0,
                 fontWeight: 'bold'
             },
             headerLeft: () => (
-                <AntDesign name="shoppingcart" size={25} color="black" style={styles.titleIcon} />
+                <AntDesign name="mail" size={25} color="black" style={styles.titleIcon} />
             ),
 
         });
@@ -56,21 +58,15 @@ const MyCart = (props) => {
     useEffect(() => {
         if (initialLoad.current) {
             setLoadingSpinner(true);
+
             initialLoad.current = false;
         }
-
         const fetchData = async () => {
 
             try {
-                const queryParameters = {
-                    customer_id: phoneNumber, // Add your product code parameter value here
 
-                };
-
-                // Convert query parameters to string
-                const queryString = new URLSearchParams(queryParameters).toString();
                 // Construct the complete URL with query parameters
-                const url = `https://clean-scrap-jnck-backend.vercel.app/api/getProductsByUser?${queryString}`;
+                const url = `https://clean-scrap-jnck-backend.vercel.app/api/getAllofferProducts`;
 
                 const response = await get(url, jwtToken);
 
@@ -101,54 +97,6 @@ const MyCart = (props) => {
     }, [refreshCount])
 
 
-    // Function to remove item from cart
-    const removeItem = async (product_code) => {
-        setLoadingSpinner(true);
-        try {
-            const queryParameters = {
-                customer_id: phoneNumber, // Add your product code parameter value here
-                product_code: product_code
-
-            };
-
-            // Convert query parameters to string
-            const queryString = new URLSearchParams(queryParameters).toString();
-            // Construct the complete URL with query parameters
-            const url = `https://clean-scrap-jnck-backend.vercel.app/api/removeCartProductByUser?${queryString}`;
-
-            const response = await remove(url, jwtToken);
-
-
-            if (response?.status == true) {
-
-                setAllMyCartProducts(prevProducts =>
-                    prevProducts.filter(product => product.product_code !== product_code)
-                );
-                setLoadingSpinner(false);
-                setModelTitle('Remove cart item successfully')
-                // Call the alert 
-                setColorTitle('green');
-                setColorDescription('black');
-                setResponseMessage(response?.message)
-                showAlert();
-            }
-            else {
-                setLoadingSpinner(false);
-                setModelTitle('Fail remove cart item')
-                // Call the alert 
-                setColorTitle('red');
-                setColorDescription('black');
-                setResponseMessage(response?.message)
-                showAlert();
-            }
-
-        } catch (error) {
-            setLoadingSpinner(false);
-            console.error('Error fetching initial data:', error);
-            // Handle error if needed
-        }
-    };
-
     // Function to place order
     const placeOrder = () => {
         // Implement logic to place the order
@@ -167,37 +115,32 @@ const MyCart = (props) => {
                     <ActivityIndicator size="100" color="#347855" />
                 </View>
             )}
-
             <ScrollView
                 contentContainerStyle={styles.scrollView}
                 refreshControl={
                     <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
                 }>
+
                 <View style={styles.container}>
 
                     {allMyCartProducts.map((item, index) => (
                         <View style={styles.cartItem} key={index}>
+
                             <View style={styles.card}>
-                                <Image source={{ uri: item.image_url }} style={styles.image} />
+                                <View style={styles.imagecard}>
+                                    <Image source={require('../../../assets/offericon.jpg')} style={styles.image} />
+                                </View>
                                 <View style={styles.textCard}>
-                                    <Text style={styles.name}>{item.name}</Text>
-                                    <Text style={styles.price}>{item.price}</Text>
-                                    <Text>Quantity: {item.quantity}</Text>
-                                    <View style={styles.iconContainer}>
-                                        <TouchableOpacity onPress={async () => await removeItem(item.product_code)}>
-                                            <FontAwesome name="trash" size={24} color="black" style={styles.icon} />
-                                        </TouchableOpacity>
-                                    </View>
+                                    <Text style={styles.name}>Name:{item.product_name}</Text>
+                                    <Text style={styles.price}>Rate:{item.rate}</Text>
+                                    <Text style={styles.price}>Size:{item.size}</Text>
+                                    <Text style={styles.price}>Quantity: {item.quantity}</Text>
+                                    {/* <Text style={styles.price}>Description: {item.description}</Text> */}
                                 </View>
                             </View>
                         </View>
                     ))}
 
-                    {allMyCartProducts.length !== 0 && (
-                        <Pressable style={styles.orderButton} onPress={() => placeOrder()}>
-                            <Text style={styles.orderButtonText}>Buy Now</Text>
-                        </Pressable>)}
-                    <MidnightAPIComponent />
 
                     <CustomAlert
                         isVisible={isVisible}
@@ -216,4 +159,4 @@ const MyCart = (props) => {
     );
 }
 
-export default MyCart;
+export default new_stock;

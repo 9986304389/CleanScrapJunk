@@ -17,13 +17,13 @@ const PriceList = (props) => {
                     <Text style={{ fontSize: 18, color: 'white', fontWeight: '600' }}>PRICES</Text>
                 </View>
 
-                <View style={styles.spOffers}>
+                {/* <View style={styles.spOffers}>
                     {userType === 'admin' && (
                         <TouchableOpacity onPress={() => navigation.navigate('AddProducts')} style={styles.iconContainer}>
                             <FontAwesome name="edit" size={24} style={styles.icon2} />
                         </TouchableOpacity>
                     )}
-                </View>
+                </View> */}
             </View>
             <ScrollView>
                 {/* <View style={styles.titleView}>

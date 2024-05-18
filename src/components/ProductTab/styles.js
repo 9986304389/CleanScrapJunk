@@ -109,7 +109,12 @@ const styles = StyleSheet.create({
         color: 'black',
         alignContent: 'center'
     },
-   
+    spinnerContainer: {
+        ...StyleSheet.absoluteFillObject, // Position the spinner absolute to cover the entire parent container
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 999,
+      },
 })
 
 export default styles;

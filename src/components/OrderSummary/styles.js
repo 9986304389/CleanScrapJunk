@@ -3,12 +3,13 @@ import { Platform } from "react-native";
 
 const styles = StyleSheet.create({
     container2: {
-        // flex: 1,
+        flex: 1,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%',
         marginTop: '5%',
+
         // marginHorizontal: '5%',
     },
     addressContainer: {
@@ -74,6 +75,7 @@ const styles = StyleSheet.create({
         // justifyContent: 'space-between',
         alignItems: 'center',
         marginVertical: 10,
+        flex: 1
     },
     totalAmountContainer: {
         width: '50%',
@@ -167,7 +169,9 @@ const styles = StyleSheet.create({
     continueBtnContainer: {
         alignItems: 'center',
         justifyContent: 'center',
-        paddingTop: '5%'
+        paddingTop: '5%',
+        flex: 1
+
         // paddingHorizontal: '5%',
         // paddingVertical: '5%',
         // marginTop: '5%', // Adjust the margin as needed
@@ -291,6 +295,12 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    spinnerContainer: {
+        ...StyleSheet.absoluteFillObject, // Position the spinner absolute to cover the entire parent container
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 999,
     },
 })
 

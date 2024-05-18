@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
         height: 40,
         fontSize: 16,
         color: '#333',
-        
+
     },
     containerView: {
         flex: 1,
@@ -110,6 +110,12 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 550,
         right: 20,
+    },
+    spinnerContainer: {
+        ...StyleSheet.absoluteFillObject, // Position the spinner absolute to cover the entire parent container
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 999,
     },
 })
 

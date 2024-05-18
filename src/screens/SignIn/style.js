@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
   },
   loginScreenContainer: {
     flex: 1,
+    justifyContent: 'center', alignItems: 'center' 
   },
   logoText: {
     fontSize: 40,
@@ -88,7 +89,13 @@ const styles = StyleSheet.create({
     top: 60,
     left: 0,
   },
-
+  spinnerContainer: {
+    ...StyleSheet.absoluteFillObject, // Position the spinner absolute to cover the entire parent container
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 999,
+  },
+ 
 
 });
 export default styles;

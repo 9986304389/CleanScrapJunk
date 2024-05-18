@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, Image, ScrollView, RefreshControl } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+import { View, Text, TouchableOpacity, Image, ScrollView, RefreshControl, ActivityIndicator } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import styles from "./styles";
 import useApi from '../../apiCalls/ApiCalls';
@@ -11,6 +11,7 @@ const ProfilePage = (props) => {
     const { navigation, route } = props;
     const [refreshing, setRefreshing] = React.useState(false);
     const [refreshCount, setRefreshCount] = useState(0);
+
 
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
@@ -65,6 +66,10 @@ const ProfileHeader = (props) => {
     const [color_description, setColorDescription] = useState('');
     const [responseMessage, setResponseMessage] = useState('');
     const [isVisible, setIsVisible] = useState(false);
+    const [loadingSpinner, setLoadingSpinner] = useState(false);
+    const initialLoad = useRef(true);
+    const userType = useSelector((state) => state.profile.user.userType);
+
     const dispatch = useDispatch();
 
     const showAlert = () => {
@@ -76,10 +81,14 @@ const ProfileHeader = (props) => {
     };
 
     console.log(count)
+
     useEffect(() => {
 
         const fetchData = async () => {
-
+            if (initialLoad.current) {
+                setLoadingSpinner(true);
+                initialLoad.current = false;
+            }
             try {
                 const queryParameters = {
                     email: user.email, // Add your product code parameter value here
@@ -95,14 +104,17 @@ const ProfileHeader = (props) => {
                 const response = await get(url, jwtToken);
 
 
+                console.log(response)
                 if (response?.status == true) {
+                    setLoadingSpinner(false);
+
                     setProfile(response.result);
                     // //Simulating fetching user data from an API
                     const userData = {
                         name: response?.result[0].name,
                         phoneNumber: response?.result[0].phonenumber,
                         email: response?.result[0].email,
-                        userType: response?.result[0].usertype,
+                        userType: userType,
                         location: response?.result[0].location,
                         loginTime: new Date().toISOString(),
                     };
@@ -111,6 +123,9 @@ const ProfileHeader = (props) => {
 
                 }
                 else {
+
+                    setLoadingSpinner(false);
+
                     setModelTitle('Get profile fail')
                     // Call the alert 
                     setColorTitle('red');
@@ -120,6 +135,8 @@ const ProfileHeader = (props) => {
                 }
 
             } catch (error) {
+                setLoadingSpinner(false);
+
                 console.error('Error fetching initial data:', error);
                 // Handle error if needed
             }
@@ -131,9 +148,11 @@ const ProfileHeader = (props) => {
     return (
         <ScrollView
             style={styles.container}
-
         >
+
             <View style={styles.header} >
+
+
                 <TouchableOpacity style={styles.dp}>
                     <Image source={require('../../../assets/man.png')} style={styles.image} />
                     {/* <Ionicons name="edit" size={20} color="#000" /> */}
@@ -148,6 +167,11 @@ const ProfileHeader = (props) => {
                 <TouchableOpacity onPress={() => navigation.navigate('ProfileEdit', { profile: profile })} style={styles.iconContainer}>
                     <FontAwesome name="edit" style={styles.icon} />
                 </TouchableOpacity>
+                {loadingSpinner && ( // Conditionally render ActivityIndicator when loading is true
+                    <View style={styles.spinnerContainer}>
+                        <ActivityIndicator size="100" color="#347855" />
+                    </View>
+                )}
                 <CustomAlert
                     isVisible={isVisible}
                     title={modelTitle}

@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { Platform } from "react-native";
+import { black } from "react-native-paper/src/styles/themes/v2/colors";
 
 const styles = StyleSheet.create({
     container: {
@@ -196,24 +197,68 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         color: 'white',
     },
-    alertButtonGroup:{
-        marginTop:0,
-        marginRight:0,
-        marginBottom:8,
-        marginLeft:24,
-        display:"flex",
-        flexDirection:'row',
-        justifyContent:"flex-end"
-       
+    alertButtonGroup: {
+        marginTop: 0,
+        marginRight: 0,
+        marginBottom: 8,
+        marginLeft: 24,
+        display: "flex",
+        flexDirection: 'row',
+        justifyContent: "flex-end"
+
     },
-    alertButton:{
-        marginTop:12,
-        marginRight:8,
-        backgroundColor:"black",
+    alertButton: {
+        marginTop: 12,
+        marginRight: 8,
+        backgroundColor: "black",
     },
-    ButtonCollor:{
-        backgroundColor:"green",
-    }
+    ButtonCollor: {
+        backgroundColor: "green",
+    },
+    spinnerContainer: {
+        ...StyleSheet.absoluteFillObject, // Position the spinner absolute to cover the entire parent container
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 999,
+    },
+
+    tableContainer: {
+        marginVertical: 16,
+        borderWidth: 1,
+        borderColor: '#ddd',
+        width: "100%"
+    },
+    tableTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 8,
+    },
+    tableRow: {
+        flexDirection: 'row',
+        padding: 8,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ddd',
+    },
+    tableCellHeader: {
+        fontWeight: 'bold',
+        flex: 1,
+    },
+    tableCell: {
+        flex: 1,
+    },
+    centeredTitle: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    overflowCell: {
+        flex: 1,
+        // overflow: 'scroll', // or 'auto' for automatic scrolling
+        width: '100%', // Adjust as needed
+        overflow: 'scroll',
+        margin: 5
+
+    },
 })
 
 export default styles;

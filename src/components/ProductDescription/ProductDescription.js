@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Text, View, Button, Image, TouchableOpacity, Pressable, Modal, TextInput, SafeAreaView } from 'react-native';
+import { Text, View, Button, Image, TouchableOpacity, Pressable, Modal, TextInput, SafeAreaView, ActivityIndicator } from 'react-native';
 import styles from './styles';
 import { Alert } from 'react-native';
 import useApi from '../../apiCalls/ApiCalls';
 import { useSelector, useDispatch } from 'react-redux'
 import CustomAlert from '../alert/Alert';
 import { ScrollView } from 'react-native-gesture-handler';
+import { DataTable } from 'react-native-paper';
+import { FontAwesome } from "@expo/vector-icons";
 
 const ProductDescription = ({ route, navigation }) => {
     const { loading, error, get, fetchData, post } = useApi();
@@ -23,6 +25,7 @@ const ProductDescription = ({ route, navigation }) => {
     const [isVisibleModel, setIsVisibleModel] = useState(false);
     const [editablePrices, SeteditablePrices] = useState("");
     const [totalPrice, SetPrice] = useState("");
+    const [loadingSpinner, setLoadingSpinner] = useState(false);
 
     const showAlert = () => {
         setIsVisible(true);
@@ -47,7 +50,21 @@ const ProductDescription = ({ route, navigation }) => {
     };
 
 
+    React.useLayoutEffect(() => {
+        navigation.setOptions({
+            headerTitle: 'Product Description',
+            headerTitleStyle: {
+                marginLeft: 0,
+                fontWeight: 'bold',
 
+            },
+            headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.navigate('Home')} style={{ marginLeft: 10 }}>
+                    <FontAwesome name="arrow-left" size={20} color="black" style={{ fontWeight: '100' }} />
+                </TouchableOpacity>
+            ),
+        });
+    }, [navigation]);
     const handleAddToCart = ({ navigation }) => {
         // const { navigation } = props;
         navigation.navigate('MyCart', {
@@ -58,6 +75,8 @@ const ProductDescription = ({ route, navigation }) => {
     };
 
     const addToCart = async () => {
+
+        setLoadingSpinner(true);
         let data = {
 
             "name": item.name,
@@ -74,14 +93,17 @@ const ProductDescription = ({ route, navigation }) => {
 
         if (response?.status === true) {
 
+            setLoadingSpinner(false);
             setModelTitle('Add Cart successfully')
             // Call the alert 
             setColorTitle('green');
             setColorDescription('black');
             setResponseMessage(response?.message)
             showAlert();
+
         }
         else {
+            setLoadingSpinner(false);
             setModelTitle('Add Cart Product fail')
             // Call the alert 
             setColorTitle('red');
@@ -93,6 +115,7 @@ const ProductDescription = ({ route, navigation }) => {
 
     const editWebyProducts = async (item) => {
 
+        setLoadingSpinner(true);
         if (item.typeofproduct == "webuy") {
             try {
                 let data = {
@@ -108,18 +131,21 @@ const ProductDescription = ({ route, navigation }) => {
                 const response = await post('https://clean-scrap-jnck-backend.vercel.app/api/weBuyProductAddAndEdit', data, jwtToken)
 
                 if (response?.status === true) {
+                    setLoadingSpinner(false);
                     Alert.alert(`${response.message}`)
+
                 }
                 else {
                     Alert.alert(`${response.message}`)
+                    setLoadingSpinner(false);
                 }
 
             } catch (err) {
-
+                setLoadingSpinner(false);
                 console.log("err", err)
             }
         }
-        else{
+        else {
             try {
                 let data = {
                     "product_id": item?.product_id,
@@ -134,16 +160,19 @@ const ProductDescription = ({ route, navigation }) => {
                 const response = await post('https://clean-scrap-jnck-backend.vercel.app/api/Editproducts', data, jwtToken)
 
                 if (response?.status === true) {
+                    setLoadingSpinner(false);
                     Alert.alert(`${response.message}`)
+
                 }
                 else {
+                    setLoadingSpinner(false);
                     Alert.alert(`${response.message}`)
                 }
 
             } catch (err) {
-
+                setLoadingSpinner(false);
                 console.log("err", err)
-            } 
+            }
         }
     }
 
@@ -162,10 +191,16 @@ const ProductDescription = ({ route, navigation }) => {
     item.quantity = quantity;
     console.log(user)
 
-
+    console.log("item", item)
     return (
         <ScrollView>
             <View style={styles.container}>
+                {loadingSpinner && ( // Conditionally render ActivityIndicator when loading is true
+                    <View style={styles.spinnerContainer}>
+                        <ActivityIndicator size="100" color="#347855" />
+                    </View>
+                )}
+
                 <Text style={styles.title}>Product Description</Text>
                 <View style={styles.contentContainer}>
                     <Image source={{ uri: item.image_url }} style={styles.image} />
@@ -182,8 +217,27 @@ const ProductDescription = ({ route, navigation }) => {
                             </Text>
                         </TouchableOpacity>
                     </View>
+
                     <Text style={styles.productDesc}>{item.name}  -  ₹ {quantity * (item?.price)}</Text>
                     <Text style={styles.productDesc2}>{item.description}</Text>
+
+                    {item.sub_products && item.sub_products.some(subProduct => subProduct.id !== null) && (
+                        <ScrollView horizontal style={{ width: '80%' }}>
+                            <DataTable style={styles.tableContainer}>
+                                <DataTable.Header>
+                                    <DataTable.Title style={styles.centeredTitle}>Name</DataTable.Title>
+                                    <DataTable.Title style={styles.centeredTitle}>Size</DataTable.Title>
+                                </DataTable.Header>
+                                {item.sub_products.filter(subProduct => subProduct.id !== null).map((subProduct, index) => (
+                                    <DataTable.Row key={index}>
+                                        <DataTable.Cell style={styles.overflowCell}>{subProduct.name}</DataTable.Cell>
+                                        <DataTable.Cell style={styles.overflowCell}>{subProduct.size}</DataTable.Cell>
+                                    </DataTable.Row>
+                                ))}
+                            </DataTable>
+                        </ScrollView>
+                    )}
+
 
                     {/* <Button title="Place Order" onPress={handlePlaceOrder} /> */}
                     {user === '1' && (<Pressable style={styles.editbutton} onPress={() => OpenMode()}>
@@ -198,7 +252,7 @@ const ProductDescription = ({ route, navigation }) => {
                             <Text style={styles.cardBtnText}>Add to Cart</Text>
                         </TouchableOpacity>
                         <Pressable style={styles.buyBtn} onPress={() => navigation.navigate('OrderSummary', { getallgoingtoorderproducts: item })}>
-                            <Text style={styles.buyBtnText}>Buy Now</Text>
+                            <Text style={styles.buyBtnText}>Get a best price</Text>
                         </Pressable>
 
 

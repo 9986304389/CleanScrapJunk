@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, TextInput, Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, TextInput, Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback, ScrollView, ActivityIndicator } from "react-native";
 import styles from "./styles";
 import { FontAwesome } from "@expo/vector-icons";
 import useApi from '../../apiCalls/ApiCalls';
 import CustomAlert from '../alert/Alert'
 import { useSelector } from "react-redux";
-const AddAddress = () => {
+const AddAddress = (props) => {
     const jwtToken = useSelector((state) => state.auth.token);
     const { loading, error, get, fetchData, post, remove } = useApi();
+    const { navigation, route } = props;
     const user = useSelector((state) => state.profile.user);
     const [address_line1, setaddress_line1] = useState("");
     const [address_line2, setaddress_line2] = useState("");
@@ -20,6 +21,8 @@ const AddAddress = () => {
     const [color_description, setColorDescription] = useState('');
     const [responseMessage, setResponseMessage] = useState('');
     const [isVisible, setIsVisible] = useState(false);
+    const [loadingSpinner, setLoadingSpinner] = useState(false);
+
 
     const showAlert = () => {
         setIsVisible(true);
@@ -29,7 +32,25 @@ const AddAddress = () => {
         setIsVisible(false);
     };
 
+    React.useLayoutEffect(() => {
+        navigation.setOptions({
+            headerTitle: 'Add My Address',
+            headerTitleStyle: {
+                marginLeft: 0,
+                fontWeight: 'bold',
+
+            },
+            headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.navigate('AddressPage')} style={{ marginLeft: 20 }}>
+                    <FontAwesome name="arrow-left" size={20} color="black" style={{ fontWeight: '100' }} />
+                </TouchableOpacity>
+            ),
+        });
+    }, [navigation]);
+
     const add_Address = async () => {
+
+        setLoadingSpinner(true);
 
         let data = {
             "customer_id": user?.phoneNumber,
@@ -44,7 +65,7 @@ const AddAddress = () => {
         const response = await post('https://clean-scrap-jnck-backend.vercel.app/api/AddressAddAndEdit', data, jwtToken)
 
         if (response?.status === true) {
-
+            setLoadingSpinner(false);
             setModelTitle('Add Address successfully')
             // Call the alert 
             setColorTitle('green');
@@ -53,6 +74,7 @@ const AddAddress = () => {
             showAlert();
         }
         else {
+            setLoadingSpinner(false);
             setModelTitle('Add Address fail')
             // Call the alert 
             setColorTitle('red');
@@ -63,6 +85,12 @@ const AddAddress = () => {
     }
     return (
         <ScrollView>
+            {loadingSpinner && ( // Conditionally render ActivityIndicator when loading is true
+                <View style={styles.spinnerContainer}>
+                    <ActivityIndicator size="100" color="#347855" />
+                </View>
+            )}
+
             <KeyboardAvoidingView style={styles.containerView}>
                 {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
 

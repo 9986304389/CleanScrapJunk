@@ -82,11 +82,17 @@ const styles = StyleSheet.create({
     icon: {
         fontSize: 26,
         color: 'black',
-        alignContent:"center"
+        alignContent: "center"
     },
     iconContainer: {
         marginLeft: '25%'
-    }
+    },
+    spinnerContainer: {
+        ...StyleSheet.absoluteFillObject, // Position the spinner absolute to cover the entire parent container
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 999,
+    },
 })
 
 export default styles;

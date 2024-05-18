@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView, ScrollView } from "react-native";
+import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView, ScrollView, ActivityIndicator } from "react-native";
 import { Feather, AntDesign, Fontisto, FontAwesome, Ionicons } from '@expo/vector-icons';
 import useApi from '../../apiCalls/ApiCalls';
 import CustomAlert from '../alert/Alert'
 import { useSelector } from 'react-redux'
-function ProfileEdit({ route }) {
+
+function ProfileEdit({ route,navigation }) {
+  
     const { profile } = route.params;
     const [name, setName] = useState("");
     const jwtToken = useSelector((state) => state.auth.token);
@@ -15,6 +17,8 @@ function ProfileEdit({ route }) {
     const [color_description, setColorDescription] = useState('');
     const [responseMessage, setResponseMessage] = useState('');
     const [isVisible, setIsVisible] = useState(false);
+    const [loadingSpinner, setLoadingSpinner] = useState(false);
+    
     const showAlert = () => {
         setIsVisible(true);
     };
@@ -23,7 +27,26 @@ function ProfileEdit({ route }) {
         setIsVisible(false);
     };
 
+    React.useLayoutEffect(() => {
+        navigation.setOptions({
+            headerTitle: 'Profile Edit',
+            headerTitleStyle: {
+                marginLeft: 0,
+                fontWeight: 'bold',
+
+            },
+            headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.navigate('ProfilePage')} style={{ marginLeft: 10 }}>
+                    <FontAwesome name="arrow-left" size={20} color="black" style={{ fontWeight: '100' }} />
+                </TouchableOpacity>
+            ),
+        });
+    }, [navigation]);
+
     const editProfile = async () => {
+
+
+        setLoadingSpinner(true);
 
 
         let data = {
@@ -38,7 +61,7 @@ function ProfileEdit({ route }) {
 
 
         if (response?.status === true) {
-
+            setLoadingSpinner(false);
             setModelTitle('Edit profile successfully')
             // Call the alert 
             setColorTitle('green');
@@ -48,6 +71,7 @@ function ProfileEdit({ route }) {
         }
         else {
 
+            setLoadingSpinner(false);
             setModelTitle('Edit Profile fail')
             // Call the alert 
             setColorTitle('red');
@@ -58,9 +82,16 @@ function ProfileEdit({ route }) {
     }
 
     return (
+
+
         <ScrollView>
             <KeyboardAvoidingView>
                 <View style={styles.container}>
+                    {loadingSpinner && ( // Conditionally render ActivityIndicator when loading is true
+                        <View style={styles.spinnerContainer}>
+                            <ActivityIndicator size="100" color="#347855" />
+                        </View>
+                    )}
                     <View>
                         <Image
                             source={require('../../../assets/man.png')}
@@ -145,6 +176,7 @@ function ProfileEdit({ route }) {
                 />
             </KeyboardAvoidingView>
         </ScrollView>
+
     );
 }
 
@@ -283,6 +315,12 @@ const styles = StyleSheet.create({
         fontSize: 18,
         paddingLeft: 10,
         paddingTop: 4
+    },
+    spinnerContainer: {
+        ...StyleSheet.absoluteFillObject, // Position the spinner absolute to cover the entire parent container
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 999,
     },
 
 });

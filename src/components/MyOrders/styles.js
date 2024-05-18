@@ -173,7 +173,13 @@ const styles = StyleSheet.create({
     orderDateTxt: {
         marginLeft: '5%',
         fontSize: 16
-    }
+    },
+    spinnerContainer: {
+        ...StyleSheet.absoluteFillObject, // Position the spinner absolute to cover the entire parent container
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 999,
+      },
 })
 
 export default styles;

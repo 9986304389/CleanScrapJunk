@@ -59,12 +59,12 @@ const styles = StyleSheet.create({
   },
   eyeIconContainer1: {
     position: 'absolute',
-    top: 465,
+    top: 500,
     right: 20,
   },
   eyeIconContainer2: {
     position: 'absolute',
-    top: 550,
+    top: 595,
     right: 20,
   },
 
@@ -105,5 +105,16 @@ const styles = StyleSheet.create({
   optionText: {
     fontSize: 16,
   },
+  errorText:{
+    paddingLeft: 10,
+    color:'red',
+    fontWeight:'100'
+ },
+ spinnerContainer: {
+  ...StyleSheet.absoluteFillObject, // Position the spinner absolute to cover the entire parent container
+  justifyContent: 'center',
+  alignItems: 'center',
+  zIndex: 999,
+},
 });
 export default styles;

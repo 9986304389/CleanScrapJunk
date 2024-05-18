@@ -7,6 +7,21 @@ import styles from "./styles";
 const PricesPage = (props) => {
     const { navigation, route } = props;
 
+    React.useLayoutEffect(() => {
+        navigation.setOptions({
+            headerTitle: "Prices",
+            headerTitleStyle: {
+                marginLeft: 0,
+                fontWeight: 'bold',
+
+            },
+            headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.navigate('Price')} style={{ marginLeft: 20 }}>
+                    <FontAwesome name="arrow-left" size={20} color="black" style={{ fontWeight: '100' }} />
+                </TouchableOpacity>
+            ),
+        });
+    }, [navigation]);
     return (
         <>
             <ScrollView>
