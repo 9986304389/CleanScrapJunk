@@ -81,41 +81,42 @@ export default function LoginScreen({ navigation }) {
         loginTime: new Date().toISOString(),
       };
 
-      
+
       dispatch(setUser(userData));
       //let jwtToken = response?.result[0].token;
-      navigation.navigate('Home')
+      //navigation.navigate('Home')
 
       setLoadingSpinner(false);
-      // try {
-      //   const queryParameters = {
-      //     email: email, // Add your product code parameter value here
 
-      //   };
+      try {
+        const queryParameters = {
+          email: email, // Add your product code parameter value here
 
-      //   // Convert query parameters to string
-      //   const queryString = new URLSearchParams(queryParameters).toString();
-      //   // Construct the complete URL with query parameters
-      //   const url = `https://clean-scrap-jnck-backend.vercel.app/api/getOTP?${queryString}`;
+        };
 
-      //   const response = await get(url, jwtToken);
+        // Convert query parameters to string
+        const queryString = new URLSearchParams(queryParameters).toString();
+        // Construct the complete URL with query parameters
+        const url = `https://clean-scrap-jnck-backend.vercel.app/api/getOTP?${queryString}`;
 
-      //   if (response?.status == true) {
-      //     navigation.navigate('OTP', { email_address: email })
-      //   }
-      //   else {
-      //     setModelTitle('Get OTP Fail')
-      //     // Call the alert 
-      //     setColorTitle('red');
-      //     setColorDescription('black');
-      //     setResponseMessage(response?.message)
-      //     showAlert();
-      //   }
+        const response = await get(url, jwtToken);
 
-      // } catch (error) {
-      //   console.error('Error fetching initial data:', error);
-      //   // Handle error if needed
-      // }
+        if (response?.status == true) {
+          navigation.navigate('OTP', { email_address: email })
+        }
+        else {
+          setModelTitle('Get OTP Fail')
+          // Call the alert 
+          setColorTitle('red');
+          setColorDescription('black');
+          setResponseMessage(response?.message)
+          showAlert();
+        }
+
+      } catch (error) {
+        console.error('Error fetching initial data:', error);
+        // Handle error if needed
+      }
 
     }
     else {

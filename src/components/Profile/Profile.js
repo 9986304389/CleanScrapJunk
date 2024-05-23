@@ -203,6 +203,21 @@ const MenuItems = ({ navigation }) => {
                 <Text style={styles.menuItemTxt}>Address</Text>
                 <FontAwesome name="chevron-right" style={[styles.rightArrow, { marginLeft: '67%' }]} />
             </TouchableOpacity>
+            <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Info')}>
+                <FontAwesome name="info-circle" style={styles.icons} />
+                <Text style={styles.menuItemTxt}>Information</Text>
+                <FontAwesome name="chevron-right" style={[styles.rightArrow, { marginLeft: '57%' }]} />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('About')}>
+                <FontAwesome name="info-circle" style={styles.icons} />
+                <Text style={styles.menuItemTxt}>About</Text>
+                <FontAwesome name="chevron-right" style={[styles.rightArrow, { marginLeft: '68%' }]} />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('AboutUs')}>
+                <FontAwesome name="user" style={styles.icons} />
+                <Text style={styles.menuItemTxt}>About US</Text>
+                <FontAwesome name="chevron-right" style={[styles.rightArrow, { marginLeft: '62%' }]} />
+            </TouchableOpacity>
             {/* <TouchableOpacity onPress={() => navigation.navigate('EnquiryForm')} style={styles.menuItem}>
                 <FontAwesome name="credit-card" style={styles.icons} />
                 <Text style={styles.menuItemTxt}>Payment Methods</Text>
@@ -213,7 +228,8 @@ const MenuItems = ({ navigation }) => {
                 <Text style={styles.menuItemTxt}>Logout</Text>
                 <FontAwesome name="chevron-right" style={[styles.rightArrow, { marginLeft: '67%' }]} />
             </TouchableOpacity>
-            <Text style={styles.menuHeads}>App Settings</Text>
+
+
             {/* <TouchableOpacity onPress={() => navigation.navigate('NotificationsPage')} style={styles.menuItem}>
                 <FontAwesome name="bell" style={styles.icons} />
                 <Text style={styles.menuItemTxt}>Notifications</Text>

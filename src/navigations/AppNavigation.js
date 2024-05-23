@@ -26,7 +26,11 @@ import PricesPage from '../components/Prices/PricesPage';
 import AddSpOffers from '../components/SpecialOffersAdd/AddSPOffers';
 import AddProducts from '../components/AddProducts/AddProducts';
 import new_stock from '../components/new_stock/new_stock';
-
+import Info from '../components/info/info';
+import About from '../components/about/about'
+import ServiceLit from '../components/Services/Services';
+import ServicesDis from '../components/Services/ServiceDisPage';
+import AboutUs from '../components/about US/aboutUS';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -59,6 +63,11 @@ function MainNavigator() {
       <Stack.Screen name='EnquiryForm' component={EnquiryForm} />
       <Stack.Screen name='PricesPage' component={PricesPage} />
       <Stack.Screen name='NewStock' component={new_stock} />
+      <Stack.Screen name='Info' component={Info} />
+      <Stack.Screen name='About' component={About} />
+      {/* <Stack.Screen name='Services' component={Services} /> */}
+      <Stack.Screen name='ServiceDisPage' component={ServicesDis} />
+      <Stack.Screen name='AboutUs' component={AboutUs} />
     </Stack.Navigator>
   )
 }
@@ -185,8 +194,8 @@ function BottomTabNavigator() {
         }}
       />
       <Tab.Screen
-        name="Service's"
-        component={PriceList}
+        name="Services"
+        component={ServiceLit}
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ color, size }) => (

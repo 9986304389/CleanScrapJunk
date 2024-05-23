@@ -52,6 +52,17 @@ const styles = StyleSheet.create({
         opacity: 1,
         borderRadius: 5
     },
+    image_content: {
+        paddingTop: 70,
+        flex: 1,
+        width: '100%',
+        height: 175,
+        opacity: 1,
+        borderRadius: 5,
+        textAlign: 'center',
+        alignContent: 'center'
+
+    },
     backgroundImage: {
         width: '100%',
         height: '100%',
@@ -114,7 +125,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         zIndex: 999,
-      },
+    },
 })
 
 export default styles;

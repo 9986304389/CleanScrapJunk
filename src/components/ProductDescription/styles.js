@@ -226,7 +226,8 @@ const styles = StyleSheet.create({
         marginVertical: 16,
         borderWidth: 1,
         borderColor: '#ddd',
-        width: "100%"
+        width: "100%",
+
     },
     tableTitle: {
         fontSize: 20,
@@ -250,13 +251,18 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        alignContent:'flex-start'
     },
     overflowCell: {
+        justifyContent: 'center',
+        alignItems: 'center',
         flex: 1,
-        // overflow: 'scroll', // or 'auto' for automatic scrolling
-        width: '100%', // Adjust as needed
+        overflow: 'scroll', // or 'auto' for automatic scrolling
+        // width: '50%', // Adjust as needed
         overflow: 'scroll',
-        margin: 5
+        margin: 5,
+   
+        // textAlign:'center'
 
     },
 })

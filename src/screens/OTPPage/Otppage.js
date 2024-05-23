@@ -1,6 +1,6 @@
 
 import React, { useRef, useEffect, useState } from "react";
-import { View, Text, TextInput, StyleSheet, BackHandler } from "react-native";
+import { View, Text, TextInput, StyleSheet, BackHandler, ActivityIndicator } from "react-native";
 import Buttonpage from "./Buttonpage";
 import { useSelector, useDispatch } from 'react-redux'
 import useApi from '../../apiCalls/ApiCalls';
@@ -18,7 +18,7 @@ export default function OTPPage({ route, navigation }) {
     const [color_description, setColorDescription] = useState('');
     const [responseMessage, setResponseMessage] = useState('');
     const [otp, setOTP] = useState(Array(6).fill(''));
-
+    const [loadingSpinner, setLoadingSpinner] = useState(false);
 
     const showAlert = () => {
         setIsVisible(true);
@@ -58,6 +58,8 @@ export default function OTPPage({ route, navigation }) {
 
 
     const validate_OTP = async () => {
+        //spinner show 
+        setLoadingSpinner(true);
         const concatenatedOTP = otp.join('');
 
         if (concatenatedOTP.length == 6) {
@@ -77,7 +79,8 @@ export default function OTPPage({ route, navigation }) {
 
                 if (response?.status == true) {
 
-                    navigation.navigate('Home')
+                    navigation.navigate('Home');
+                    setLoadingSpinner(false);
                 }
                 else {
                     setButtonPressCount(prevCount => prevCount + 1);
@@ -142,6 +145,12 @@ export default function OTPPage({ route, navigation }) {
 
     return (
         <View style={styles.container}>
+
+            {loadingSpinner && ( // Conditionally render ActivityIndicator when loading is true
+                <View style={styles.spinnerContainer}>
+                    <ActivityIndicator size="100" color="#347855" />
+                </View>
+            )}
             <View style={{ top: 50 }}>
                 <Text style={{ fontStyle: "normal", fontWeight: "200", fontSize: 20 }}>An 6 Digits code has been sent to</Text>
                 <Text style={{ fontStyle: "normal", fontWeight: "200", fontSize: 20, textAlign: "center" }}>your email {email}</Text>
@@ -208,5 +217,12 @@ const styles = StyleSheet.create({
         marginTop: 100,
         marginLeft: 25
     },
+    spinnerContainer: {
+        ...StyleSheet.absoluteFillObject, // Position the spinner absolute to cover the entire parent container
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 999,
+      },
+     
 
 });

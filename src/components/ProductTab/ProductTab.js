@@ -36,7 +36,13 @@ const FirstRoute = (props) => {
                         <View key={index}>
 
                             <View style={styles.card}>
-                                <Image source={{ uri: item?.image_url }} style={styles.image} />
+                                {item?.image_url ? (
+                                    <Image source={{ uri: item.image_url }} style={styles.image} />
+                                ) : (
+                                    <Text style={styles.image_content}>No image</Text>
+                                )}
+
+
                                 {user === '1' && (
                                     <TouchableOpacity style={styles.heartIcon} onPress={() => navigation.navigate("ProductDescription", { item: item })}>
                                         <Text>  <FontAwesome name="edit" style={styles.icon} /></Text>
@@ -70,7 +76,11 @@ const OldTabContent = (props) => {
                     <TouchableOpacity style={styles.cardContainer} key={item?.product_id} onPress={() => navigation.navigate("ProductDescription", { item: item })}>
                         <View key={item?.product_id}>
                             <View style={styles.card}>
-                                <Image source={{ uri: item?.image_url }} style={styles.image} />
+                                {item?.image_url ? (
+                                    <Image source={{ uri: item.image_url }} style={styles.image} />
+                                ) : (
+                                    <Text style={styles.image_content}>No image</Text>
+                                )}
                                 <TouchableOpacity style={styles.heartIcon} onPress={() => console.log('Heart icon pressed')}>
                                     {user === '1' && (
                                         <TouchableOpacity style={styles.heartIcon} onPress={() => console.log('Heart icon pressed')}>
@@ -103,7 +113,11 @@ const NewTabContent = (props) => {
                     <TouchableOpacity style={styles.cardContainer} key={item?.product_id} onPress={() => navigation.navigate("ProductDescription", { item: item })}>
                         <View key={item?.product_id}>
                             <View style={styles.card}>
-                                <Image source={{ uri: item?.image_url }} style={styles.image} />
+                                {item?.image_url ? (
+                                    <Image source={{ uri: item.image_url }} style={styles.image} />
+                                ) : (
+                                    <Text style={styles.image_content}>No image</Text>
+                                )}
                                 <TouchableOpacity style={styles.heartIcon} onPress={() => console.log('Heart icon pressed')}>
                                     {user === '1' && (
                                         <TouchableOpacity style={styles.heartIcon} onPress={() => console.log('Heart icon pressed')}>

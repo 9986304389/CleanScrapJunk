@@ -130,7 +130,7 @@ export default function AddProducts(props) {
                         <Text style={styles.label_text}>Quantity</Text>
                         <TextInput
                             onChangeText={setQuntity}
-                            placeholder="Size"
+                            placeholder="Quantity"
                             placeholderColor="#c4c3cb"
                             style={styles.loginFormTextInput}
                         />
@@ -144,7 +144,7 @@ export default function AddProducts(props) {
                         <Text style={styles.label_text}>Product Code</Text>
                         <TextInput
                             onChangeText={setProductCode}
-                            placeholder="Description"
+                            placeholder="Product Code"
                             placeholderColor="#c4c3cb"
                             style={styles.loginFormTextInput}
                         />

@@ -54,12 +54,12 @@ const ProductDescription = ({ route, navigation }) => {
         navigation.setOptions({
             headerTitle: 'Product Description',
             headerTitleStyle: {
-                marginLeft: 0,
+                marginLeft: 3,
                 fontWeight: 'bold',
 
             },
             headerLeft: () => (
-                <TouchableOpacity onPress={() => navigation.navigate('Home')} style={{ marginLeft: 10 }}>
+                <TouchableOpacity onPress={() => navigation.navigate('Home')} style={{ marginLeft: 20 }}>
                     <FontAwesome name="arrow-left" size={20} color="black" style={{ fontWeight: '100' }} />
                 </TouchableOpacity>
             ),
@@ -191,7 +191,7 @@ const ProductDescription = ({ route, navigation }) => {
     item.quantity = quantity;
     console.log(user)
 
-    console.log("item", item)
+    console.log("item", item.type)
     return (
         <ScrollView>
             <View style={styles.container}>
@@ -218,26 +218,32 @@ const ProductDescription = ({ route, navigation }) => {
                         </TouchableOpacity>
                     </View>
 
-                    <Text style={styles.productDesc}>{item.name}  -  ₹ {quantity * (item?.price)}</Text>
+                    <Text style={styles.productDesc}>{item.name}  -  ₹ {quantity * (item?.price)}{item.type === 'old' && ' kg'}{(item.type === 'new') && (item.typeofproduct === 'wesell') && ' kg'}</Text>
                     <Text style={styles.productDesc2}>{item.description}</Text>
 
                     {item.sub_products && item.sub_products.some(subProduct => subProduct.id !== null) && (
-                        <ScrollView horizontal style={{ width: '80%' }}>
-                            <DataTable style={styles.tableContainer}>
+                        <ScrollView style={{ width: '100%', height: 200 }}>
+                            <DataTable style={[styles.tableContainer, { width: '100%' }]} horizontal={true}>
                                 <DataTable.Header>
                                     <DataTable.Title style={styles.centeredTitle}>Name</DataTable.Title>
                                     <DataTable.Title style={styles.centeredTitle}>Size</DataTable.Title>
                                 </DataTable.Header>
+
                                 {item.sub_products.filter(subProduct => subProduct.id !== null).map((subProduct, index) => (
-                                    <DataTable.Row key={index}>
-                                        <DataTable.Cell style={styles.overflowCell}>{subProduct.name}</DataTable.Cell>
-                                        <DataTable.Cell style={styles.overflowCell}>{subProduct.size}</DataTable.Cell>
-                                    </DataTable.Row>
+                                    <ScrollView horizontal style={{ width: '100%', flex: 1 }}>
+                                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', alignContent: 'center' }}>
+                                            <DataTable.Row style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                                <DataTable.Cell style={styles.overflowCell}>{subProduct.name}</DataTable.Cell>
+                                                <DataTable.Cell style={styles.overflowCell}>{subProduct.size}</DataTable.Cell>
+                                            </DataTable.Row>
+                                        </View>
+                                    </ScrollView>
                                 ))}
+
                             </DataTable>
                         </ScrollView>
-                    )}
 
+                    )}
 
                     {/* <Button title="Place Order" onPress={handlePlaceOrder} /> */}
                     {user === '1' && (<Pressable style={styles.editbutton} onPress={() => OpenMode()}>
