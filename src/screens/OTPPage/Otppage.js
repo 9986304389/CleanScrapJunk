@@ -1,10 +1,11 @@
 
 import React, { useRef, useEffect, useState } from "react";
-import { View, Text, TextInput, StyleSheet, BackHandler, ActivityIndicator } from "react-native";
+import { View, Text, TextInput, StyleSheet, BackHandler, ActivityIndicator, Alert,TouchableOpacity } from "react-native";
 import Buttonpage from "./Buttonpage";
 import { useSelector, useDispatch } from 'react-redux'
 import useApi from '../../apiCalls/ApiCalls';
 import CustomAlert from '../../components/alert/Alert';
+import { AntDesign, FontAwesome } from "@expo/vector-icons";
 export default function OTPPage({ route, navigation }) {
 
     const { email_address } = route.params;
@@ -19,6 +20,22 @@ export default function OTPPage({ route, navigation }) {
     const [responseMessage, setResponseMessage] = useState('');
     const [otp, setOTP] = useState(Array(6).fill(''));
     const [loadingSpinner, setLoadingSpinner] = useState(false);
+
+    React.useLayoutEffect(() => {
+        navigation.setOptions({
+            headerTitle: 'OTP',
+            headerTitleStyle: {
+                marginLeft: 0,
+                fontWeight: 'bold',
+
+            },
+            headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.navigate('SignIn')} style={{ marginLeft: 10 }}>
+                    <FontAwesome name="arrow-left" size={20} color="black" style={{ fontWeight: '100' }} />
+                </TouchableOpacity>
+            ),
+        });
+    }, [navigation]);
 
     const showAlert = () => {
         setIsVisible(true);
@@ -85,10 +102,12 @@ export default function OTPPage({ route, navigation }) {
                 else {
                     setButtonPressCount(prevCount => prevCount + 1);
                     if (buttonPressCount === 2) {
+                        setLoadingSpinner(false);
                         // If button has been pressed 3 times, navigate to home page
                         navigation.navigate('SignIn');
                     }
                     else {
+                        setLoadingSpinner(false);
                         setModelTitle('Verify OTP Fail')
                         // Call the alert 
                         setColorTitle('red');
@@ -99,14 +118,22 @@ export default function OTPPage({ route, navigation }) {
                 }
 
             } catch (error) {
+                setLoadingSpinner(false);
                 console.error('Error fetching initial data:', error);
                 // Handle error if needed
             }
 
         }
+        else {
+            console.log("kavitha")
+            setLoadingSpinner(false);
+            Alert.alert("Please Enter The OTP")
+        }
+
     }
 
     const resend_OTP = async () => {
+        setLoadingSpinner(true);
         try {
             const queryParameters = {
                 email: email_address, // Add your product code parameter value here
@@ -121,6 +148,7 @@ export default function OTPPage({ route, navigation }) {
             const response = await get(url, jwtToken);
 
             if (response?.status == true) {
+                setLoadingSpinner(false);
                 setModelTitle('Get OTP success please enter otp')
                 // Call the alert 
                 setColorTitle('green');
@@ -129,6 +157,7 @@ export default function OTPPage({ route, navigation }) {
                 showAlert();
             }
             else {
+                setLoadingSpinner(false);
                 setModelTitle('Get OTP Fail')
                 // Call the alert 
                 setColorTitle('red');
@@ -222,7 +251,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         zIndex: 999,
-      },
-     
+    },
+
 
 });

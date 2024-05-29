@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { View, Text, TouchableOpacity, Image, ScrollView, RefreshControl, ActivityIndicator } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+import { NavigationContainer, CommonActions } from '@react-navigation/native';
 import styles from "./styles";
 import useApi from '../../apiCalls/ApiCalls';
 import CustomAlert from '../alert/Alert';
@@ -223,11 +224,35 @@ const MenuItems = ({ navigation }) => {
                 <Text style={styles.menuItemTxt}>Payment Methods</Text>
                 <FontAwesome name="chevron-right" style={[styles.rightArrow, { marginLeft: '43%' }]} />
             </TouchableOpacity> */}
-            <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('SignIn')}>
+            {/* <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('SignIn')}>
+                <FontAwesome name="sign-out" style={styles.icons} />
+                <Text style={styles.menuItemTxt}>Logout</Text>
+                <FontAwesome name="chevron-right" style={[styles.rightArrow, { marginLeft: '67%' }]} />
+            </TouchableOpacity> */}
+            <TouchableOpacity
+                style={styles.menuItem}
+                onPress={() =>
+                    navigation.dispatch(
+                        CommonActions.reset({
+                            index: 0,
+                            routes: [{ name: 'SignIn' }],
+                        })
+                    )
+                }
+            >
                 <FontAwesome name="sign-out" style={styles.icons} />
                 <Text style={styles.menuItemTxt}>Logout</Text>
                 <FontAwesome name="chevron-right" style={[styles.rightArrow, { marginLeft: '67%' }]} />
             </TouchableOpacity>
+
+
+
+
+
+
+
+
+
 
 
             {/* <TouchableOpacity onPress={() => navigation.navigate('NotificationsPage')} style={styles.menuItem}>
