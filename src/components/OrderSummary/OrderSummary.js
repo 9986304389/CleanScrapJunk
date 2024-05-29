@@ -173,9 +173,11 @@ const OrderSummaryPage = ({ onNext, onPrev, route, selectAddress }) => {
     };
 
     const handleNext = async (selectAddress, orderItems, totalAmount) => {
+       
         // onNext(selectedAddress, orderItems, totalAmount); // Invoke the parent function passed as prop
         setLoadingSpinner(true);
         try {
+            
             let data = {
                 "userdetails": user,
                 "orderdetails": orderItems,
@@ -183,8 +185,7 @@ const OrderSummaryPage = ({ onNext, onPrev, route, selectAddress }) => {
                 "address": { "address_line1": UserAddress },
             }
 
-            // console.log(data)
-
+        
             const response = await post('https://clean-scrap-jnck-backend.vercel.app/api/sendPlaceorderemail', data, jwtToken)
 
             if (response?.status === true) {
@@ -293,10 +294,10 @@ const OrderSummaryPage = ({ onNext, onPrev, route, selectAddress }) => {
     return (
         <ScrollView>
             {loadingSpinner && ( // Conditionally render ActivityIndicator when loading is true
-            <View style={styles.spinnerContainer}>
-              <ActivityIndicator size="100" color="#347855" />
-            </View>
-          )}
+                <View style={styles.spinnerContainer}>
+                    <ActivityIndicator size="100" color="#347855" />
+                </View>
+            )}
 
             <View style={styles.container2}>
                 {/* <View style={styles.addressContainer}>

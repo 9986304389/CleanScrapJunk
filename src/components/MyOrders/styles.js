@@ -75,11 +75,11 @@ const styles = StyleSheet.create({
 
     },
     name: {
-        width: '85%',
-        fontSize: 18,
+        width: '80%',
+        fontSize: 20,
         fontWeight: '700',
         marginBottom: 7,
-
+        flexWrap: 'wrap',
     },
     price: {
         fontSize: 18,

@@ -81,12 +81,9 @@ export default function LoginScreen({ navigation }) {
         loginTime: new Date().toISOString(),
       };
 
-
+     
       dispatch(setUser(userData));
-      //let jwtToken = response?.result[0].token;
-      //navigation.navigate('Home')
-
-      setLoadingSpinner(false);
+      let jwtToken = response?.result[0].token;
 
       try {
         const queryParameters = {
@@ -102,9 +99,12 @@ export default function LoginScreen({ navigation }) {
         const response = await get(url, jwtToken);
 
         if (response?.status == true) {
+          setLoadingSpinner(false);
           navigation.navigate('OTP', { email_address: email })
+
         }
         else {
+          setLoadingSpinner(false);
           setModelTitle('Get OTP Fail')
           // Call the alert 
           setColorTitle('red');
@@ -114,6 +114,7 @@ export default function LoginScreen({ navigation }) {
         }
 
       } catch (error) {
+        setLoadingSpinner(false);
         console.error('Error fetching initial data:', error);
         // Handle error if needed
       }
